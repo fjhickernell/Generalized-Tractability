@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb, amsthm, booktabs, mathtools}
+\usepackage[utf8]{inputenc}
+\input{FJHDef.tex}
+
+\title{Generalized Tractability}
+\author{Fred J. Hickernell, Peter Kritzer and Henryk Wo\'zniakwoski}
+\date{December 2018}
+
+%\DeclareMathOperator{\comp}{comp}
+\DeclareMathOperator{\SOL}{SOL}
+\DeclareMathOperator{\APP}{APP}
+
+%\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Let $\cf_d$ and $\cg_d$ Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a linear solution operator with adjoint $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors  
+\[
+\lambda_{\max} \ge \lambda_{1,d} \ge \lambda_{2,d} \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, 
+\]
+The goal is to find an approximate solution, $\APP_d:\cb_d \times (0,\infty) \to \cg_d$ satisfying $\norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon$, where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals.  In this case the optimal solution is 
+\[
+\APP_d(f,\varepsilon) = \sum_{i=1}^n \SOL(u_i) \ip[\cf_d]{f}{u_i},
+\]
+and the complexity of our linear problem is
+\[
+\comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon^2\}.
+\]
+
+Let let $\phi : (0,\infty) \times [0,\Delta] \to (0,\infty)$ and $\{\psi : \naturals  \times [0,\Delta] \to (0,\infty)\}$ be positive functions that are increasing in both arguments, e.g., 
+\[
+(x,\delta) \mapsto x^{p + \delta} \ (p >0), \qquad (x,\delta) \mapsto (1 + \delta) \log(1+x)
+\]
+which satisfy
+\begin{equation*}
+    \lim_{\delta \downarrow 0} \phi(x,\delta) = \phi(x,0) =: \phi(x), \qquad 
+    \lim_{\delta \downarrow 0} \psi(x,\delta) = \psi(x,0) =: \psi(x).
+\end{equation*}
+
+
+\begin{definition}
+If for all $\delta_1, \delta_2 \in (0,\Delta]$ there exist the functions $\phi$ and $\psi$ satisfying the conditions listed above, and there exists $C_1 : (0,\Delta]^2 \to (0,\infty)$  with 
+\begin{multline*}
+    \comp(\varepsilon, d) \le \phi(\varepsilon^{-1},\delta_1)\psi(d,\delta_2) + C_1(\delta_1, \delta_2) \\
+    \forall \delta_1, \delta_2 \in (0,\Delta], \quad  \varepsilon \in (0, 1], \quad \forall d \in \naturals
+\end{multline*}
+then we call a problem $\phi$-$\psi$-tractable.
+\end{definition}
+
+Some specific examples include 
+\begin{equation*}
+    \begin{array}{r@{\qquad}c@{\qquad}c}
+    & \phi(x,\delta) & \psi(x,\delta) \\
+    \toprule
+    \text{strong algebraic tractability} & C_2(x,\delta) x^{p+\delta} & 1\\
+    \text{ algebraic tractability} & C_2(x,\delta) x^{p+\delta} & x^{q+\delta}\\
+    \text{strong exponential tractability} &(p+\delta) \log(1 + x) & 1 \\
+    \text{ exponential tractability} &(p+\delta) \log(1 + x) &  x^{q+\delta} \\
+    & 
+    \end{array}
+\end{equation*}
+
+\section{Main Result}
+\begin{theorem} A problem is $\phi$-$\psi$-tractable iff there exists a  $C_3 : (0,\Delta]^2 \to (0,\infty)$
+\begin{equation} \label{eq:tractiff}
+    \sup_{d \in \naturals} \frac{1}{\psi(d,\delta_2)} \sum_{i = C_3(\delta_1,\delta_2)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},\delta_1)} \le 1 \qquad \forall \delta_1, \delta_2 \in (0,\Delta]
+\end{equation}
+\end{theorem}
+\begin{proof}
+Fix $\delta_1 \in (0,\Delta]$.  Because $\phi$ is increasing in its arguments, it follows that the complexity may be equivalently expressed as 
+\begin{align*}
+    \comp(\varepsilon, d) &= \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon^2\} \\
+    &= \min \biggl\{n \in \natzero : \frac{1}{\phi(\lambda_{n+1, d}^{-1/2},\delta_1)} \le \frac{1}{\phi(\varepsilon^{-1},\delta_1)} \biggr\}.
+\end{align*}
+
+Since the $\lambda_{i,d}$ are non-increasing it follows that the $\phi(\lambda_{i, d}^{-1/2},\delta_1)$ are also non-increasing.  In particular, for all $n \in \naturals$,
+\begin{align*}
+    \MoveEqLeft{\lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}} \\
+    & \implies \frac{1}{\phi(\lambda_{n+1, d}^{-1/2},\delta_1)} \le \frac{1}{\phi(\lambda_{n, d}^{-1/2},\delta_1)} \le \cdots \le \frac{1}{\phi(\lambda_{1, d}^{-1/2},\delta_1)} \\
+    & \implies \frac{1}{\phi(\lambda_{n+1, d}^{-1/2},\delta_1)} 
+    \le \frac 1n \sum_{i=1}^n  \frac{1}{\phi(\lambda_{i, d}^{-1/2},\delta_1)} 
+    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{\phi(\lambda_{i, d}^{-1/2},\delta_1)}.
+\end{align*}
+Thus, we can conclude that 
+\begin{align*}
+    n \ge \phi(\varepsilon^{-1},\delta_1) \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},\delta_1)}
+    & \implies 
+  \frac 1n \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},\delta_1)} \le  \frac{1}{\phi(\varepsilon^{-1},\delta_1)} \\
+   & \implies   \frac{1}{\phi(\lambda_{n+1, d}^{-1/2},\delta_1)} \le \frac{1}{\phi(\varepsilon^{-1},\delta_1)}.
+\end{align*}
+This implies an upper bound on the complexity of
+\begin{align*}
+       \MoveEqLeft{\comp(\varepsilon,d)} \\
+       &\le 1 + \phi(\varepsilon^{-1},\delta_1) \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},\delta_1)} \\
+       & = 1 + \phi(\varepsilon^{-1},\delta_1) \left [ \sum_{i=1}^{C_3(\delta_1,\delta_2)-1} \frac{1}{\phi(\lambda_{i, d}^{-1/2},\delta_1)}  + \sum_{i=C_3(\delta_1,\delta_2)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},\delta_1)} \right ] \\
+       & \le \underbrace{1+  \phi(\varepsilon^{-1},\delta_1) \frac{C_3(\delta_1,\delta_2)-1}{\phi(\lambda_{\max}^{-1/2},\delta_1)}}_{C_1(\delta_1,\delta_2)}
+       +  \phi(\varepsilon^{-1},\delta_1) \psi(d,\delta_2) 
+        \qquad \text{by \eqref{eq:tractiff}} \\
+\end{align*}
+This verifies the sufficient condition.
+
+
+
+The proof is done.
+\end{proof}
+
+\end{document}
