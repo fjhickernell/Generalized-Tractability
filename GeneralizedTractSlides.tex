@@ -94,17 +94,17 @@
    \begin{gather*}
    \text{\alert{integration \only<1-3>{problem}}\quad} \only<1-3>{\SOL}\only<4->{\SOL_{\alert{d}}}(f) := \only<1-3>{\int_{0}^1}\only<4->{\int_{\alert{[0,1]^d}}} f(x) \, \dif x = \,?,  \quad f \in \only<1-3>{\{f : \norm[2]{f''} \le R \}}\only<4->{\{f : \norm[2]{\partial^{\valpha}f} \le R \; \forall \norm[\infty]{\valpha} \le 2 \}} =: \only<1-3>{\cb}\only<4->{\cb_{\alert{d}}}\\
    \text{\alert{\only<4->{tensor product }trapezoidal rule}\quad} \only<1-3>{\APP}\only<4->{\APP_{\alert{d}}}(f,n) \only<1-3>{:= \frac 1n \biggl( \frac12 f(0) + f(1/n) + \dots + f(1-1/n) + \frac 12 f(1) \biggr)} \\
-   \text{\alert{error}\quad}\ERR\only<4->{\alert{_d}}(f,n) = \abs{\only<1-3>{\SOL}\only<4->{\SOL_{\alert{d}}}(f) - \only<1-3>{\APP}\only<4->{\APP_{\alert{d}}}(f,n)} \only<1-3>{\le \frac{R}{8n^2}}\only<4->{ = \Theta(n^{-2/\alert{d}})} \\
-   \uncover<2->{\text{\alert{algorithm}\quad} \only<1-3>{\ALG}\only<4->{\ALG_{\alert{d}}}(f,\varepsilon) = \only<1-3>{\APP}\only<4->{\APP_{\alert{d}}}(f,n_\varepsilon), \qquad n_\varepsilon\only<1-3>{ = \sqrt{\frac{R}{8\varepsilon}}} \quad \text{ensures that}\\
+   \text{\alert{error}\quad}\only<1-3>{\ERR}\only<4->{\ERR_{\alert{d}}}(f,n) = \abs{\only<1-3>{\SOL}\only<4->{\SOL_{\alert{d}}}(f) - \only<1-3>{\APP}\only<4->{\APP_{\alert{d}}}(f,n)} \only<1-3>{\le \frac{R}{8n^2}}\only<4->{ = \Theta(n^{-2/\alert{d}})} \\
+   \uncover<2->{\text{\alert{algorithm}\quad} \only<1-3>{\ALG}\only<4->{\ALG_{\alert{d}}}(f,\varepsilon) = \only<1-3>{\APP}\only<4->{\APP_{\alert{d}}}(f,\only<1-3>{n_\varepsilon}\only<4>{n_{\varepsilon,d}}), \qquad \only<1-3>{n_\varepsilon}\only<4->{n_{\varepsilon,d}}\only<1-3>{ = \sqrt{\frac{R}{8\varepsilon}}} \quad \text{ensures that}\\
    \text{\alert{error criterion}\quad} \abs{\only<1-3>{\SOL}\only<4->{\SOL_{\alert{d}}}(f) - \only<1-3>{\ALG}\only<4->{\ALG_{\alert{d}}}(f,\varepsilon)} \le \varepsilon \quad \forall f \in \cb\only<4->{\alert{_d}} \\
-   \text{\alert{information cost} \quad}\COST\only<4->{\alert{_d}}(\only<1-3>{\SOL}\only<4->{\SOL_{\alert{d}}},
+   \text{\alert{information cost} \quad}\only<1-3>{\COST}\only<4->{\COST_{\alert{d}}}(\only<1-3>{\SOL}\only<4->{\SOL_{\alert{d}}},
    \only<1-3>{\cb}\only<4->{\cb_{\alert{d}}},
-   \only<1-3>{\ALG}\only<4->{\ALG_{\alert{d}}},\varepsilon) = n_\varepsilon = \Theta (\varepsilon^{-\only<1-3>{1}\only<4->{\alert{d}}/2}) \text{ as }\varepsilon \to 0}
+   \only<1-3>{\ALG}\only<4->{\ALG_{\alert{d}}},\varepsilon) = \only<1-3>{n_\varepsilon}\only<4->{n_{\varepsilon,d}} = \Theta (\varepsilon^{-\only<1-3>{1}\only<4->{\alert{d}}/2}) \text{ as }\varepsilon \to 0}
    \end{gather*}
    
    \vspace{-7ex}
    \uncover<3->{\begin{multline*}
-          \text{\alert{computational complexity} \quad}\COMP(\only<1-3>{\SOL}\only<4->{\SOL_{\alert{d}}},
+          \text{\alert{computational complexity} \quad}\only<1-3>{\COMP}\only<4->{\COMP_{\alert{d}}}(\only<1-3>{\SOL}\only<4->{\SOL_{\alert{d}}},
           \only<1-3>{\cb}\only<4->{\cb_{\alert{d}}}
           ,\varepsilon) \\
           = \text{information cost of \alert{best} possible algorithm} = \Theta (\varepsilon^{-1/2}) \text{ as }\varepsilon \to 0
@@ -136,8 +136,8 @@
    \end{gather*}
    
    \vspace{-3ex}
-   The question is $\COMP(\SOL_d,\cb_d,\varepsilon) = \Omega(\varepsilon^{-p} d^q)$? $\Omega(\varepsilon^{-p})$? \\
-   \qquad \qquad $\Omega\bigl(\log(1 + \varepsilon^{-p} ) d^q \bigr)$?
+   The question is $\COMP_d(\SOL_d,\cb_d,\varepsilon) = \Theta(\varepsilon^{-p} d^q)$? $\Theta(\varepsilon^{-p})$? \\
+   \qquad \qquad $\Theta\bigl(\log(1 + \varepsilon^{-p} ) d^q \bigr)$?
    \hfill \hfill as $\varepsilon \to 0$, $d \to \infty$
    
 
