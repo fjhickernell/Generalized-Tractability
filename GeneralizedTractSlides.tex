@@ -178,9 +178,63 @@
 \end{equation*}
 \end{theorem}
 
-A sketch of one side of the prrof is in the notes.
-\end{frame}
-\end{document}
+A sketch of one side of the proof is in the notes.
 
+\end{frame}
+
+\begin{frame}{Start of Proof}
+\begin{proof}
+\vspace{-3ex}
+Fix $p' > p$ and $q' > q$.  Because $\phi$ is increasing in its arguments, it follows that
+
+\vspace{-6ex}
+\begin{align*}
+    \comp(\varepsilon, d) &= \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon^2\} \\
+    &= \min \biggl\{n \in \natzero : \frac{1}{\phi(\lambda_{n+1, d}^{-1/2},p')} \le \frac{1}{\phi(\varepsilon^{-1},p')} \biggr\}.
+\end{align*}
+
+\vspace{-4ex}
+Since the $\lambda_{i,d}$ then the $\phi(\lambda_{i, d}^{-1/2},p')$ are also non-increasing.  For all $n \in \naturals$,
+
+\vspace{-6ex}
+\begin{align*}
+    \MoveEqLeft{\lambda_{n+1,d} \le \cdots \le \lambda_{1,d}} \\
+    & \implies \frac{1}{\phi(\lambda_{n+1, d}^{-1/2},p')}  \le \cdots \le \frac{1}{\phi(\lambda_{1, d}^{-1/2},p')} \\
+    & \implies \frac{1}{\phi(\lambda_{n+1, d}^{-1/2},p')} 
+    \le \frac 1n \sum_{i=1}^n  \frac{1}{\phi(\lambda_{i, d}^{-1/2},p')}
+\end{align*}
+\end{proof}
+\end{frame}
+
+\begin{frame}{Continuation of Start of Proof}
+\begin{proof}
+\vspace{-3ex}
+Thus, we can conclude that 
+\begin{align*}
+    n \ge \phi(\varepsilon^{-1},q') \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},p')}
+    & \implies 
+  \frac 1n \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},p')} \le  \frac{1}{\phi(\varepsilon^{-1},p')} \\
+   & \implies   \frac{1}{\phi(\lambda_{n+1, d}^{-1/2},p')} \le \frac{1}{\phi(\varepsilon^{-1},p')}.
+\end{align*}
+\end{proof}
+\end{frame}
+
+\begin{frame}{Continuation of Start of Proof}
+\begin{proof}
+\vspace{-3ex}
+This implies an upper bound on the complexity of
+
+\vspace{-6ex}
+\begin{align*}
+       \comp(\varepsilon,d)
+       &\le \phi(\varepsilon^{-1},q') \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},p')} \\
+       & = \phi(\varepsilon^{-1},p') \left [ \sum_{i=1}^{C(p',q')-1} \frac{1}{\phi(\lambda_{i, d}^{-1/2},p')}  + \sum_{i=C(p',q')}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},p')} \right ] \\
+       & \le \underbrace{\phi(\varepsilon^{-1},p') \frac{C(p',q')-1}{\phi(\lambda_{\max}^{-1/2},p')}}_{C'(p',q')}
+       +  \phi(\varepsilon^{-1},p') \psi(d,q') \le \Theta\bigl(\phi(\varepsilon^{-1},p) \psi(d,q)  \bigr)
+\end{align*}
+This verifies the sufficient condition.
+\end{proof}
+
+\end{frame}
 \end{document}
 
