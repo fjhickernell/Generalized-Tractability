@@ -88,7 +88,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{\only<1-3>{Cost of Algorithm, Complexity of the Problem}\only<4->{$d$-Dimensional Problems}}
+\begin{frame}{\only<1-3>{Cost of the Algorithm, Complexity of the Problem}\only<4->{$d$-Dimensional Problems}}
 \vspace{-6ex}
 \only<4->{\vspace{-6ex}}
    \begin{gather*}
@@ -101,15 +101,18 @@
    \only<1-3>{\cb}\only<4->{\cb_{\alert{d}}},
    \only<1-3>{\ALG}\only<4->{\ALG_{\alert{d}}},\varepsilon) = \only<1-3>{n_\varepsilon}\only<4->{n_{\varepsilon,d}} = \Theta (\varepsilon^{-\only<1-3>{1}\only<4->{\alert{d}}/2}) \text{ as }\varepsilon \to 0}
    \end{gather*}
+   \only<1-3>{\vspace{-4ex}}\only<4->{\vspace{-6ex}
    
-   \vspace{-7ex}
+   \hfill \hfill The \alert{curse} of dimensionality
+   \vspace{-2ex}}
    \uncover<3->{\begin{multline*}
           \text{\alert{computational complexity} \quad}\only<1-3>{\COMP}\only<4->{\COMP_{\alert{d}}}(\only<1-3>{\SOL}\only<4->{\SOL_{\alert{d}}},
           \only<1-3>{\cb}\only<4->{\cb_{\alert{d}}}
           ,\varepsilon) \\
-          = \text{information cost of \alert{best} possible algorithm} = \Theta (\varepsilon^{-1/2}) \text{ as }\varepsilon \to 0
+          = \text{information cost of \alert{best} possible algorithm} = \Theta (\only<4->{C_{\alert{d}}
+          } \varepsilon^{-1/2}) \text{ as }\varepsilon \to 0
    \end{multline*}}
-   \only<5>{What about as \alert{$d \to \infty$?}}
+   \only<5>{What about as \alert{$d \to \infty$?}, the question of \alert{tractability}}
    
 \vspace{-7ex}
    \only<3>{\begin{equation*}
@@ -123,38 +126,61 @@
 
 \section{Harder and Easier}
 \begin{frame}{Linear Problem with Linear Information}
-    \vspace{-6ex}
+    \vspace{-7ex}
    \begin{gather*}
    \text{\alert{problem}}\quad \SOL_d : \cf_d \to \cg_d,  \qquad \cb_d : = \{f : \norm[\cf_d]{f} \le 1 \} \\
    \SOL_d^*\SOL_d : \cf_d \to \cf_d \text{ has eigenvalues and orthonormal eigenvectors } \\
 \lambda_{\max} \ge \lambda_{1,d} \ge \lambda_{2,d} \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, \\
    \text{\alert{approximation}\quad} \APP_d(f,n) = \sum_{i=1}^n \SOL(u_{i,d}) \ip[\cf_d]{f}{u_{i,d}}, \\
    \text{\alert{error}\quad}\ERR_d(f,n) = \norm[\cg]{\SOL_d(f) - \APP_d(f)} \le \sqrt{\lambda_{n+1, d}} \\
-   \text{\alert{algorithm}\quad} \ALG_d(f,\varepsilon) = \APP_d(f,n_\varepsilon), \qquad n_\varepsilon = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon^2\} \quad \text{ensures}\\
+   \text{\alert{algorithm}\quad} \ALG_d(f,\varepsilon) = \APP_d(f,n_\varepsilon), \qquad n_{\varepsilon,d} = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon^2\} \quad \text{ensures}\\
    \text{\alert{error criterion}\quad} \norm[\cg]{\SOL_d(f) - \ALG_d(f,\varepsilon)} \le \varepsilon \quad \forall f \in \cb_d \\
-   \text{\alert{information cost} \quad} \COST_d(\SOL_d,\cb_d,\ALG_d,\varepsilon) = n_\varepsilon = \COMP(\SOL_d,\cb_d,\varepsilon)
+   \text{\alert{information cost} \quad} \COST_d(\SOL_d,\cb_d,\ALG_d,\varepsilon) = n_{\varepsilon,d} = \COMP(\SOL_d,\cb_d,\varepsilon)
    \end{gather*}
    
    \vspace{-3ex}
-   The question is $\COMP_d(\SOL_d,\cb_d,\varepsilon) = \Theta(\varepsilon^{-p} d^q)$? $\Theta(\varepsilon^{-p})$? \\
-   \qquad \qquad $\Theta\bigl(\log(1 + \varepsilon^{-p} ) d^q \bigr)$?
+   The question is $\COMP_d(\SOL_d,\cb_d,\varepsilon) = \Theta(\varepsilon^{-p} d^q)$ (tractable)? $\Theta(\varepsilon^{-p})$ (strongly tractable)? $\Theta\bigl(\log(1 + \varepsilon^{-p} ) d^q \bigr)$ (exponentially  tractable)?
    \hfill \hfill as $\varepsilon \to 0$, $d \to \infty$
    
 
 \end{frame}
 
 
+\section{A General Approach to Tractability}
+\begin{frame}{Moving Towards a Theorem}
+    \vspace{-6ex}
+    \[
+    \text{\alert{computational complexity}\quad} \COMP(\SOL_d,\cb_d,\varepsilon) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon^2\} 
+    \]
+    
+    \vspace{-3ex}
+   The question is $\COMP_d(\SOL_d,\cb_d,\varepsilon) = \Theta(\varepsilon^{-p} d^q)$ (tractable)? $\Theta(\varepsilon^{-p})$ (strongly tractable)? $\Theta\bigl(\log(1 + \varepsilon^{-p} ) d^q \bigr)$ (exponentially  tractable)?
+   \hfill \hfill as $\varepsilon \to 0$, $d \to \infty$
+   
+   Arguments seem to be similar for these cases and give an equivalent condition on the sums of functions of the $\lambda_{i,d}$
+ 
+   Let let $\phi : (0,\infty) \times [0,+\infty) \to (0,\infty)$ and $\psi : \naturals  \times [0,+\infty) \to (0,\infty)$ be positive functions that are increasing in both arguments, e.g., 
+\[
+(x,p) \mapsto x^{p}, \qquad (x,q) \mapsto \log(1+ x^q)
+\]
+
+\vspace{-3ex}
+\alert{Definition.} A problem is $\phi(\cdot,p)$-$\psi(\cdot, q)$-tractable iff $\COMP_d(\SOL_d,\cb_d,\varepsilon) = \Theta\bigl(\phi(\varepsilon^{-1},p) \psi(d,q)  \bigr)$
+
+
+
+\end{frame}
+
+\begin{frame}{Possible Theorem}
+\begin{theorem} A problem is $\phi(\cdot,p)$-$\psi(\cdot, q)$-tractable iff(?) there exists a  $C : (0,\infty)^2 \to (0,\infty)$
+\begin{equation*}
+    \sup_{d \in \naturals} \frac{1}{\psi(d,q')} \sum_{i = C(p',q')}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},p')} \le 1 \qquad \forall p' > p, \ q' > q
+\end{equation*}
+\end{theorem}
+
+A sketch of one side of the prrof is in the notes.
+\end{frame}
 \end{document}
 
-Let $\cf_d$ and $\cg_d$ Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a linear solution operator with adjoint $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors  
-\[
-\lambda_{\max} \ge \lambda_{1,d} \ge \lambda_{2,d} \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, 
-\]
-The goal is to find an approximate solution, $\APP_d:\cb_d \times (0,\infty) \to \cg_d$ satisfying $\norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon$, where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals.  In this case the optimal solution is 
-\[
-\APP_d(f,\varepsilon) = \sum_{i=1}^n \SOL(u_i) \ip[\cf_d]{f}{u_i},
-\]
-and the complexity of our linear problem is
-\[
-\comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon^2\}.
-\]
+\end{document}
+
