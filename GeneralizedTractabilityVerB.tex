@@ -27,7 +27,7 @@ Let $\cf_d$ and $\cg_d$ Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a line
 \[
 \lambda_{\max}^2 \ge \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, 
 \]
-This means that the $\lambda_{i,d}$ are the singular values of the $\SOL_d$. The goal is to find an approximate solution, $\APP_d:\cb_d \times (0,\infty) \to \cg_d$ satisfying 
+This means that the non-negative $\lambda_{i,d}$ are the singular values of the $\SOL_d$. The goal is to find an approximate solution, $\APP_d:\cb_d \times (0,\infty) \to \cg_d$ satisfying 
 \[
 \norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon,
 \]
@@ -37,7 +37,7 @@ where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed
 \]
 and the complexity of our linear problem is
 \[
-\comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon^2\}.
+\comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\}.
 \]
 
 Certain kinds of common notions of tractability are 
@@ -47,49 +47,48 @@ Certain kinds of common notions of tractability are
     \toprule
     \text{strong algebraic tractability} & \Theta(\varepsilon^{-p})\\
     \text{ algebraic tractability} & \Theta(\varepsilon^{-p}d^{q})\\
-    \text{strong exponential tractability} & \log(1 + \varepsilon^{-p})\\
-    \text{ exponential tractability} &(p+\delta) \log(1 + x) &  x^{q+\delta} \\
-    & 
+    \text{strong exponential tractability} &  \Theta\bigl([\log(1 + \varepsilon^{-1})]^p\bigr)\\
+    \text{ exponential tractability} & \Theta\bigl([\log(1 + \varepsilon^{-1})]^p  d^{q}\bigr)
     \end{array}
 \end{equation*}
-
-Let let $\phi : (0,\infty) \times [0,\Delta] \to (0,\infty)$ and $\{\psi : \naturals  \times [0,\Delta] \to (0,\infty)\}$ be positive functions that are increasing in both arguments, e.g., 
+Let let $\phi : (0,\infty) \times (0,\infty] \to (0,\infty)$ and $\psi : \naturals  \times (0,\Delta) \to (0,\infty)$ be positive-valued functions that are strictly increasing in both arguments, e.g., 
 \[
-(x,\delta) \mapsto x^{p + \delta} \ (p >0), \qquad (x,\delta) \mapsto (1 + \delta) \log(1+x)
+(x,p) \mapsto x^{p}, \qquad (x,p) \mapsto [\log(1+x)]^p.
 \]
-which satisfy
+
+All the examples of tractability above are of the form $\comp(\varepsilon, d) = \Theta \bigl( \phi(\varepsilon^{-1},p) \psi(d,q)\bigr)$.  Note, we define the $\Theta$ notation as follows
 \begin{equation*}
-    \lim_{\delta \downarrow 0} \phi(x,\delta) = \phi(x,0) =: \phi(x), \qquad 
-    \lim_{\delta \downarrow 0} \psi(x,\delta) = \psi(x,0) =: \psi(x).
+     g(\varepsilon,d) = \Theta\bigl(\phi(\varepsilon^{-1},p) \bigr) \text{ means } 
+    \lim_{\varepsilon \to 0} \frac{g(\varepsilon,d)}{\phi(\varepsilon^{-1},p')}
+           \begin{cases} < \infty, & p'> p,  \\ 
+          =\infty, & p' < p.\end{cases}
 \end{equation*}
+\begin{multline*}
+     g(\varepsilon,d) = \Theta\bigl(\phi(\varepsilon^{-1},p) \psi(d,q) \bigr) \text{ means } \\
+    \lim_{\substack{\varepsilon \to 0 \\ d \to \infty}} \frac{g(\varepsilon,d)}{\phi(\varepsilon^{-1},p') \psi(d,q')}
+          \begin{cases} < \infty, & p'> p, \  q' > q,  \\ 
+          =\infty, & p' < p, \ q' < q.\end{cases}
+\end{multline*}
 
 
 \begin{definition}
-If for all $\delta_1, \delta_2 \in (0,\Delta]$ there exist the functions $\phi$ and $\psi$ satisfying the conditions listed above, and there exists $C_1 : (0,\Delta]^2 \to (0,\infty)$  with 
-\begin{multline*}
-    \comp(\varepsilon, d) \le \phi(\varepsilon^{-1},\delta_1)\psi(d,\delta_2) + C_1(\delta_1, \delta_2) \\
-    \forall \delta_1, \delta_2 \in (0,\Delta], \quad  \varepsilon \in (0, 1], \quad \forall d \in \naturals
-\end{multline*}
-then we call a problem $\phi$-$\psi$-tractable.
+If there exist the functions $\phi$ and $\psi$ satisfying the conditions listed above and there exist positive numbers $p$ and $q$ with
+\[
+\comp(\varepsilon, d)  = \Theta\bigl(\phi(\varepsilon^{-1},p) \psi(d,q) \bigr),
+\]
+then we call a problem $\phi$-$\psi$-tractable with exponents $p$ and $q$.  If there exists a function there $\phi$ satisfying the conditions above and a positive numbers $p$
+\[
+\comp(\varepsilon, d)  = \Theta\bigl(\phi(\varepsilon^{-1},p) \bigr)
+\]
+then we call a problem strongly $\phi$-tractable with expontent $p$
 \end{definition}
 
-Some specific examples include 
-\begin{equation*}
-    \begin{array}{r@{\qquad}c@{\qquad}c}
-    & \phi(x,\delta) & \psi(x,\delta) \\
-    \toprule
-    \text{strong algebraic tractability} & C_2(x,\delta) x^{p+\delta} & 1\\
-    \text{ algebraic tractability} & C_2(x,\delta) x^{p+\delta} & x^{q+\delta}\\
-    \text{strong exponential tractability} &(p+\delta) \log(1 + x) & 1 \\
-    \text{ exponential tractability} &(p+\delta) \log(1 + x) &  x^{q+\delta} \\
-    & 
-    \end{array}
-\end{equation*}
+
 
 \section{Main Result}
-\begin{theorem} A problem is $\phi$-$\psi$-tractable iff there exists a  $C_3 : (0,\Delta]^2 \to (0,\infty)$
+\begin{theorem} A problem is $\phi$-$\psi$-tractable iff there exists a  $C : (0,\infty)^2 \to \naturals$
 \begin{equation} \label{eq:tractiff}
-    \sup_{d \in \naturals} \frac{1}{\psi(d,\delta_2)} \sum_{i = C_3(\delta_1,\delta_2)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},\delta_1)} \le 1 \qquad \forall \delta_1, \delta_2 \in (0,\Delta]
+    \sup_{d \in \naturals} \frac{1}{\psi(d,q)} \sum_{i = C(p,q)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1/2},p)} \le 1 \qquad \forall p,q \in (0,\infty)
 \end{equation}
 \end{theorem}
 \begin{proof}
