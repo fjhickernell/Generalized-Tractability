@@ -1,0 +1,775 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{latexsym,amsfonts,amsmath,graphics,mathtools,amssymb,amsthm,booktabs}
+\usepackage{epsfig}
+%\usepackage[notref,notcite]{showkeys}
+%\usepackage[active]{srcltx}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+
+\usepackage{algorithmic}
+
+%\input{common-macros}
+%\input{common-macros2}
+
+\input{FJHDef.tex}
+
+
+
+\setlength{\textheight}{24cm} \setlength{\textwidth}{16cm}
+\setlength{\hoffset}{-1.3cm} \setlength{\voffset}{-1.8cm}
+
+\newcommand{\supp}{\operatorname{supp}}
+
+\newcommand{\tpmod}[1]{{\;(\operatorname{mod}\;#1)}}
+
+\DeclareMathOperator*{\esssup}{ess\,sup}
+
+%\DeclareMathOperator{\comp}{comp}
+\DeclareMathOperator{\SOL}{SOL}
+\DeclareMathOperator{\APP}{APP}
+
+\allowdisplaybreaks
+
+\newcommand{\fred}[1]{\begingroup\color{blue}Fred: #1\endgroup}
+\newcommand{\peter}[1]{\begingroup\color{purple}Peter: #1\endgroup}
+\newcommand{\kachi}[1]{\begingroup\color{ForestGreen}#1\endgroup}
+
+
+\begin{document}
+
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+
+\title{Generalized Tractability}
+\author{\fred{Fred J. Hickernell}, \peter{Peter Kritzer}, \kachi{Onyekachi Osisiogu}, and \\ Henryk Wo\'zniakwoski}
+\date{\today}
+
+\maketitle
+
+\section{Introduction}
+
+TODO: We need to check the relation of our work to that of Michael Gnewuch and Henryk. We do not need tensor product structure: do they need that assumption? The summation conditions on the eigenvalues might be a significant difference between our results and theirs.
+
+\medskip
+
+TODO: Check in how far our conditions coincide with existing conditions for less general tractability notions (polynomial tractability, etc.).
+
+\medskip
+
+Let $\cf_d$ and $\cg_d$ Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a linear solution operator with adjoint $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors  
+\[
+\lambda_{\max}^2 \ge \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, 
+\]
+This means that the non-negative $\lambda_{i,d}$ are the singular values of the $\SOL_d$. The goal is to find an approximate solution, $\APP_d:\cb_d \times (0,\infty) \to \cg_d$ satisfying 
+\[
+\norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon,
+\]
+where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals.  In this case, the optimal solution is 
+\[
+\APP_d(f,\varepsilon) = \sum_{i=1}^n \SOL(u_i) \ip[\cf_d]{f}{u_i},
+\]
+and the complexity of our linear problem is
+\[
+\comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\}.
+\]
+
+Certain kinds of common notions of tractability are 
+\begin{equation*}
+    \begin{array}{r@{\qquad}c@{\qquad}c}
+    & \comp(\varepsilon, d)\\
+    \toprule
+    \text{strong polynomial algebraic  tractability} & \Theta(\varepsilon^{-p})\\
+    \text{polynomial algebraic tractability} & \Theta(\varepsilon^{-p}d^{q})\\
+    \text{strong polynomial exponential tractability} &  \Theta\bigl([\log(1 + \varepsilon^{-1})]^p\bigr)\\
+    \text{polynomial exponential tractability} & \Theta\bigl([\log(1 + \varepsilon^{-1})]^p  d^{q}\bigr)
+    \end{array}
+\end{equation*}
+Let $\phi : (0,\infty) \times (0,\infty) \to (0,\infty)$ and $\psi : \naturals  \times (0,\infty) \to (0,\infty)$ be positive-valued functions that are strictly increasing in both arguments, e.g., 
+\[
+(x,p) \mapsto x^{p}, \qquad (x,p) \mapsto [\log(1+x)]^p.
+\]
+
+All the examples of tractability above are of the form $\comp(\varepsilon, d) = \Theta \bigl( \phi(\varepsilon^{-1},p) \psi(d,q)\bigr)$.  
+Note, we define the $\Theta$ notation as follows
+\begin{equation*}
+     g(\varepsilon,d) = \Theta\bigl(\phi(\varepsilon^{-1},p) \bigr) \text{ means } 
+    \lim_{\varepsilon \to 0} \frac{g(\varepsilon,d)}{\phi(\varepsilon^{-1},p')}
+           \begin{cases} < \infty, & p'> p,  \\ 
+          =\infty, & p' < p.\end{cases}
+\end{equation*}
+\begin{multline*}
+     g(\varepsilon,d) = \Theta\bigl(\phi(\varepsilon^{-1},p) \psi(d,q) \bigr) \text{ means } \\
+    \lim_{\substack{\varepsilon \to 0 \\ d \to \infty}} \frac{g(\varepsilon,d)}{\phi(\varepsilon^{-1},p') \psi(d,q')}
+          \begin{cases} < \infty, & p'> p, \  q' > q,  \\ 
+          =\infty, & p' < p, \ q' < q.\end{cases}
+\end{multline*}
+
+
+\begin{definition}
+If there exist the functions $\phi$ and $\psi$ satisfying the conditions listed above and there exist positive numbers $p$ and $q$ with
+\[
+\comp(\varepsilon, d)  = \Theta\bigl(\phi(\varepsilon^{-1},p) \psi(d,q) \bigr),
+\]
+then we call a problem $\phi$-$\psi$-tractable with exponents $p$ and $q$.  
+If there exists a function $\phi$ satisfying the conditions above and a positive number $p$ such that 
+\begin{equation}\label{eq:def_strong_tract}
+\comp(\varepsilon, d)  = \Theta\bigl(\phi(\varepsilon^{-1},p) \bigr)
+\end{equation}
+then we call a problem strongly $\phi$-tractable with exponent $p$. The infimum $p^*$ of all exponents $p>0$ such that \eqref{eq:def_strong_tract} holds, 
+is called the exponent of strong $\phi$-tractability. 
+\end{definition}
+
+
+\section{Main Results}
+Suppose that, for any real $\tau_1, \tau_2>0$ and any $p,q>0$, it holds that
+\begin{align*}
+ (\phi(\varepsilon^{-1},p))^{\tau_1} &\le K_{p,\tau_1} \phi (\varepsilon^{-1},\tau_1 p)\\
+  (\psi(d,q))^{\tau_2} &\le L_{q,\tau_2} \psi (d,\tau_2 q)\\
+\end{align*}
+for all $\varepsilon\in (0,1)$, where $K_{p,\tau_1}>0$ is a constant that may depend on $p$ and $\tau_1$, but is independent of $\varepsilon$, 
+and where $L_{q,\tau_2}>0$ is a constant that may depend on $q$ and $\tau_2$, but is independent of $d$.
+
+We first show the following result. 
+\begin{theorem}\label{thm_main_strong_tract} 
+A problem is strongly $\phi$-tractable iff there exists $p>0$ and an integer $C(p)\ge 0$ such that
+\begin{equation} \label{eq:strong_tractiff}
+     \sup_{d \in \naturals} \sum_{i = C(p)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} < \infty.
+\end{equation}
+If \eqref{eq:strong_tractiff} holds, then the exponent of strong $\phi$-tractability equals
+\[
+ p^* := \inf\{p>0\ \mbox{such that \eqref{eq:tractiff} holds}\}.
+\]
+
+\end{theorem}
+
+\begin{proof}
+We first show the sufficiency of \eqref{eq:strong_tractiff}. Suppose that \eqref{eq:strong_tractiff} holds for some $p>0$.  
+Because $\phi$ is increasing in its arguments, it follows that the complexity may be equivalently expressed as 
+\begin{align*}
+    \comp(\varepsilon, d) &= \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
+    &= \min \biggl\{n \in \natzero : \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} \le \frac{1}{\phi(\varepsilon^{-1},p)} \biggr\}.
+\end{align*}
+Since the $\lambda_{i,d}$ are non-increasing it follows that the $\phi(\lambda_{i, d}^{-1},p)$ are non-decreasing. 
+In particular, for all $n \in \naturals$,
+\begin{align*}
+    \MoveEqLeft{\lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}} \\
+    & \implies \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} \le \frac{1}{\phi(\lambda_{n, d}^{-1},p)} \le \cdots \le \frac{1}{\phi(\lambda_{1, d}^{-1},p)} \\
+    & \implies \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} 
+    \le \frac 1n \sum_{i=1}^n  \frac{1}{\phi(\lambda_{i, d}^{-1},p)} 
+    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{\phi(\lambda_{i, d}^{-1},p)}.
+\end{align*}
+Thus, we can conclude that 
+\begin{align*}
+    n \ge \phi(\varepsilon^{-1},p) \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)}
+    & \implies 
+  \frac 1n \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} \le  \frac{1}{\phi(\varepsilon^{-1},p')} \\
+   & \implies   \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} \le \frac{1}{\phi(\varepsilon^{-1},p)}.
+\end{align*}
+This implies an upper bound on the complexity of
+\begin{align*}
+       \MoveEqLeft{\comp(\varepsilon,d)} \\
+       &\le 1 + \phi(\varepsilon^{-1},p) \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} \\
+       & = 1 + \phi(\varepsilon^{-1}, p) \left [ \sum_{i=1}^{C(p)-1} \frac{1}{\phi(\lambda_{i, d}^{-1},p)}  
+       + \underbrace{\sum_{i=C(p)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)}}_{=:S_p <\infty\ \text{by \eqref{eq:tractiff}} }\right] \\
+       & \le 1+ \phi(\varepsilon^{-1},p) \underbrace{\left(\frac{C(p)-1}{\phi(\lambda_{\max}^{-1},p)} + S_p\right)}_{=:C_1(p)}\\
+       & = 1+ \phi(\varepsilon^{-1},p) C_1 (p),
+\end{align*}
+which means that we have strong $\phi$-tractability, and verifies sufficiency of \eqref{eq:strong_tractiff}. 
+
+\bigskip
+
+For the exponent $p^*$ of $\phi$-tractability, we then obviously obtain 
+\[
+ p^* \le \inf\{p>0\ \mbox{such that \eqref{eq:strong_tractiff} holds}\}.
+\]
+
+
+\bigskip
+
+
+Let us now show the necessity of \eqref{eq:strong_tractiff}. Indeed, suppose that we have strong 
+$\phi$-tractability. I.e., 
+\[
+\comp(\varepsilon,d)=\Theta (\phi(\varepsilon^{-1},p))
+\]
+for some $p>0$. This, in turn, means that there is a positive constant $K$ such that
+\begin{equation}\label{eq_strong_tract_p'}
+\comp(\varepsilon,d)\le K \phi(\varepsilon^{-1},p')
+\end{equation}
+for all $p'>p$. 
+
+Hence, for (possibly small) $\delta_p>0$, there exists a constant $K$ such that \eqref{eq_strong_tract_p'} holds for $p'=p+\delta_p$.
+
+We know that
+\[
+\lambda_{\comp(\varepsilon,d)+1,d}\le \varepsilon.
+\]
+Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
+\begin{equation}\label{eq:lambda_K_strong3}
+\lambda_{\lfloor K \phi(\varepsilon^{-1},p')\rfloor +1,d}\le \varepsilon.
+\end{equation}
+Let
+\[
+j=j (\varepsilon):= \lfloor K \phi(\varepsilon^{-1},p')\rfloor +1.
+\]
+If we vary $\varepsilon\in (0,1]$, we see that $j=j_d^*, j_d^*+1, j_d^*+2,\ldots$, where 
+\[
+  j_d^*=\lfloor K \phi(1,p')\rfloor +1
+\]
+Note that
+\[
+j\le K \phi(\varepsilon^{-1},p')+1.
+\]
+Due to our assumptions, we know that 
+$\phi(\cdot, p')$ is increasing in the first argument if 
+we keep $p'$ fixed. Let $\phi_{p'}^{-1} (\cdot)$ be the inverse function of $\phi (\cdot, p')$ with respect to the first argument. 
+Note that also $\phi_{p'}^{-1}$ is strictly increasing. 
+
+Then, 
+\[
+j \le K \phi(\varepsilon^{-1},p')+1
+\]
+is equivalent to
+\[
+\frac{j-1}{K} \le \phi(\varepsilon^{-1},p').
+\]
+By the monotonicity of $\phi_{p'}^{-1}$, the latter inequality holds if and only if
+\[
+  \phi_{p'}^{-1} \left(\frac{j-1}{K} \right)
+  \le \varepsilon^{-1},
+\]
+or, equivalently,
+\[
+ \varepsilon \le \frac{1}{\phi_{p'}^{-1} \left(\frac{j-1}{K} \right)}.
+\]
+By using \eqref{eq:lambda_K_strong3}, we derive
+\[
+ \lambda_{j,d}\le \frac{1}{\phi_{p'}^{-1} \left(\frac{j-1}{K} \right)}
+\]
+for all $j\ge j_d^*$, which is again equivalent to 
+\[
+\lambda_{j,d}^{-1}\ge \phi_{p'}^{-1} \left(\frac{j-1}{K} \right),
+\]
+which holds if and only if
+\[ 
+ \phi (\lambda_{j,d}^{-1}, p') \ge \frac{j-1}{K}.
+\]
+This implies, for any $\tau>1$, that 
+\[ 
+ (\phi (\lambda_{j,d}^{-1}, p'))^\tau \ge \frac{(j-1)^\tau}{K^\tau },
+\]
+which implies, due to our assumption on $\phi$, 
+\[ 
+ K_{p',\tau}\,\phi (\lambda_{j,d}^{-1}, \tau p') \ge \frac{(j-1)^\tau}{K^\tau }.
+\]
+This yields
+\[
+\sum_{j=j_d^*}^\infty \frac{1}{\phi (\lambda_{j,d}^{-1}, \tau p')} \le K_{p',\tau}\, K^\tau \sum_{j=j_d^*}^\infty \frac{1}{(j-1)^\tau}<\infty.
+\]
+
+Note, however, that 
+\[
+ j_d^* = \lfloor K \phi(1,p')\rfloor +1 \le \lfloor K \phi(1,\tau p')\rfloor +1
+\]
+Hence, we can find $C(\tau p')$ such that 
+\[
+ \sum_{j=C(\tau p')}^\infty \frac{1}{\phi (\lambda_{j,d}^{-1}, \tau p')}<\infty.
+\]
+This yields \eqref{eq:strong_tractiff} with $p$ replaced by $\tau p'$, and so we see necessity of $\eqref{eq:strong_tractiff}$. 
+
+\bigskip
+
+Assume that $p^*$ is the $\varepsilon$-exponent of strong $\phi$-tractability. We already know from the first part of the proof that 
+\[
+ p^* \le \inf\{p>0\ \mbox{such that \eqref{eq:strong_tractiff} holds}\}.
+\]
+Suppose that we would have 
+\[
+ p^* < \inf\{p>0\ \mbox{such that \eqref{eq:strong_tractiff} holds}\}.
+\]
+Then, however, we could proceed as in the second part of the proof and show that 
+\[
+ \sum_{j=C(\tau p')}^\infty \frac{1}{\phi (\lambda_{j,d}^{-1}, \tau p')}<\infty.
+\]
+for any $\tau>1$, any $p'>p^*$, and a suitable $C(\tau p')$. By choosing $\tau$ sufficiently close to 1, and $p'$ sufficiently close to $p^*$, we then would 
+obtain 
+\[
+ \tau p' < \inf\{p>0\ \mbox{such that \eqref{eq:strong_tractiff} holds}\},
+\]
+which is a contradiction. So, we must have 
+\[
+ p^* = \inf\{p>0\ \mbox{such that \eqref{eq:strong_tractiff} holds}\}.
+\]
+
+This concludes the proof of the theorem. 
+\end{proof}
+
+Next, we show a theorem characterizing $\phi$-$\psi$-tractability. 
+\begin{theorem}\label{thm_main_tract} 
+A problem is $\phi$-$\psi$-tractable iff there exist $p,q>0$ and an integer $C(p,q) \ge 0$ such that
+\begin{equation} \label{eq:tractiff}
+     \sup_{d \in \naturals} \frac{1}{\psi(d,q)} \sum_{i = C(p,q)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p))} < \infty.
+\end{equation}
+\end{theorem}
+\begin{proof}
+We first show the sufficiency of \eqref{eq:tractiff}. Suppose that \eqref{eq:tractiff} holds for some $p,q>0$. 
+Because $\phi$ is increasing in its arguments, it follows that the complexity may be equivalently expressed as 
+\begin{align*}
+    \comp(\varepsilon, d) &= \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
+    &= \min \biggl\{n \in \natzero : \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} \le \frac{1}{\phi(\varepsilon^{-1},p)} \biggr\}.
+\end{align*}
+
+Since the $\lambda_{i,d}$ are non-increasing it follows that the $\phi(\lambda_{i, d}^{-1},p)$ are non-decreasing, and this holds for any $\tau>1$.  
+In particular, for all $n \in \naturals$,
+\begin{align*}
+    \MoveEqLeft{\lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}} \\
+    & \implies \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} \le \frac{1}{\phi(\lambda_{n, d}^{-1},p))} \le \cdots \le \frac{1}{\phi(\lambda_{1, d}^{-1},p)} \\
+    & \implies \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} 
+    \le \frac 1n \sum_{i=1}^n  \frac{1}{\phi(\lambda_{i, d}^{-1},p)} 
+    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{\phi(\lambda_{i, d}^{-1},p)}.
+\end{align*}
+Thus, we can conclude that 
+\begin{align*}
+    n \ge \phi(\varepsilon^{-1},p) \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)}
+    & \implies 
+  \frac 1n \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} \le  \frac{1}{\phi(\varepsilon^{-1},p)} \\
+   & \implies   \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} \le \frac{1}{\phi(\varepsilon^{-1},p)}.
+\end{align*}
+This implies an upper bound on the complexity of
+\begin{align*}
+       \MoveEqLeft{\comp(\varepsilon,d)} \\
+       &\le 1 + \phi(\varepsilon^{-1},p) \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} \\       
+       & = 1 + \phi(\varepsilon^{-1},p) \left [ \sum_{i=1}^{C(p,q)-1} \frac{1}{\phi(\lambda_{i, d}^{-1},p)}  
+       + \sum_{i=C(p,q)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} \right ] \\
+       & \le 1+ \phi(\varepsilon^{-1},p) \underbrace{\frac{C(p,q)-1}{\phi(\lambda_{\max}^{-1},p)}}_{=:C_1(p,q)}
+       +  \phi(\varepsilon^{-1},p) \psi(d,q)
+        \qquad \text{by \eqref{eq:tractiff}} \\
+        & \le 1+\phi(\varepsilon^{-1},p) \bigl[C_1(p,q) + \psi(d,q) \bigr].
+\end{align*}
+It follows that we have $\phi$-$\psi$-tractability, which shows sufficiency of \eqref{eq:tractiff}. 
+
+
+\bigskip
+
+%---------------------------------------------------------------------
+%---------------------------------------------------------------------
+
+Let us now show necessity. Indeed, suppose that we have 
+$\phi$-$\psi$-tractability with parameters $p$ and $q$. I.e., 
+\[
+\comp(\varepsilon,d)=\Theta (\phi(\varepsilon^{-1},p)\psi(d,q))
+\]
+for some $p,q>0$. This, in turn, means that there is a positive constant $K$ such that
+\begin{equation}\label{eq_tract_p'q'}
+\comp(\varepsilon,d)\le K \phi(\varepsilon^{-1},p')\psi(d,q')
+\end{equation}
+for all $p'>p$ and $q'>q$. 
+
+Hence, for (possibly small) $\delta_p>0$ and $\delta_q>0$, there exists a constant $K$ such that \eqref{eq_tract_p'q'} holds for $p'=p+\delta_p$ 
+and $q'=q+\delta_q$.
+
+We know that
+\[
+\lambda_{\comp(\varepsilon,d)+1,d}\le \varepsilon.
+\]
+Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
+\begin{equation}\label{eq:lambda_K}
+\lambda_{\lfloor K \phi(\varepsilon^{-1},p')\psi(d,q')\rfloor +1,d}\le \varepsilon.
+\end{equation}
+Let
+\[
+j=j (\varepsilon):= \lfloor K \phi(\varepsilon^{-1},p')\psi(d,q')\rfloor +1.
+\]
+If we vary $\varepsilon\in (0,1]$, we see that $j=j_d^*, j_d^*+1, j_d^*+2,\ldots$, where 
+\[
+  j_d^*=\lfloor K \phi(1,p')\psi(d,q')\rfloor +1
+\]
+Note that
+\[
+j\le K \phi(\varepsilon^{-1},p')\psi(d,q') +1.
+\]
+Due to our assumptions, we know that 
+$\phi(\cdot, p')$ is increasing in the first argument if 
+we keep $p'$ fixed. Let $\phi_{p'}^{-1} (\cdot)$ be the inverse function of $\phi (\cdot, p')$ with respect to the first argument. Note that also $\phi_{p'}^{-1}$ is strictly increasing. 
+
+Then, 
+\[
+j \le K \phi(\varepsilon^{-1},p')\psi(d,q') +1
+\]
+is equivalent to
+\[
+\frac{j-1}{K \psi(d,q')} \le \phi(\varepsilon^{-1},p').
+\]
+By the monotonicity of $\phi_{p'}^{-1}$, the latter inequality holds if and only if
+\[
+  \phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right)
+  \le \varepsilon^{-1},
+\]
+or, equivalently,
+\[
+ \varepsilon \le \frac{1}{\phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right)}.
+\]
+By using \eqref{eq:lambda_K}, we derive
+\[
+ \lambda_{j,d}\le \frac{1}{\phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right)}
+\]
+for all $j\ge j_d^*$, which is again equivalent to 
+\[
+\lambda_{j,d}^{-1}\ge \phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right),
+\]
+which holds if and only if
+\[ 
+ \phi (\lambda_{j,d}^{-1}, p') \ge \frac{j-1}{K \psi(d,q')}.
+\]
+This implies, for any $\tau>1$, that 
+\[ 
+ (\phi (\lambda_{j,d}^{-1}, p'))^\tau \ge \frac{(j-1)^\tau}{K^\tau (\psi(d,q'))^\tau},
+\]
+which yields
+\[ 
+ K_{p',\tau}\, \phi (\lambda_{j,d}^{-1}, \tau p') \ge (\phi (\lambda_{j,d}^{-1}, p'))^\tau 
+ \ge \frac{(j-1)^\tau}{K^\tau (\psi(d,q'))^\tau}\ge \frac{(j-1)^\tau}{K^\tau\, L_{q',\tau}\, \psi(d,\tau q')}.
+\]
+This then implies
+\[
+\frac{1}{L_{q',\tau}\, \psi(d,\tau q')} \sum_{j=j_d^*}^\infty \frac{1}{\phi (\lambda_{j,d}^{-1}, \tau p')} 
+\le K_{p',\tau}\, K^\tau \sum_{j=j_d^*}^\infty \frac{1}{(j-1)^\tau}<\infty.
+\]
+Note now that
+\[
+ j_d^* = \lfloor K \phi(1,p')\psi (1,q')\rfloor +1 \le \lfloor K\phi(1,\tau p')\psi (1,\tau q')\rfloor +1.
+\]
+So, there exists $C(\tau p',\tau q')$ such that 
+\[
+ \sum_{j=C(\tau p',\tau q')}^\infty \frac{1}{\phi (\lambda_{j,d}^{-1}, \tau p')}<\infty.
+\]
+This yields \eqref{eq:tractiff} with $p$ replaced by $\tau p'$ and $q$ replaced by $\tau q'$, and so we see the necessity of $\eqref{eq:tractiff}$. 
+
+\end{proof}
+\newpage
+\bigskip
+
+\kachi{
+Let $T$ be a tractability function defined as follows
+\[
+T :(0,\infty) \times \mathbb{N} \times [0,\infty) \times [0,\infty) \rightarrow [1,\infty)
+\] 
+strictly increasing in all variables.
+
+Also,
+\[
+[T(\varepsilon^{-1},d,p,q)]^\tau \le K_{p,q,\tau} T(\varepsilon^{-1},d,\tau p,\tau q)
+\]
+A problem is $T$-tractable with parameters $p$ and $q$ iff
+\begin{equation} \label{comp_def}
+\comp(\varepsilon,d) \le C(p,q) T(\varepsilon^{-1},d,p,q) \qquad \forall \varepsilon \in (0,\infty), \ d \in \mathbb{N}
+\end{equation}
+The  set of optimal parameters, $\mathcal{P}_{\text{opt}}$ is defined as
+\begin{multline}
+    \mathcal{P}_{\text{opt}} : = \{(p^*,q^*) : \eqref{comp_def} \text{ holds }\forall (p,q) \in [p^*,\infty) \times [q^*,\infty) \setminus (p^*,q^*) \\ 
+    \eqref{comp_def} \text{ fails } \forall (p,q) \in [0,p^*] \times [0,q^*] \setminus (p^*,q^*) \}
+\end{multline}
+
+
+
+
+
+
+\begin{theorem}\label{thm_main_tract2} 
+A problem is $T$-tractable with $q=0$ iff there exists $p>0$ and an integer $C(p) \ge 0$ such that
+\begin{equation} \label{eq:strong_tractiff3}
+     \sup_{d \in \naturals} \sum_{i = C(p)}^\infty \frac{1}{T(\lambda_{i,d}^{-1},1,p,0)} < \infty.
+\end{equation}
+%$ \frac{1}{\psi(d,q)}\frac{1}{\phi(\lambda_{i, d}^{-1},p))} $
+\end{theorem}
+
+If \eqref{eq:strong_tractiff3} holds, then the optimal $p$
+is defined as
+\[
+ p^* := \inf\{p>0\ \mbox{such that \eqref{comp_def} holds}\}.
+\]
+\bigskip
+\begin{proof}
+\textbf{Sufficient condition:}\\
+Given that $T$ is increasing in its arguments, we have the following equivalent expression 
+    \begin{align*}
+    \comp(\varepsilon, d) &= \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
+    &= \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},1,p,0)}\le \frac{1}{T(\varepsilon^{-1},1,p,0) }\biggr\}.
+\end{align*}
+Also since the $\lambda_{i,d}$ are non-increasing, it follows that the $T(\lambda_{i,d}^{-1},1,p,0)$ are non-decreasing. In particular, for all $n\in \mathbb{N}$, we have
+
+\begin{align*}
+    \MoveEqLeft{\lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}} \\
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},1,p,0)} \le \frac{1}{T(\lambda_{n, d}^{-1},1,p,0)} \le \cdots \le \frac{1}{T(\lambda_{1, d}^{-1},1,p,0)} \\
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},1,p,0) }
+    \le \frac 1n \sum_{i=1}^n  \frac{1}{T(\lambda_{i, d}^{-1},1,p,0) }
+    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},1,p,0)}.
+\end{align*}
+Thus, we can conclude that 
+\begin{align*}
+    n \ge T(\varepsilon^{-1},1,p,0) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,p,0)}
+    & \implies 
+\frac 1n \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,p,0) }\le  T(\varepsilon^{-1},1,p,0) \\
+   & \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},1,p,0)} \le \frac{1}{T(\varepsilon^{-1},1,p,0)}.
+\end{align*}
+
+This implies an upper bound on the complexity of
+\begin{align*}
+       \MoveEqLeft{\comp(\varepsilon,d)} \\
+       &\le 1 + T(\varepsilon^{-1},1,p,0) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,p,0)} \\
+       & = 1 + T(\varepsilon^{-1},1, p,0) \left [ \sum_{i=1}^{C(p)-1} \frac{1}{T(\lambda_{i, d}^{-1},1,p,0)}
+       + \underbrace{\sum_{i=C(p)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,p,0)}}_{=:S_p^* <\infty\ \text{by \eqref{eq:tractiff}} }\right] \\
+       & \le 1+ T(\varepsilon^{-1},1,p,0) \underbrace{\left[\frac{(C(p)-1)}{T(\lambda_{\max}^{-1},1,p,0)} + S_p^*\right]}_{=:C_2(p)}\\
+       & = 1+ T(\varepsilon^{-1},1,p,0) C_2 (p)
+\end{align*}
+which means that we have strong $T$-tractability, and verifies sufficiency of \eqref{eq:strong_tractiff3}. 
+
+\bigskip
+
+\bigskip
+\noindent \textbf{Necessity condition:} \\
+Suppose that we have strong 
+$T$-tractability. That is, 
+\[
+\comp(\varepsilon,d)=\Theta (T(\varepsilon^{-1},1,p,0))
+\]
+for some $p>0$. This, in turn, means that there is a positive constant $K$ such that
+\begin{equation}\label{eq_strong_tract_p'3}
+\comp(\varepsilon,d)\le K T(\varepsilon^{-1},1,p',0)
+\end{equation}
+for all $p'>p$. 
+
+\noindent This means for (possibly small) $\delta_p>0$, there exists a constant $K$ such that \eqref{eq_strong_tract_p'3} holds for $p'=p+\delta_p$.
+
+Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
+\begin{equation}\label{eq:lambda_K_strong3}
+\lambda_{\lfloor K T(\varepsilon^{-1},1,p',0)\rfloor +1,d}\le \varepsilon.
+\end{equation}
+Let
+\[
+j=j (\varepsilon):= \lfloor K T(\varepsilon^{-1},1,p',0)\rfloor +1.
+\]
+
+Suppose we vary $\varepsilon\in (0,1]$, we have that $j=j_d^*, j_d^*+1, j_d^*+2,\ldots$, where 
+\[
+  j_d^*=\lfloor K T(1,1,p',0)\rfloor +1
+\]
+Note that
+\[
+j\le K T(\varepsilon^{-1},1,p',0)+1.
+\]
+Due to our assumptions, we know that 
+$T(\cdot,1, p',0)$ is increasing in the first argument if 
+we keep $p'$ fixed. Let $T_{p'}^{-1} (\cdot)$ be the inverse function of $T (\cdot,1, p',0)$ with respect to the first argument. Observe also that $T_{p'}^{-1}$ is strictly increasing. 
+
+
+Then, 
+\[
+j \le K T(\varepsilon^{-1},1,p',0)+1
+\]
+is equivalent to
+\[
+\frac{j-1}{K} \le T(\varepsilon^{-1},1,p',0).
+\]
+By the monotonicity of $T_{p'}^{-1}$, the latter inequality holds if and only if
+\[
+  T_{p'}^{-1} \left(\frac{j-1}{K} \right)
+  \le \varepsilon^{-1},
+\]
+or, equivalently,
+\[
+ \varepsilon \le \frac{1}{T_{p'}^{-1} \left(\frac{j-1}{K} \right)}.
+\]
+By using \eqref{eq:lambda_K_strong3}, we derive
+\[
+ \lambda_{j,d}\le \frac{1}{T_{p'}^{-1} \left(\frac{j-1}{K} \right)}
+\]
+for all $j\ge j_d^*$, which is again equivalent to 
+\[
+\lambda_{j,d}^{-1}\ge T_{p'}^{-1} \left(\frac{j-1}{K} \right),
+\]
+which holds if and only if
+\[ 
+ T(\lambda_{j,d}^{-1},1, p',0) \ge \frac{j-1}{K}.
+\]
+This implies, for any $\tau>1$, that 
+\[ 
+ (T(\lambda_{j,d}^{-1},1, p',0))^\tau \ge \frac{(j-1)^\tau}{K^\tau },
+\]
+which implies, due to our assumption on $\phi$, 
+\[ 
+ K_{p',\tau}\,T (\lambda_{j,d}^{-1},1,\tau p',0) \ge \frac{(j-1)^\tau}{K^\tau }.
+\]
+This yields
+\[
+\sum_{j=j_d^*}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau p',0)} \le K_{p',\tau}\, K^\tau \sum_{j=j_d^*}^\infty \frac{1}{(j-1)^\tau}<\infty.
+\]
+
+Note, however, that 
+\[
+ j_d^* = \lfloor K T(1,1,p',0)\rfloor +1 \le \lfloor K T(1,1,\tau p',0)\rfloor +1
+\]
+Hence, we can find $C(\tau p')$ such that 
+\[
+ \sum_{j=C(\tau p')}^\infty \frac{1}{T(\lambda_{j,d}^{-1},1, \tau p',0)}<\infty.
+\]
+This yields \eqref{eq:strong_tractiff3} with $p$ replaced by $\tau p'$, and so we see necessity of $\eqref{eq:strong_tractiff3}$. 
+
+
+
+\end{proof}
+\bigskip
+\begin{theorem}\label{thm_main_strong_tract2} 
+A problem is $T$-tractable iff there exist $p,q>0$ and an integer $C(p,q) \ge 0$ such that
+\begin{equation} \label{eq:tractiff4}
+     \sup_{d \in \naturals} \sum_{i = C(p,q)}^\infty \frac{1}{T(\lambda^{-1}_{i,d},d,p,q)}< \infty.
+\end{equation}
+%$ \frac{1}{\psi(d,q)}\frac{1}{\phi(\lambda_{i, d}^{-1},p))} $
+
+\end{theorem}
+
+\begin{proof}
+    \textbf{Sufficient Condition:}\\ Suppose that \eqref{eq:tractiff4} holds for some $p,q>0$. 
+Because $T$ is increasing in its arguments, it follows that the complexity may be equivalently expressed as 
+\begin{align*}
+    \comp(\varepsilon, d) &= \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
+    &= \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1, d}^{-1},d,p,q)} \le \frac{1}{T(\varepsilon^{-1},d,p,q)} \biggr\}.
+\end{align*}
+
+Since the $\lambda_{i,d}$ are non-increasing it follows that the $\phi(\lambda_{i, d}^{-1},p)$ are non-decreasing, and this holds for any $\tau>1$.  
+In particular, for all $n \in \naturals$,
+\begin{align*}
+    \MoveEqLeft{\lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}} \\
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d,p,q)} \le \frac{1}{T(\lambda_{n, d}^{-1},d,p,q))} \le \cdots \le \frac{1}{T(\lambda_{1, d}^{-1},d,p,q)} \\
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d,p.q)} 
+    \le \frac 1n \sum_{i=1}^n  \frac{1}{T(\lambda_{i, d}^{-1},d,p,q)} 
+    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},d,p,q)}.
+\end{align*}
+Thus, we can conclude that 
+\begin{align*}
+    n \ge T(\varepsilon^{-1},d,p,q) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,p,q)}
+    & \implies 
+  \frac 1n \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,p,q)} \le  \frac{1}{T(\varepsilon^{-1},d,p,q)} \\
+   & \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},d,p,q)} \le \frac{1}{T(\varepsilon^{-1},d,p,q)}.
+\end{align*}
+This implies an upper bound on the complexity of
+\begin{align*}
+       \MoveEqLeft{\comp(\varepsilon,d)} \\
+       &\le 1 + T(\varepsilon^{-1},d,p,q) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,p,q)} \\       
+       & = 1 + T(\varepsilon^{-1},d,p,q) \left [ \sum_{i=1}^{C(p,q)-1} \frac{1}{T(\lambda_{i, d}^{-1},d,p,q)}  
+       + \sum_{i=C(p,q)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,p,q)} \right ] \\
+       & \le 1+ T(\varepsilon^{-1},d,p,q) \underbrace{\frac{C(p,q)-1}{T(\lambda_{\max}^{-1},d,p,q)}}_{=:C_1(p,q)}
+       +  T(\varepsilon^{-1},d,p,q) 
+        \qquad \text{by \eqref{eq:tractiff4}} \\
+        & \le 1+T(\varepsilon^{-1},d,p,q) \bigl[C_1(p,q) +1\bigr].
+\end{align*}
+It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:tractiff3}. \\
+
+\textbf{Necessity condition:}\\
+Suppose that we have 
+$T$-tractability with parameters $p$ and $q$. That is, 
+\[
+\comp(\varepsilon,d)=\Theta (T(\varepsilon^{-1},d,p,q))
+\]
+for some $p,q>0$. This, in turn, means that there is a positive constant $K$ such that
+\begin{equation}\label{eq_tract_p'q'4}
+\comp(\varepsilon,d)\le K T(\varepsilon^{-1},d,p',q')
+\end{equation}
+for all $p'>p$ and $q'>q$. 
+
+Hence, for (possibly small) $\delta_p>0$ and $\delta_q>0$, there exists a constant $K$ such that \eqref{eq_tract_p'q'4} holds for $p'=p+\delta_p$ 
+and $q'=q+\delta_q$.
+
+We know that
+\[
+\lambda_{\comp(\varepsilon,d)+1,d}\le \varepsilon.
+\]
+Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
+\begin{equation}\label{eq:lambda_K4}
+\lambda_{\lfloor K T(\varepsilon^{-1},d,p',q)\rfloor +1,d}\le \varepsilon.
+\end{equation}
+Let
+\[
+j=j (\varepsilon):= \lfloor K T(\varepsilon^{-1},d,p',q')\rfloor +1.
+\]
+If we vary $\varepsilon\in (0,1]$, we see that $j=j_d^*, j_d^*+1, j_d^*+2,\ldots$, where 
+\[
+  j_d^*=\lfloor K T(1,d,p',q')\rfloor +1
+\]
+Note that
+\[
+j\le K T(\varepsilon^{-1},d,p',q') +1.
+\]
+Due to our assumptions, we know that 
+$T(\cdot,d,p',q')$ is increasing in the first argument if 
+we keep $p'$ and $q'$ fixed. Let $T_{p',q'}^{-1} (\cdot)$ be the inverse function of $T(\cdot,d,p',q')$ with respect to the first argument. Note that also $T_{p',q'}^{-1}$ is strictly increasing. 
+
+Then, 
+\[
+j \le K T(\varepsilon^{-1},d,p',q') +1
+\]
+is equivalent to
+\[
+\frac{j-1}{K } \le T(\varepsilon^{-1},d,p',q').
+\]
+By the monotonicity of $T_{p',q'}^{-1}$, the latter inequality holds if and only if
+\[
+  T_{p',q'}^{-1} \left(\frac{j-1}{K} \right)
+  \le \varepsilon^{-1},
+\]
+or, equivalently,
+\[
+ \varepsilon \le \frac{1}{T_{p',q'}^{-1} \left(\frac{j-1}{K} \right)}.
+\]
+By using \eqref{eq:lambda_K4}, we derive
+\[
+ \lambda_{j,d}\le \frac{1}{T_{p',q'}^{-1} \left(\frac{j-1}{K } \right)}
+\]
+for all $j\ge j_d^*$, which is again equivalent to 
+\[
+\lambda_{j,d}^{-1}\ge T_{p',q'}^{-1} \left(\frac{j-1}{K} \right),
+\]
+which holds if and only if
+\[ 
+T(\lambda_{j,d}^{-1},d, p',q') \ge \frac{j-1}{K}.
+\]
+This implies, for any $\tau>1$, that 
+\[ 
+ (T(\lambda_{j,d}^{-1},d, p',q'))^\tau \ge \frac{(j-1)^\tau}{K^\tau },
+\]
+which yields
+\[ 
+ K_{p',q',\tau}\, T (\lambda_{j,d}^{-1},d,\tau p',\tau q') \ge (T(\lambda_{j,d}^{-1},d, p',q'))^\tau 
+ \ge \frac{(j-1)^\tau}{K^\tau}.
+\]
+This then implies
+\[
+\sum_{j=j_d^*}^\infty \frac{1}{T(\lambda_{j,d}^{-1},d, \tau p',\tau q')} 
+\le K_{p',q',\tau}\, K^\tau \sum_{j=j_d^*}^\infty \frac{1}{(j-1)^\tau}<\infty.
+\]
+Note now that
+\[
+ j_d^* = \lfloor K T(1,1,p',q')\rfloor +1 \le \lfloor KT(1,1,\tau p',\tau q')\rfloor +1.
+\]
+So, there exists $C(\tau p',\tau q')$ such that 
+\[
+ \sum_{j=C(\tau p',\tau q')}^\infty \frac{1}{T(\lambda_{j,d}^{-1},d, \tau p',\tau q')}<\infty.
+\]
+This yields \eqref{eq:tractiff} with $p$ replaced by $\tau p'$ and $q$ replaced by $\tau q'$, and so we see the necessity of $\eqref{eq:tractiff4}$. 
+
+\end{proof}
+}
+\bigskip
+
+\fred{We need to check the proof for 
+\begin{itemize}
+\item correctness
+\item exponents
+\item whether the additional assumptions are too restrictive and can be generalized
+\item whether we need $\tau$ in the assumption
+\item Do we need non-decreasing or strictly increasing? 
+\end{itemize}}
+
+\end{document}

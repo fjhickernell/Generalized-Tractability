@@ -1,0 +1,368 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb, amsthm, booktabs, mathtools}
+\usepackage[utf8]{inputenc}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[notref,notcite]{showkeys}
+\input{FJHDef.tex}
+
+\title{Generalized Tractability}
+\author{\fred{Fred J. Hickernell}, \peter{Peter Kritzer}, \kachi{Onyekachi Osisiogu}, and \\ Henryk Wo\'zniakwoski}
+\date{\today}
+
+%\DeclareMathOperator{\comp}{comp}
+\DeclareMathOperator{\SOL}{SOL}
+\DeclareMathOperator{\APP}{APP}
+
+%\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\allowdisplaybreaks
+
+\newcommand{\fred}[1]{\begingroup\color{blue}Fred: #1\endgroup}
+\newcommand{\peter}[1]{\begingroup\color{purple}Peter: #1\endgroup}
+\newcommand{\kachi}[1]{\begingroup\color{ForestGreen}Kachi: #1\endgroup}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Let $\cf_d$ and $\cg_d$ Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a linear solution operator with adjoint $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors  
+\[
+\lambda_{\max}^2 \ge \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, 
+\]
+This means that the non-negative $\lambda_{i,d}$ are the singular values of the $\SOL_d$. The goal is to find an approximate solution, $\APP_d:\cb_d \times (0,\infty) \to \cg_d$ satisfying 
+\[
+\norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon,
+\]
+where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals.  In this case the optimal solution is 
+\[
+\APP_d(f,\varepsilon) = \sum_{i=1}^n \SOL(u_i) \ip[\cf_d]{f}{u_i},
+\]
+and the complexity of our linear problem is
+\[
+\comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\}.
+\]
+
+Certain kinds of common notions of tractability are 
+\begin{equation*}
+    \begin{array}{r@{\qquad}c@{\qquad}c}
+    & \comp(\varepsilon, d)\\
+    \toprule
+    \text{strong polynomial algebraic  tractability} & \Theta(\varepsilon^{-p})\\
+    \text{polynomial algebraic tractability} & \Theta(\varepsilon^{-p}d^{q})\\
+    \text{strong polynomial exponential tractability} &  \Theta\bigl([\log(1 + \varepsilon^{-1})]^p\bigr)\\
+    \text{polynomial exponential tractability} & \Theta\bigl([\log(1 + \varepsilon^{-1})]^p  d^{q}\bigr)
+    \end{array}
+\end{equation*}
+Let let $\phi : (0,\infty) \times (0,\infty) \to (0,\infty)$ and $\psi : \naturals  \times (0,\infty) \to (0,\infty)$ be positive-valued functions that are strictly increasing in both arguments, e.g., 
+\[
+(x,p) \mapsto x^{p}, \qquad (x,p) \mapsto [\log(1+x)]^p.
+\]
+
+All the examples of tractability above are of the form $\comp(\varepsilon, d) = \Theta \bigl( \phi(\varepsilon^{-1},p) \psi(d,q)\bigr)$.  Note, we define the $\Theta$ notation as follows
+\begin{equation*}
+     g(\varepsilon,d) = \Theta\bigl(\phi(\varepsilon^{-1},p) \bigr) \text{ means } 
+    \lim_{\varepsilon \to 0} \frac{g(\varepsilon,d)}{\phi(\varepsilon^{-1},p')}
+           \begin{cases} < \infty, & p'> p,  \\ 
+          =\infty, & p' < p.\end{cases}
+\end{equation*}
+\begin{multline*}
+     g(\varepsilon,d) = \Theta\bigl(\phi(\varepsilon^{-1},p) \psi(d,q) \bigr) \text{ means } \\
+    \lim_{\substack{\varepsilon \to 0 \\ d \to \infty}} \frac{g(\varepsilon,d)}{\phi(\varepsilon^{-1},p') \psi(d,q')}
+          \begin{cases} < \infty, & p'> p, \  q' > q,  \\ 
+          =\infty, & p' < p, \ q' < q.\end{cases}
+\end{multline*}
+\peter{(PETER: what would happen if $p'<p$ and $q'\ge q$ or the other way around?)}
+
+\begin{definition}
+If there exist the functions $\phi$ and $\psi$ satisfying the conditions listed above and there exist positive numbers $p$ and $q$ with
+\[
+\comp(\varepsilon, d)  = \Theta\bigl(\phi(\varepsilon^{-1},p) \psi(d,q) \bigr),
+\]
+then we call a problem $\phi$-$\psi$-tractable with exponents $p$ and $q$.  If there exists a function there $\phi$ satisfying the conditions above and a positive number $p$
+\[
+\comp(\varepsilon, d)  = \Theta\bigl(\phi(\varepsilon^{-1},p) \bigr)
+\]
+then we call a problem strongly $\phi$-tractable with exponent $p$.
+\end{definition}
+
+
+
+\section{Main Result}
+\begin{theorem}\label{thm_main} 
+A problem is $\phi$-$\psi$-tractable with exponents $p$ and $q$ iff there exists a  $C : (0,\infty)^2 \to \naturals$
+\begin{equation} \label{eq:tractiff}
+    \sup_{d \in \naturals} \frac{1}{\psi(d,q)} \sum_{i = C(p,q)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} \le 1 \qquad \forall p',q' \in (p,\infty)\times (q,\infty).
+\end{equation}
+\end{theorem}
+\peter{I am wondering whether it would be useful to also include something like "exponents of tractability". I.e., to define minimal $p$ and $q$ such that $\phi-\psi$-tractability holds. I am thinking so because maybe the condition in Theorem 1 should then be modified to hold for all $p'\ge p$ and all $q'\ge q$, and not more generally for all $p,q>0$ as it is now.}
+
+\fred{We may be able to patch up this proof with a condition like $$(\phi(\varepsilon^{-1},p))^{\tau} \le K_{p,\tau} \phi (\varepsilon^{-1},\tau p)$$}
+\begin{proof}
+Fix $p \in (0,\infty)$.  Because $\phi$ is increasing in its arguments, it follows that the complexity may be equivalently expressed as 
+\begin{align*}
+    \comp(\varepsilon, d) &= \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
+    &= \min \biggl\{n \in \natzero : \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} \le \frac{1}{\phi(\varepsilon^{-1},p)} \biggr\}.
+\end{align*}
+
+Since the $\lambda_{i,d}$ are non-increasing it follows that the $\phi(\lambda_{i, d}^{-1},p)$ are non-decreasing.  In particular, for all $n \in \naturals$,
+\begin{align*}
+    \MoveEqLeft{\lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}} \\
+    & \implies \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} \le \frac{1}{\phi(\lambda_{n, d}^{-1},p)} \le \cdots \le \frac{1}{\phi(\lambda_{1, d}^{-1},p)} \\
+    & \implies \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} 
+    \le \frac 1n \sum_{i=1}^n  \frac{1}{\phi(\lambda_{i, d}^{-1},p)} 
+    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{\phi(\lambda_{i, d}^{-1},p)}.
+\end{align*}
+Thus, we can conclude that 
+\begin{align*}
+    n \ge \phi(\varepsilon^{-1},p) \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)}
+    & \implies 
+  \frac 1n \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} \le  \frac{1}{\phi(\varepsilon^{-1},p)} \\
+   & \implies   \frac{1}{\phi(\lambda_{n+1, d}^{-1},p)} \le \frac{1}{\phi(\varepsilon^{-1},p)}.
+\end{align*}
+This implies an upper bound on the complexity of
+\begin{align*}
+       \MoveEqLeft{\comp(\varepsilon,d)} \\
+       &\le 1 + \phi(\varepsilon^{-1},p) \sum_{i=1}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} \\
+       & = 1 + \phi(\varepsilon^{-1},p) \left [ \sum_{i=1}^{C_3(p,q)-1} \frac{1}{\phi(\lambda_{i, d}^{-1},p)}  + \sum_{i=C_3(p,q)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} \right ] \\
+       & \le 1+  \phi(\varepsilon^{-1},p) \underbrace{\frac{C_3(p,q)-1}{\phi(\lambda_{\max}^{-1},p)}}_{C_1(p,q)}
+       +  \phi(\varepsilon^{-1},p) \psi(d,q) 
+        \qquad \text{by \eqref{eq:tractiff}} \\
+        & \le 1+  \phi(\varepsilon^{-1},p) \bigl[C_1(p,q) + \psi(d,q) \bigr].
+\end{align*}
+
+This verifies the sufficient condition.
+
+\peter{PETER: I try to give a proof of the necessary condition (but there is still a gap):
+
+
+
+Let us assume that we have $\phi$-$\psi$-tractability. I.e., 
+\[
+\comp(\varepsilon,d)=\Theta (\phi(\varepsilon^{-1},p),\psi(d,q))
+\]
+for some $p,q>0$. This, in turn, means that there is a positive constant $K$ such that
+\begin{equation}\label{eq_tract_p'q'}
+\comp(\varepsilon,d)\le K \phi(\varepsilon^{-1},p')\psi(d,q')
+\end{equation}
+for all $p'>p$ and $q'>q$. 
+
+Hence, for (possibly small) $\delta_p>0$ and $\delta_q>0$, there eists a constant $K$ such that \eqref{eq_tract_p'q'} holds for $p'=p+\delta_p$ 
+and $q'=q+\delta_q$.
+
+We know that
+\[
+\lambda_{\comp(\varepsilon,d)+1,d}\le \varepsilon.
+\]
+Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
+\begin{equation}\label{eq:lambda_K}
+\lambda_{\lfloor K \phi(\varepsilon^{-1},p'),\psi(d,q')\rfloor +1,d}\le \varepsilon.
+\end{equation}
+Let
+\[
+j=j (\varepsilon):= \lfloor K \phi(\varepsilon^{-1},p'),\psi(d,q')\rfloor +1.
+\]
+If we vary $\varepsilon\in (0,1]$, we see that $j=j_d^*, j_d^*+1, j_d^*+2,\ldots$, where 
+\[
+  j_d^*=\lfloor K \phi(1,p'),\psi(d,q')\rfloor +1
+\]
+Note that
+\[
+j\le K \phi(\varepsilon^{-1},p'),\psi(d,q') +1.
+\]
+Due to our assumptions, we know that 
+$\phi(\cdot, p')$ is increasing in the first argument if 
+we keep $p'$ fixed. Let $\phi_{p'}^{-1} (\cdot)$ be the inverse function of $\phi (\cdot, p')$ with respect to the first argument. Note that also $\phi_{p'}^{-1}$ is strictly increasing. 
+
+Then, 
+\[
+j \le K \phi(\varepsilon^{-1},p'),\psi(d,q') +1
+\]
+is equivalent to
+\[
+\frac{j-1}{K \psi(d,q')} \le \phi(\varepsilon^{-1},p').
+\]
+By the monotonicity of $\phi_{p'}^{-1}$, the latter inequality holds if and only if
+\[
+  \phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right)
+  \le \varepsilon^{-1},
+\]
+or, equivalently,
+\[
+ \varepsilon \le \frac{1}{\phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right)}.
+\]
+By using \eqref{eq:lambda_K}, we derive
+\[
+ \lambda_{j,d}\le \frac{1}{\phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right)}
+\]
+for all $j\ge j_d^*$, which is again equivalent to 
+\[
+\lambda_{j,d}^{-1}\ge \phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right),
+\]
+which holds if and only if
+\[ 
+ \phi (\lambda_{j,d}^{-1}, p') \ge \frac{j-1}{K \psi(d,q')}.
+\]
+This implies that 
+\[
+\frac{1}{\psi(d,q')} \sum_{j=j_d^*}^\infty \frac{1}{\phi (\lambda_{j,d}^{-1}, p')} \le K \sum_{j=j_d^*}^\infty \frac{1}{j-1}.
+\]
+If the series on the right hand side of the latter inequality would converge (which it obviously does not), then we would be done, since we could argue that we start the summation late enough that the series is less than $1/K$. Then we could argue that this estimate holds for all $d$, and therefore also for the supremum over all $d$. Also the sum of the first $j_d^*$ should be no problem to handle, as this should be bounded by a constant times $\psi (d,q')$.
+What we need is a suitable exponent of $j-1$.
+}
+\end{proof}
+
+\bigskip
+
+\peter{
+MODIFIED APPROACH:
+
+\bigskip
+
+\fred{We need to check the proof for 
+\begin{itemize}
+\item correctness
+\item exponents
+\item whether the additional assumptions are too restrictive and can be generalized
+\item whether we need $\tau$ in the assumption
+\end{itemize}}
+
+Let us make the following additional assumptions. Suppose that, for any real $\tau_1, \tau_2>0$ and any $p,q>0$, it holds that
+\begin{align*}
+ (\phi(\varepsilon^{-1},p))^{\tau_1} &\le K_{p,\tau_1} \phi (\varepsilon^{-1},\tau_1 p)\\
+  (\psi(d,q))^{\tau_2} &\le L_{q,\tau_2} \psi (d,\tau_2 q)\\
+\end{align*}
+for all $\varepsilon\in (0,1)$, where $K_{p,\tau_1}>0$ is a constant that may depend on $p$ and $\tau_1$, but is independent of $\varepsilon$, and where $L_{q,\tau_2}>0$ is a constant that may depend on $q$ and $\tau_2$, but is independent of $d$.
+
+
+
+\begin{theorem}\label{thm_main_modified}
+
+A problem is $\phi$-$\psi$-tractable with parameters $p$ and $q$ iff there exists a  $C : (0,\infty)^2 \to \naturals$  such that
+\begin{equation} \label{eq:tractiff_modified}
+    \sup_{d \in \naturals} \frac{1}{(\psi(d,q'))^\tau} \sum_{i = C(p',q')}^\infty \frac{1}{(\phi(\lambda_{i, d}^{-1},p'))^\tau} \le 1 \qquad \forall p',q' \in (p,\infty)\times (q,\infty),\ \forall \tau>1.
+\end{equation}
+\fred{And the left hand side is infinite if both $p' < p$ and $q' < q$?  Or just one?}
+\end{theorem}
+\begin{proof}
+We first show sufficiency of \eqref{eq:tractiff_modified}. Suppose that \eqref{eq:tractiff_modified} holds for some $p,q>0$. Fix $p'\in (p,\infty)$ and $q'\in (q,\infty)$. Because $\phi$ is increasing in its arguments, it follows that the complexity may be equivalently expressed as 
+\begin{align*}
+    \comp(\varepsilon, d) &= \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
+    &= \min \biggl\{n \in \natzero : \frac{1}{(\phi(\lambda_{n+1, d}^{-1},p'))^\tau} \le \frac{1}{(\phi(\varepsilon^{-1},p'))^\tau} \biggr\}.
+\end{align*}
+
+Since the $\lambda_{i,d}$ are non-increasing it follows that the $(\phi(\lambda_{i, d}^{-1},p))^\tau$ are non-decreasing, and this holds for any $\tau>1$.  In particular, for all $n \in \naturals$,
+\begin{align*}
+    \MoveEqLeft{\lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}} \\
+    & \implies \frac{1}{(\phi(\lambda_{n+1, d}^{-1},p'))^\tau} \le \frac{1}{(\phi(\lambda_{n, d}^{-1},p'))^\tau} \le \cdots \le \frac{1}{(\phi(\lambda_{1, d}^{-1},p'))^\tau} \\
+    & \implies \frac{1}{(\phi(\lambda_{n+1, d}^{-1},p'))^\tau} 
+    \le \frac 1n \sum_{i=1}^n  \frac{1}{(\phi(\lambda_{i, d}^{-1},p'))^\tau} 
+    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{(\phi(\lambda_{i, d}^{-1},p'))^\tau}.
+\end{align*}
+Thus, we can conclude that 
+\begin{align*}
+    n \ge (\phi(\varepsilon^{-1},p'))^\tau \sum_{i=1}^\infty \frac{1}{(\phi(\lambda_{i, d}^{-1},p'))^\tau}
+    & \implies 
+  \frac 1n \sum_{i=1}^\infty \frac{1}{(\phi(\lambda_{i, d}^{-1},p'))^\tau} \le  \frac{1}{\phi((\varepsilon^{-1},p'))^\tau} \\
+   & \implies   \frac{1}{(\phi(\lambda_{n+1, d}^{-1},p'))^\tau} \le \frac{1}{(\phi(\varepsilon^{-1},p'))^\tau}.
+\end{align*}
+This implies an upper bound on the complexity of
+\begin{align*}
+       \MoveEqLeft{\comp(\varepsilon,d)} \\
+       &\le 1 + (\phi(\varepsilon^{-1},p'))^\tau \sum_{i=1}^\infty \frac{1}{(\phi(\lambda_{i, d}^{-1},p'))^\tau} \\
+       &\le 1 +K_{p',\tau} (\phi(\varepsilon^{-1},\tau p')) \sum_{i=1}^\infty \frac{1}{(\phi(\lambda_{i, d}^{-1},p'))^\tau} \\
+       & = 1 + K_{p',\tau}\phi(\varepsilon^{-1},\tau p') \left [ \sum_{i=1}^{C_3(p',q')-1} \frac{1}{(\phi(\lambda_{i, d}^{-1},p'))^\tau}  + \sum_{i=C_3(p',q')}^\infty \frac{1}{(\phi(\lambda_{i, d}^{-1},p'))^\tau} \right ] \\
+       & \le 1+ K_{p',\tau} (\phi(\varepsilon^{-1},\tau p')) \underbrace{\frac{C_3(p',q')-1}{(\phi(\lambda_{\max}^{-1},p'))^\tau}}_{C_1(p',q')}
+       +  K_{p',\tau}\phi(\varepsilon^{-1},\tau p') (\psi(d,q'))^\tau 
+        \qquad \text{by \eqref{eq:tractiff}} \\
+        & \le 1+ K_{p',\tau} \phi(\varepsilon^{-1},\tau p') \bigl[C_1(p',q') + L_{q',\tau}\psi(d,\tau q') \bigr].
+\end{align*}
+As $\tau$ can be arbitrarily close to 1, and $p'$ and $q'$ can be arbitrarily close to $p$ and $q$, respectively, it follows that we have $\phi$-$\psi$-tractability with parameters $p$ and $q$, which shows sufficiency of \eqref{eq:tractiff_modified}. 
+
+Let us now show necessity. Indeed, suppose that we have 
+$\phi$-$\psi$-tractability with parameters $p$ and $q$. I.e., 
+\[
+\comp(\varepsilon,d)=\Theta (\phi(\varepsilon^{-1},p),\psi(d,q))
+\]
+for some $p,q>0$. This, in turn, means that there is a positive constant $K$ such that
+\begin{equation}\label{eq_tract_p'q'}
+\comp(\varepsilon,d)\le K \phi(\varepsilon^{-1},p'),\psi(d,q')
+\end{equation}
+for all $p'>p$ and $q'>q$. 
+
+Hence, for (possibly small) $\delta_p>0$ and $\delta_q>0$, there eists a constant $K$ such that \eqref{eq_tract_p'q'} holds for $p'=p+\delta_p$ 
+and $q'=q+\delta_q$.
+
+We know that
+\[
+\lambda_{\comp(\varepsilon,d)+1,d}\le \varepsilon.
+\]
+Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
+\begin{equation}\label{eq:lambda_K}
+\lambda_{\lfloor K \phi(\varepsilon^{-1},p'),\psi(d,q')\rfloor +1,d}\le \varepsilon.
+\end{equation}
+Let
+\[
+j=j (\varepsilon):= \lfloor K \phi(\varepsilon^{-1},p'),\psi(d,q')\rfloor +1.
+\]
+If we vary $\varepsilon\in (0,1]$, we see that $j=j_d^*, j_d^*+1, j_d^*+2,\ldots$, where 
+\[
+  j_d^*=\lfloor K \phi(1,p'),\psi(d,q')\rfloor +1
+\]
+Note that
+\[
+j\le K \phi(\varepsilon^{-1},p'),\psi(d,q') +1.
+\]
+Due to our assumptions, we know that 
+$\phi(\cdot, p')$ is increasing in the first argument if 
+we keep $p'$ fixed. Let $\phi_{p'}^{-1} (\cdot)$ be the inverse function of $\phi (\cdot, p')$ with respect to the first argument. Note that also $\phi_{p'}^{-1}$ is strictly increasing. 
+
+Then, 
+\[
+j \le K \phi(\varepsilon^{-1},p'),\psi(d,q') +1
+\]
+is equivalent to
+\[
+\frac{j-1}{K \psi(d,q')} \le \phi(\varepsilon^{-1},p').
+\]
+By the monotonicity of $\phi_{p'}^{-1}$, the latter inequality holds if and only if
+\[
+  \phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right)
+  \le \varepsilon^{-1},
+\]
+or, equivalently,
+\[
+ \varepsilon \le \frac{1}{\phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right)}.
+\]
+By using \eqref{eq:lambda_K}, we derive
+\[
+ \lambda_{j,d}\le \frac{1}{\phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right)}
+\]
+for all $j\ge j_d^*$, which is again equivalent to 
+\[
+\lambda_{j,d}^{-1}\ge \phi_{p'}^{-1} \left(\frac{j-1}{K \psi(d,q')} \right),
+\]
+which holds if and only if
+\[ 
+ \phi (\lambda_{j,d}^{-1}, p') \ge \frac{j-1}{K \psi(d,q')}.
+\]
+This implies, for any $\tau>1$, that 
+\[ 
+ (\phi (\lambda_{j,d}^{-1}, p'))^\tau \ge \frac{(j-1)^\tau}{K^\tau (\psi(d,q'))^\tau},
+\]
+which yields
+\[
+\frac{1}{(\psi(d,q'))^\tau} \sum_{j=j_d^*}^\infty \frac{1}{(\phi (\lambda_{j,d}^{-1}, p'))^\tau} \le K^\tau \sum_{j=j_d^*}^\infty \frac{1}{(j-1)^\tau}.  \text{\fred{here we need the $\tau$}}
+\]
+Now we could again argue that the first summation index on the right-hand side can be chosen small enough such that the series is not bigger than $1/(K^\tau)$. Also the sum of the first $j_d^*$ should be no problem to handle, as this should be bounded by a constant times $\psi (d,q')$.
+Note that now the series on the right-hand side certainly converges as $\tau>1$.
+\end{proof}
+}
+
+
+
+\end{document}
