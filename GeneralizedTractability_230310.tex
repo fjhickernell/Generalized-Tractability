@@ -160,35 +160,37 @@ If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\tex
 
 
 \begin{proof}
-\textbf{Sufficient condition:}\\
-Given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity:
+\textbf{Sufficient condition:}\newline
+We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.  Given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity:
     \begin{equation} \label{eq:comp_equiv}
-    \comp(\varepsilon, d) &= \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d,\vp)}\le \frac{1}{T(\varepsilon^{-1},d,\vp) }\biggr\}.
+    \comp(\varepsilon, d) &= \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d',\vp)}\le \frac{1}{T(\varepsilon^{-1},d',\vp) }\biggr\},
 \end{equation}
-We use this expression for $d=1$ here and for arbitrary $d$ in the next subsection
+for any $d' \in \naturals$.
 
-
-Also since the $\lambda_{i,d}$ are non-increasing, it follows that the $T(\lambda_{i,d}^{-1},1,\vp)$ are non-decreasing. In particular, for all $n\in \mathbb{N}$, we have
-
+Also since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d',\vp)$ are non-decreasing in $i$. In particular, for all $n\in \mathbb{N}$, we have
 \begin{align*}
     \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}
-    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},1,\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},1,\vp)} \le \cdots \le \frac{1}{T(\lambda_{1, d}^{-1},1,\vp)} \\
-    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},1,\vp) }
-    \le \frac 1n \sum_{i=1}^n  \frac{1}{T(\lambda_{i, d}^{-1},1,\vp) }
-    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}.
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},d',\vp)} \le \cdots \le \frac{1}{T(\lambda_{1, d}^{-1},d',\vp)} \\
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp) }
+    \le \frac 1n \sum_{i=1}^n  \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) }
+    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)}.
 \end{align*}
 Thus, we can conclude from the previous line that
-\begin{equation*}
-    n \ge T(\varepsilon^{-1},1,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
-   \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},1,\vp)} \le
-   \frac 1n \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp) } \le \frac{1}{T(\varepsilon^{-1},1,\vp)}.
-\end{equation*}
+\begin{multline*}
+    n \ge T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \\
+   \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le
+   \frac 1n \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) } \le \frac{1}{T(\varepsilon^{-1},d',\vp)} \qquad \forall \varepsilon > 0, \ d,d' \in \naturals.
+\end{multline*}
+This last inequality together with \eqref{eq:comp_equiv} implies an upper bound on the complexity: of
+\begin{equation}
+	\comp(\varepsilon,d)
+	\le 1 + T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \qquad \forall \varepsilon > 0, \ d, d' \in \naturals
+\end{equation}
 
-This last inequality implies an upper bound on the complexity of
+Now we take this upper bound further, specializing to the case of $d'=1$:
 \begin{align*}
        \comp(\varepsilon,d)
-       &\le 1 + T(\varepsilon^{-1},1,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)} \\
-       & = 1 + T(\varepsilon^{-1},1, \vp) \left [ \sum_{i=1}^{L(p)-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
+       & = 1 + T(\varepsilon^{-1},1, \vp) \left [ \sum_{i=1}^{L(\vp)-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
        + \underbrace{\sum_{i=L(p)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S(p) <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\right] \\
        & \le 1+ T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L(p)-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S(p)\right]}_{=:C_1(p)}\\
        & = 1+ T(\varepsilon^{-1},1,\vp) C_1 (p)\\
