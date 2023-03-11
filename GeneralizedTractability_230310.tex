@@ -71,23 +71,9 @@ where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed
 \APP_d(f,\varepsilon) = \sum_{i=1}^n \SOL(u_i) \ip[\cf_d]{f}{u_i},
 \]
 and the complexity of our linear problem is
-\[
+\begin{equation}\label{eq:comp_def}
 \comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\}.
-\]
-
-Certain kinds of common notions of tractability are
-\begin{equation*}
-    \begin{array}{r@{\qquad}c@{\qquad}c}
-    & \comp(\varepsilon, d)\\
-    \toprule
-    \text{strong polynomial algebraic  tractability} & \Theta(\varepsilon^{-p})\\
-    \text{polynomial algebraic tractability} & \Theta(\varepsilon^{-p}d^{q})\\
-    \text{strong polynomial exponential tractability} &  \Theta\bigl([\log(1 + \varepsilon^{-1})]^p\bigr)\\
-    \text{polynomial exponential tractability} & \Theta\bigl([\log(1 + \varepsilon^{-1})]^p  d^{q}\bigr)
-    \end{array}
-\end{equation*}
-\fred{We need to fix these so that the tractability function does not vanish as $\varepsilon \to \infty$.}
-
+\end{equation}
 
 \section{Main Results}
 
@@ -96,9 +82,15 @@ Let $T$ be a tractability function defined as follows,
 \[
 T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow [1,\infty),
 \]
+A tractability function is a simple function that provides an upper bound on the computational complexity of a problem
 A problem is $T$-tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$ such that
-\begin{equation} \label{comp_def}
+\begin{equation} \label{eq:tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall \varepsilon \in (0,\infty), \ \forall d \in \mathbb{N}.
+\end{equation}
+A problem is \emph{strongly}
+$T$-tractable with parameter $\vp$ iff the complexity is independent of the dimension, that is, there exists a positive constant $C_{\vp}$ such that
+\begin{equation} \label{eq:tract_def}
+	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},1,\vp) \qquad \forall \varepsilon \in (0,\infty), \ \forall d \in \mathbb{N}.
 \end{equation}
 
 Note that the tractability function is bounded below away from zero even as $\varepsilon \to \infty$, so that the information based complexity is not expected to vanish under arbitrarily loose error requirements.  For this definition of tractability to make sense we assume that
@@ -111,65 +103,87 @@ which implies that the problem does not become easier by decreasing the toleranc
 \end{equation}
 There is a technical assumption required for our analysis.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:ptauassume}
-	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsion \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in (1,\infty).
+	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in (1,\infty).
 \end{equation}
 
-If \eqref{comp_def} holds for some $\vp$, it clearly holds for larger, $\vp$.  We are often interested in the optimal or smallest $\vp$ for which \eqref{comp_def} holds.
+If \eqref{eq:tract_def} holds for some $\vp$, it clearly holds for larger, $\vp$.  We are often interested in the optimal or smallest $\vp$ for which \eqref{eq:tract_def} holds.
 The  set of optimal parameters, $\mathcal{P}_{\text{opt}}$ is defined as
 \begin{equation}
-	\mathcal{P}_{\text{opt}} : = \{\vp^* : \eqref{comp_def} \text{ holds }\forall \vp \in [\vp,\boldsymbol{\infty}) \setminus \{\vp^*\} \text{ and }
-	\eqref{comp_def} \text{ fails } \forall \vp \in [\vzero,\vp] \setminus \{\vp^*\} \}.
+	\mathcal{P}_{\text{opt}} : = \{\vp^* : \eqref{eq:tract_def} \text{ holds }\forall \vp \in [\vp,\boldsymbol{\infty}) \setminus \{\vp^*\} \text{ and }
+	\eqref{eq:tract_def} \text{ fails } \forall \vp \in [\vzero,\vp] \setminus \{\vp^*\} \}.
 \end{equation}
 In this article we allow $\vp$ to be a scalar or vector as the situation requires.
 
+Certain common notions of tractability are covered by the general situation described above
+\begin{equation*}
+	\begin{array}{r@{\qquad}c@{\qquad}c}
+		& T(\varepsilon^{-1},d,\vp)\\
+		\toprule
+		\text{strong polynomial algebraic  tractability} & \max(1,\varepsilon^{-p})\\
+		\text{polynomial algebraic tractability} & \max(1,\varepsilon^{-p})d^{q}\\
+		\text{strong polynomial exponential tractability} &  [\max(1,\log(1 + \varepsilon^{-1})]^p\\
+		\text{polynomial exponential tractability} &
+		[\max(1,\log(1 + \varepsilon^{-1}))]^p  d^{q}
+	\end{array}
+\end{equation*}
+Here, $\vp = (p,q)$ in some cases.
+
+
+In the sections below we prove necessary and sufficient conditions on tractability as generally defined in \eqref{eq:tract_def}.  These conditions  that involve the boundedness of sums defined in terms of $\{T(\lambda_{i,d}^{-1},\cdot, \cdot)\}_{i=1}^\infty$.  In practice, it may be easier to verify whether or not these conditions hold than to deal with \eqref{eq:comp_def} directly.
+
+
 \subsection{Strong tractability}
 
+We first consider the simpler case when the complexity is essentially independent of the dimension, $d$.  The proof also introduces the line of argument used for the case where there is $d$ dependence.
 
 \begin{theorem}\label{thm_main_strong_tract2}
-A problem is $T$-tractable with $q=0$ iff there exists $p>0$ and an integer $L(p) > 0$ such that
+A problem is strongly $T$-tractable iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ and an integer $L(\vp) > 0$ such that
 \begin{equation} \label{eq:strong_tractiff3}
-     S_p:=\sup_{d \in \naturals} \sum_{i = L(p)}^\infty \frac{1}{T(\lambda_{i,d}^{-1},1,p,0)} < \infty.
+     S_p:=\sup_{d \in \naturals} \sum_{i = L(\vp)}^\infty \frac{1}{T(\lambda_{i,d}^{-1},1,\vp)} < \infty.
 \end{equation}
-If \eqref{eq:strong_tractiff3} holds, then $\mathcal{P}_{\text{opt}}=(p^*,0)$, where
+If \eqref{eq:strong_tractiff3} holds for some $\vp$, then
 \[
- p^* := \inf\{p>0\ \mbox{such that \eqref{eq:strong_tractiff3} holds}\}.
+	\mathcal{P}_{\text{opt}} : = \{\vp^* : \eqref{eq:strong_tractiff3} \text{ holds }\forall \vp \in [\vp,\boldsymbol{\infty}) \setminus \{\vp^*\} \text{ and }
+\eqref{eq:strong_tractiff3} \text{ fails } \forall \vp \in [\vzero,\vp] \setminus \{\vp^*\} \}.
 \]
 \end{theorem}
+
+
 \begin{proof}
 \textbf{Sufficient condition:}\\
-Given that $T$ is increasing in its arguments, we have the following equivalent expression,
+Given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity:
     \begin{align*}
     \comp(\varepsilon, d) &= \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
-    &= \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},1,p,0)}\le \frac{1}{T(\varepsilon^{-1},1,p,0) }\biggr\}.
+    &= \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},1,\vp)}\le \frac{1}{T(\varepsilon^{-1},1,\vp) }\biggr\}.
 \end{align*}
-Also since the $\lambda_{i,d}$ are non-increasing, it follows that the $T(\lambda_{i,d}^{-1},1,p,0)$ are non-decreasing. In particular, for all $n\in \mathbb{N}$, we have
+Also since the $\lambda_{i,d}$ are non-increasing, it follows that the $T(\lambda_{i,d}^{-1},1,\vp)$ are non-decreasing. In particular, for all $n\in \mathbb{N}$, we have
 
 \begin{align*}
     \MoveEqLeft{\lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}} \\
-    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},1,p,0)} \le \frac{1}{T(\lambda_{n, d}^{-1},1,p,0)} \le \cdots \le \frac{1}{T(\lambda_{1, d}^{-1},1,p,0)} \\
-    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},1,p,0) }
-    \le \frac 1n \sum_{i=1}^n  \frac{1}{T(\lambda_{i, d}^{-1},1,p,0) }
-    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},1,p,0)}.
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},1,\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},1,\vp)} \le \cdots \le \frac{1}{T(\lambda_{1, d}^{-1},1,\vp)} \\
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},1,\vp) }
+    \le \frac 1n \sum_{i=1}^n  \frac{1}{T(\lambda_{i, d}^{-1},1,\vp) }
+    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}.
 \end{align*}
 Thus, we can conclude that
 \begin{align*}
-    n \ge T(\varepsilon^{-1},1,p,0) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,p,0)}
+    n \ge T(\varepsilon^{-1},1,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
     & \implies
-\frac 1n \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,p,0) }\le  T(\varepsilon^{-1},1,p,0) \\
-   & \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},1,p,0)} \le \frac{1}{T(\varepsilon^{-1},1,p,0)}.
+\frac 1n \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp) }\le  T(\varepsilon^{-1},1,\vp) \\
+   & \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},1,\vp)} \le \frac{1}{T(\varepsilon^{-1},1,\vp)}.
 \end{align*}
 
 This implies an upper bound on the complexity of
 \begin{align*}
        \MoveEqLeft{\comp(\varepsilon,d)} \\
-       &\le 1 + T(\varepsilon^{-1},1,p,0) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,p,0)} \\
-       & = 1 + T(\varepsilon^{-1},1, p,0) \left [ \sum_{i=1}^{L(p)-1} \frac{1}{T(\lambda_{i, d}^{-1},1,p,0)}
-       + \underbrace{\sum_{i=L(p)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,p,0)}}_{=:S_p <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\right] \\
-       & \le 1+ T(\varepsilon^{-1},1,p,0) \underbrace{\left[\frac{(L(p)-1)}{T(\lambda_{\max}^{-1},1,p,0)} + S_p\right]}_{=:C_2(p)}\\
-       & = 1+ T(\varepsilon^{-1},1,p,0) C_2 (p)\\
-       &\le C_{p,0} T(\varepsilon^{-1},1,p,0),
+       &\le 1 + T(\varepsilon^{-1},1,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)} \\
+       & = 1 + T(\varepsilon^{-1},1, \vp) \left [ \sum_{i=1}^{L(p)-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
+       + \underbrace{\sum_{i=L(p)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{=:S_p <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\right] \\
+       & \le 1+ T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L(p)-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S_p\right]}_{=:C_2(p)}\\
+       & = 1+ T(\varepsilon^{-1},1,\vp) C_2 (p)\\
+       &\le C_{\vp} T(\varepsilon^{-1},1,\vp),
 \end{align*}
-for some suitably chosen $C_{p,0}>0$. This means that we have strong $T$-tractability, and verifies sufficiency of \eqref{eq:strong_tractiff3}.
+for some suitably chosen $C_{\vp}>0$. This means that we have strong $T$-tractability, and verifies sufficiency of \eqref{eq:strong_tractiff3}.
 As for $\mathcal{P}_{\text{opt}}$, we immediately see from the above argument that $\mathcal{P}_{\text{opt}}=(p^*,0)$, where
 \[
  p^* \le \inf\{p>0\ \mbox{such that \eqref{eq:strong_tractiff3} holds}\}.
@@ -179,16 +193,16 @@ As for $\mathcal{P}_{\text{opt}}$, we immediately see from the above argument th
 \bigskip
 \noindent \textbf{Necessary condition:} \\
 Suppose that we have strong
-$T$-tractability. That is, for some $p>0$ there exists a positive constant $C_{p,0}$ such that
+$T$-tractability. That is, for some $p>0$ there exists a positive constant $C_{\vp}$ such that
 \[
-\comp(\varepsilon,d)\le C_{p,0}\, T(\varepsilon^{-1},1,p,0)
+\comp(\varepsilon,d)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)
 \]
 for all $\varepsilon\in (0,\infty)$.
 
 
 % This, in turn, means that
 % \begin{equation}\label{eq_strong_tract_p'3}
-% \comp(\varepsilon,d)\le C_{p,0} T(\varepsilon^{-1},1,p',0)
+% \comp(\varepsilon,d)\le C_{\vp} T(\varepsilon^{-1},1,p',0)
 % \end{equation}
 % for all $p'>p$.
 %
@@ -196,66 +210,66 @@ for all $\varepsilon\in (0,\infty)$.
 
 Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
 \begin{equation}\label{eq:lambda_K_strong3}
-\lambda_{\lfloor C_{p,0}\, T(\varepsilon^{-1},1,p,0)\rfloor +1,d}\le \varepsilon.
+\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1,d}\le \varepsilon.
 \end{equation}
 Let
 \[
-j=j (\varepsilon):= \lfloor C_{p,0}\, T(\varepsilon^{-1},1,p,0)\rfloor +1.
+j=j (\varepsilon):= \lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1.
 \]
 When we vary $\varepsilon\in (0,\infty)$, we have that $j\in \{j_d^*, j_d^*+1, j_d^*+2,\ldots\}$, where
 \[
-  j_d^*=\lfloor  T(0,1,p,0)\rfloor +1,
+  j_d^*=\lfloor  T(0,1,\vp)\rfloor +1,
 \]
 by the monotonicity of $T$.
 
 Note furthermore that we always have
 \[
-j=j(\varepsilon)\le C_{p,0}\, T(\varepsilon^{-1},1,p,0)+1.
+j=j(\varepsilon)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1.
 \]
 Due to our assumptions, we know that
-$T(\cdot,1, p,0)$ is increasing in the first argument if
+$T(\cdot,1, \vp)$ is increasing in the first argument if
 we keep $p$ fixed.
 
 Then, by \eqref{eq:lambda_K_strong3},
 \[
-j \le C_{p,0} T(\varepsilon^{-1},1,p,0)+1\le C_{p,0} T(\lambda_{j,d}^{-1},1,p,0)+1,
+j \le C_{\vp} T(\varepsilon^{-1},1,\vp)+1\le C_{\vp} T(\lambda_{j,d}^{-1},1,\vp)+1,
 \]
 and the latter chain of inequalities holds for all $j\ge j_d^*$.
 
 
 This implies
 \[
- T(\lambda_{j,d}^{-1},1, p,0) \ge \frac{j-1}{C_{p,0}}.
+ T(\lambda_{j,d}^{-1},1, \vp) \ge \frac{j-1}{C_{\vp}}.
 \]
 This, in turn, implies, for any $\tau>1$, that
 \[
- (T(\lambda_{j,d}^{-1},1, p,0))^\tau \ge \frac{(j-1)^\tau}{C_{p,0}^\tau },
+ (T(\lambda_{j,d}^{-1},1, \vp))^\tau \ge \frac{(j-1)^\tau}{C_{\vp}^\tau },
 \]
 which yields, due to our assumption on $T$,
 \[
- K_{p,0,\tau}\,T (\lambda_{j,d}^{-1},1,\tau p,0) \ge \frac{(j-1)^\tau}{C_{p,0}^\tau},
+ K_{\vp,\tau}\,T (\lambda_{j,d}^{-1},1,\tau \vp) \ge \frac{(j-1)^\tau}{C_{\vp}^\tau},
 \]
-for some $K_{p,0,\tau}>0$.
+for some $K_{\vp,\tau}>0$.
 This gives
 \[
-\sum_{j=j_d^*}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau p,0)} \le K_{p,0,\tau}\, C_{p,0}^\tau
+\sum_{j=j_d^*}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau \vp)} \le K_{\vp,\tau}\, C_{\vp}^\tau
 \sum_{j=j_d^*}^\infty \frac{1}{(j-1)^\tau} \le
-\peter{K_{p,0,\tau}\, C_{p,0}^\tau\, \zeta (\tau) }< \infty,
+\peter{K_{\vp,\tau}\, C_{\vp}^\tau\, \zeta (\tau) }< \infty,
 \]
 \peter{where by $\zeta(\cdot)$ we denote the Riemann zeta function. Consequently,
 \[
-\sup_{d\in\naturals} \sum_{j=j_d^*}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau p,0)} \le K_{p,0,\tau}\, C_{p,0}^\tau\, \zeta (\tau) < \infty.
+\sup_{d\in\naturals} \sum_{j=j_d^*}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau \vp)} \le K_{\vp,\tau}\, C_{\vp}^\tau\, \zeta (\tau) < \infty.
 \]
 }
 
 
 Note, however, that, \peter{for any $d\in\naturals$,}
 \[
- j_d^* = \lfloor C_{p,0}\, T(0,1,p,0)\rfloor +1 \le \lfloor C_{p,0}\, T(0,1,\tau p,0)\rfloor +1
+ j_d^* = \lfloor C_{\vp}\, T(0,1,\vp)\rfloor +1 \le \lfloor C_{\vp}\, T(0,1,\tau \vp)\rfloor +1
 \]
 Hence, we can find $L(\tau p)$, which is independent of $\varepsilon$ and $d$, such that
 \[
- \peter{\sup_{d\in\naturals}} \sum_{j=L(\tau p)}^\infty \frac{1}{T(\lambda_{j,d}^{-1},1, \tau p,0)}<\infty.
+ \peter{\sup_{d\in\naturals}} \sum_{j=L(\tau p)}^\infty \frac{1}{T(\lambda_{j,d}^{-1},1, \tau \vp)}<\infty.
 \]
 This yields \eqref{eq:strong_tractiff3} with $p$ replaced by $\tau p$, and so we see necessity of $\eqref{eq:strong_tractiff3}$.
 
