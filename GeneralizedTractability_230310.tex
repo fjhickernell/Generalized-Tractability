@@ -357,20 +357,24 @@ Summing both sides of the inequality yields and noting that $L(\vp) \le L(\tau\v
 	K_{\vp,\tau}\, C_{\vp}^\tau\, \zeta (\tau) < \infty,
 \end{multline*}
 where $\zeta$ denotes the Riemann zeta function.
-This yields \eqref{eq:strong_tractiff3} with $p$ replaced by $\tau p$, and so we see the necessity of $\eqref{eq:strong_tractiff3}$.
 
 
 Note now that, \peter{for any $d\in\naturals$,}
 \[
- j_d^* = \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1 \le \lfloor C_{\vp}^\tau\, T(0,d,\tau p,\tau q)\rfloor +1.
+ j(\infty,d,\vp) = \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1 \le \lfloor C_{\vp}^\tau\, T(0,d,\tau \vp)\rfloor +1.
 \]
-So, there exists $L(\tau p,\tau q)$ such that
+So, there exists $L(\tau \vp)$ such that
 \[
-\peter{\sup_{d\in\naturals}}\,\, \sum_{j=\lceil L(\tau p,\tau q) T(0,d,\tau p,\tau q)\rceil}^\infty \frac{1}{T(\lambda_{j,d}^{-1},d, \tau p,\tau q)}<\infty.
+\peter{\sup_{d\in\naturals}}\,\, \sum_{j=\lceil L(\tau \vp) T(0,d,\tau \vp)\rceil}^\infty \frac{1}{T(\lambda_{j,d}^{-1},d, \tau\vp)}<\infty.
 \]
+\fred{Fred:  Not sure how $C_{\vp}^\tau$ becomes $L(\tau \vp)$?}
 
+This yields \eqref{eq:tractiff4} with $\vp$ replaced by $\tau \vp$, and so we see the necessity of $\eqref{eq:tractiff4}$.
 
-This yields \eqref{eq:tractiff4} with $p$ replaced by $\tau p$ and $q$ and $q_1$ replaced by $\tau q$, and so we see the necessity of $\eqref{eq:tractiff4}$.
+\bigskp
+
+\noindent \textbf{Optimality:}
+\fred{Not sure how to make optimality works because for sufficiency $\vp$ turns into $2\vp$.}
 
 \end{proof}
 
