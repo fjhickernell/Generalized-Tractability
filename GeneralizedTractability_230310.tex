@@ -343,80 +343,23 @@ j\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{j,d}^{-1},d,\v
 \]
 This implies via our technical assumption \eqref{eq:ptauassume} that
 \begin{equation*}
-	K_{\vp,\tau}\,T (\lambda_{j,d}^{-1},1,\tau \vp) \ge
-	[T(\lambda_{j,d}^{-1},1, \vp)]^\tau
+	K_{\vp,\tau}\,T (\lambda_{j,d}^{-1},d,\tau \vp) \ge
+	[T(\lambda_{j,d}^{-1},d, \vp)]^\tau
 	\ge
 	\left[\frac{(j-1)}{C_{\vp}}\right]^\tau \qquad \forall j \ge j(\infty,d,\vp)
 \end{equation*}
 Summing both sides of the inequality yields and noting that $L(\vp) \le L(\tau\vp)$, it follows that
 \begin{multline*}
-	\sup_{d\in\naturals} \sum_{j=L(\tau\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau \vp)} \le
-	\sup_{d\in\naturals} \sum_{j=L(\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau \vp)} \\
+	\sup_{d\in\naturals} \sum_{j=j(\infty,d,\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},d, \tau \vp)} \le
+	\sup_{d\in\naturals} \sum_{j=j(\infty,d,\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},d, \tau \vp)} \\
 	\le K_{\vp,\tau}\, C_{\vp}^\tau
-	\sum_{j=L(\vp)}^\infty \frac{1}{(j-1)^\tau} \le
+	\sum_{j=j(\infty,d,\vp)}^\infty \frac{1}{(j-1)^\tau} \le
 	K_{\vp,\tau}\, C_{\vp}^\tau\, \zeta (\tau) < \infty,
 \end{multline*}
 where $\zeta$ denotes the Riemann zeta function.
 This yields \eqref{eq:strong_tractiff3} with $p$ replaced by $\tau p$, and so we see the necessity of $\eqref{eq:strong_tractiff3}$.
 
 
-
-We know that
-\[
-\lambda_{\comp(\varepsilon,d)+1,d}\le \varepsilon.
-\]
-Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
-\begin{equation}\label{eq:lambda_K4}
-\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1,d}\le \varepsilon.
-\end{equation}
-Let
-\[
-j=j (\varepsilon):= \lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1.
-\]
-If we vary $\varepsilon\in (0,\infty)$, we see that $j=j_d^*, j_d^*+1, j_d^*+2,\ldots$, where
-\[
-  j_d^*=\lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1
-\]
-Note that
-\[
-j\le C_{\vp}\, T(\varepsilon^{-1},d,\vp) +1.
-\]
-Due to our assumptions, we know that
-$T(\cdot,d,\vp)$ is increasing in the first argument if
-we keep $p$ and $q$ fixed.
-
-Then, by \eqref{eq:lambda_K4},
-\[
-j \le C_{\vp}\, T(\varepsilon^{-1},d,\vp) +1 \le C_{\vp}\, T(\lambda_{j,d}^{-1},d,\vp) +1,
-\]
-and the latter chain of inequalities holds for all $j\ge j_d^*$.
-
-This implies
-\[
-T(\lambda_{j,d}^{-1},d, \vp) \ge \frac{j-1}{C_{\vp}}.
-\]
-This, in turn, implies, for any $\tau>1$, that
-\[
- (T(\lambda_{j,d}^{-1},d,\vp))^\tau \ge \frac{(j-1)^\tau}{C_{\vp}^\tau},
-\]
-which yields
-\[
- K_{\vp,\tau}\, T (\lambda_{j,d}^{-1},d,\tau p,\tau q) \ge (T(\lambda_{j,d}^{-1},d, \vp))^\tau
- \ge \frac{(j-1)^\tau}{C_{\vp}^\tau}.
-\]
-This then implies
-\[
-\sum_{j=j_d^*}^\infty \frac{1}{T(\lambda_{j,d}^{-1},d, \tau p,\tau q)}
-\le K_{\vp,\tau}\, C_{\vp}^\tau \sum_{j=j_d^*}^\infty \frac{1}{(j-1)^\tau}
-\peter{\le K_{\vp,\tau}\, C_{\vp}^\tau \, \zeta(\tau)}
-<\infty.
-\]
-\peter{
-Consequently,
-\[
-\sup_{d\in\naturals} \sum_{j=j_d^*}^\infty \frac{1}{T(\lambda_{j,d}^{-1},d, \tau p,\tau q)} \le K_{\vp,\tau}\, C_{\vp}^\tau \, \zeta(\tau) < \infty.
-\]
-}
 Note now that, \peter{for any $d\in\naturals$,}
 \[
  j_d^* = \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1 \le \lfloor C_{\vp}^\tau\, T(0,d,\tau p,\tau q)\rfloor +1.
