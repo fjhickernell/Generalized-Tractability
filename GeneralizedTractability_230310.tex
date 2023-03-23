@@ -157,7 +157,7 @@ We first consider the simpler case when the complexity is essentially independen
 \begin{theorem}\label{thm_main_strong_tract2}
 A problem is strongly $T$-tractable iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ and an integer $L_{\vp} > 0$ such that
 \begin{equation} \label{eq:strong_tractiff3}
-     S(\vp):=\sup_{d \in \naturals} \sum_{i = L_{\vp}}^\infty \frac{1}{T(\lambda_{i,d}^{-1},1,\vp)} < \infty.
+     S_{\vp}:=\sup_{d \in \naturals} \sum_{i = L_{\vp}}^\infty \frac{1}{T(\lambda_{i,d}^{-1},1,\vp)} < \infty.
 \end{equation}
 If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{strct}} : = \{\vp^* : \eqref{eq:strong_tractiff3} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}$.  Then $\cp_{\textup{strct}} = \widetilde{\cp}_{\textup{strct}}$, and the set of optimal strong tractability parameters is
 \[
@@ -199,12 +199,13 @@ Now we take this upper bound further, specializing to the case of $d'=1$:
 \begin{align*}
        \comp(\varepsilon,d)
        & = 1 + T(\varepsilon^{-1},1, \vp) \Biggl [ \sum_{i=1}^{L_{\vp}-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
-       + \underbrace{\sum_{i=L(p)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S(p) <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\Biggr] \\
-       & \le 1+ T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L(p)-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S(\vp)\right]}_{=:C_1(\vp)}\\
-       & = 1+ T(\varepsilon^{-1},1,\vp) C_1 (p)\\
-       &\le C_{\vp} T(\varepsilon^{-1},1,\vp),
+       + \underbrace{\sum_{i=L(p)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\Biggr] \\
+       & \le 1+ T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L(p)-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp}\right]}_{=:C_{1,\vp}}\\
+       & = 1+ T(\varepsilon^{-1},1,\vp) C_{1,\vp}\\
+       & \le \underbrace{2 C_{1,\vp}}_{\text{since } T(\varepsilon^{-1},1,\vp) \ge 1} T(\varepsilon^{-1},1,\vp)
+       = \underbrace{C_{\vp}}_{:=2 C_{1,\vp}}T(\varepsilon^{-1},1,\vp).
 \end{align*}
-for some suitably chosen $C_{\vp}>0$. This means that we have strong $T$-tractability via \eqref{eq:strong_tract_def}, and verifies the sufficiency of \eqref{eq:strong_tractiff3}.
+This means that we have strong $T$-tractability via \eqref{eq:strong_tract_def}, and verifies the sufficiency of \eqref{eq:strong_tractiff3}.
 
 
 
@@ -281,7 +282,7 @@ Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \
 \begin{theorem}\label{thm_main_tract2}
 A problem is $T$-tractable iff there exist $\vp\ge \vzero$ and a constant $L(\vp) > 0$ such that
 \begin{equation} \label{eq:tractiff4}
-     S(\vp):=\sup_{d \in \naturals}
+     S_{\vp}:=\sup_{d \in \naturals}
      \sum_{i = \lceil L(\vp)\, T(0,d,\vp) \rceil}^\infty \frac{1}{T(\lambda^{-1}_{i,d},d,\vp)}< \infty.
 \end{equation}
 If \eqref{eq:tractiff4} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{trct}} : = \{\vp^* : \eqref{eq:tractiff4} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}$.  Then $\cp_{\textup{trct}} = \widetilde{\cp}_{\textup{trct}}$, and the set of optimal strong tractability parameters is
@@ -302,13 +303,13 @@ Let $J(\vp,d): = \lceil L(\vp)\, T(0,d,\vp)\rceil$.  Then this upper bound on th
 \begin{align*}
        \comp(\varepsilon,d)
        & = 1 + T(\varepsilon^{-1},d,\vp) \Biggl [ \sum_{i=1}^{J(\vp,d) -1} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
-       + \underbrace{\sum_{i=J(\vp,d)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S(\vp) \text{ by \eqref{eq:tractiff4}}} \Biggr ] \\
-       & \le 1+ T(\varepsilon^{-1},d,\vp)\left[ \frac{J(\vp,d)-1}{T(\lambda_{\max}^{-1},d,\vp)} + S(\vp)\right]
+       + \underbrace{\sum_{i=J(\vp,d)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} \text{ by \eqref{eq:tractiff4}}} \Biggr ] \\
+       & \le 1+ T(\varepsilon^{-1},d,\vp)\left[ \frac{J(\vp,d)-1}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp}\right]
         \\
-       & \le 1+ T(\varepsilon^{-1},d,\vp)\left[L(\vp)\, T(0,d,\vp) + S(\vp)\right] \qquad \text{since } T(\lambda_{\max}^{-1},d,\vp) \ge 1\\
-       & \le 1+L(\vp)\,T(\varepsilon^{-1},d,\vp) T(0,d,\vp) + S(\vp)\, T(\varepsilon^{-1},d,\vp)\\
-       & \le 1+L(\vp)\,T(\varepsilon^{-1},d,\vp) T(\varepsilon^{-1},d,\vp) + S(\vp)\, T(\varepsilon^{-1},d,\vp)\\
-       & \le 1+L(\vp)\,K_{\vp,2} T(\varepsilon^{-1},d,2\vp)  + S(\vp)\, T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
+       & \le 1+ T(\varepsilon^{-1},d,\vp)\left[L(\vp)\, T(0,d,\vp) + S_{\vp}\right] \qquad \text{since } T(\lambda_{\max}^{-1},d,\vp) \ge 1\\
+       & \le 1+L(\vp)\,T(\varepsilon^{-1},d,\vp) T(0,d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
+       & \le 1+L(\vp)\,T(\varepsilon^{-1},d,\vp) T(\varepsilon^{-1},d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
+       & \le 1+L(\vp)\,K_{\vp,2} T(\varepsilon^{-1},d,2\vp)  + S_{\vp}\, T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
        & \le C_{2}(2\vp) \,T(\varepsilon^{-1},d,2\vp)
 \end{align*}
 for some suitably chosen $C_{2}(2\vp)>0$. It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:tractiff4}. \\
