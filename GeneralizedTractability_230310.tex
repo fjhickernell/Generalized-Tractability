@@ -349,6 +349,8 @@ This implies via our technical assumption \eqref{eq:ptauassume} that
 	\left[\frac{(j-1)}{C_{\vp}}\right]^\tau \qquad \forall j \ge j(\infty,d,\vp)
 \end{equation*}
 Summing both sides of the inequality yields and noting that $L(\vp) \le L(\tau\vp)$, it follows that
+\peter{(Peter: Why does $L(\cdot)$ ocur here?)} \fred{Because I got lost a bit.}
+
 \begin{multline*}
 	\sup_{d\in\naturals} \sum_{j=j(\infty,d,\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},d, \tau \vp)} \le
 	\sup_{d\in\naturals} \sum_{j=j(\infty,d,\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},d, \tau \vp)} \\
@@ -368,6 +370,13 @@ So, there exists $L(\tau \vp)$ such that
 \peter{\sup_{d\in\naturals}}\,\, \sum_{j=\lceil L(\tau \vp) T(0,d,\tau \vp)\rceil}^\infty \frac{1}{T(\lambda_{j,d}^{-1},d, \tau\vp)}<\infty.
 \]
 \fred{Fred:  Not sure how $C_{\vp}^\tau$ becomes $L(\tau \vp)$?}
+
+\peter{Peter: You are right. We could probably solve this by just saying above that 
+\[
+ j(\infty,d,\vp) = \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1 \le \lfloor C_{\vp}\, T(0,d,\tau \vp)\rfloor +1,
+\]
+and then introduce $L(\tau \vp)$ to bound $C_{\vp}$ and also incorporate the ``+1''?
+}
 
 This yields \eqref{eq:tractiff4} with $\vp$ replaced by $\tau \vp$, and so we see the necessity of $\eqref{eq:tractiff4}$.
 
