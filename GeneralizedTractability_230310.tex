@@ -155,9 +155,9 @@ In the sections below we prove necessary and sufficient conditions on tractabili
 We first consider the simpler case when the complexity is essentially independent of the dimension, $d$.  The proof also introduces the line of argument used for the case where there is $d$ dependence.
 
 \begin{theorem}\label{thm_main_strong_tract2}
-A problem is strongly $T$-tractable iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ and an integer $L(\vp) > 0$ such that
+A problem is strongly $T$-tractable iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ and an integer $L_{\vp} > 0$ such that
 \begin{equation} \label{eq:strong_tractiff3}
-     S(\vp):=\sup_{d \in \naturals} \sum_{i = L(\vp)}^\infty \frac{1}{T(\lambda_{i,d}^{-1},1,\vp)} < \infty.
+     S(\vp):=\sup_{d \in \naturals} \sum_{i = L_{\vp}}^\infty \frac{1}{T(\lambda_{i,d}^{-1},1,\vp)} < \infty.
 \end{equation}
 If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{strct}} : = \{\vp^* : \eqref{eq:strong_tractiff3} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}$.  Then $\cp_{\textup{strct}} = \widetilde{\cp}_{\textup{strct}}$, and the set of optimal strong tractability parameters is
 \[
@@ -198,13 +198,13 @@ This last inequality together with \eqref{eq:comp_equiv} implies an upper bound 
 Now we take this upper bound further, specializing to the case of $d'=1$:
 \begin{align*}
        \comp(\varepsilon,d)
-       & = 1 + T(\varepsilon^{-1},1, \vp) \Biggl [ \sum_{i=1}^{L(\vp)-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
+       & = 1 + T(\varepsilon^{-1},1, \vp) \Biggl [ \sum_{i=1}^{L_{\vp}-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
        + \underbrace{\sum_{i=L(p)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S(p) <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\Biggr] \\
        & \le 1+ T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L(p)-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S(\vp)\right]}_{=:C_1(\vp)}\\
        & = 1+ T(\varepsilon^{-1},1,\vp) C_1 (p)\\
        &\le C_{\vp} T(\varepsilon^{-1},1,\vp),
 \end{align*}
-for some suitably chosen $C_{\vp}>0$. This means that we have strong $T$-tractability via \eqref{eq:strong_tract_def}, and verifies sufficiency of \eqref{eq:strong_tractiff3}.
+for some suitably chosen $C_{\vp}>0$. This means that we have strong $T$-tractability via \eqref{eq:strong_tract_def}, and verifies the sufficiency of \eqref{eq:strong_tractiff3}.
 
 
 
@@ -253,13 +253,15 @@ Summing both sides of the inequality yields it follows that
 K_{\vp,\tau}\, C_{\vp}^\tau\, \zeta (\tau) < \infty,
 \end{equation*}
 where $\zeta$ denotes the Riemann zeta function.
-This yields \eqref{eq:strong_tractiff3} with $\vp$ replaced by $\vp' = \tau \vp$ and $L(\vp') = j (\infty,\vp)$, and so we see the necessity of $\eqref{eq:strong_tractiff3}$.
+This yields \eqref{eq:strong_tractiff3} with $\vp$ replaced by $\vp' = \tau \vp$ and $L_{\vp'} = j (\infty,\vp)$, and so we see the necessity of $\eqref{eq:strong_tractiff3}$.
 
 \bigskip
 \noindent \textbf{Optimality:} \\
 To complete the proof, we must show that $\cp_{\textup{strct}} = \widetilde{\cp}_{\textup{strct}}$.  Then, the expression for  $\cp_{\textup{sopt}}$ automatically follows from its definition in \eqref{eq:Psoptdef}.
 
-If $\vp^* \in \cp_{\textup{strct}}$, then \eqref{eq:strong_tract_def} holds for all $\vp \in (\vp^*,\vinfty)$.  By the argument to prove the necessary condition, it follows that \eqref{eq:strong_tractiff3} must also hold for all $\vp \in (\vp^*,\vinfty)$, so $\vp^* \in \widetilde{\cp}_{\textup{strct}}$.  Conversely, if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then \eqref{eq:strong_tractiff3}  holds for all $\vp \in (\vp^*,\vinfty)$.  By the argument to prove the sufficient condition, it follows that \eqref{eq:strong_tract_def} must also hold for all $\vp \in (\vp^*,\vinfty)$, so $\vp^* \in \cp}_{\textup{strct}}$.
+First we show  that if $\vp^* \in \cp_{\textup{strct}}$, then $\vp^* \in \widetilde{\cp}_{\textup{strct}}$.  If $\vp^* \in \cp_{\textup{strct}}$, then \eqref{eq:strong_tract_def} must hold for all $\vp' \in (\vp^*,\vinfty)$.  For any $\vp' \in (\vp^*,\vinfty)$, we may choose $\vp$ and $\tau$ such that $\vp^* < \vp < \vp' = \tau \vp$. Since $\vp > \vp^*$, \eqref{eq:strong_tract_def} also holds for $\vp$, and it follows that \eqref{eq:strong_tractiff3} must hold for $\vp'$ by the proof of necessity above.  Thus, $\vp^* \in \widetilde{\cp}_{\textup{strct}}$.  
+
+Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \in \cp_{\textup{strct}}$.  If $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then \eqref{eq:strong_tractiff3}  holds for all $\vp \in (\vp^*,\vinfty)$.  By the argument to prove the sufficient condition above, it follows that \eqref{eq:strong_tract_def} must also hold for all $\vp \in (\vp^*,\vinfty)$. Thus, $\vp^* \in \cp}_{\textup{strct}}$.
 
 \bigskip
 
