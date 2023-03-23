@@ -118,7 +118,7 @@ There is a technical assumption required for our analysis.  There exists a $K_{\
 \end{equation}
 \end{subequations}
 
-If \eqref{eq:tract_def} holds for some $\vp$, it clearly holds for larger, $\vp$.  We are often interested in the optimal or smallest $\vp$ for which \eqref{eq:tract_def} holds.  Let
+If \eqref{eq:tract_def} holds for some $\vp$, it clearly holds for larger, $\vp$.  We are often interested in the optimal or smallest $\vp$ for which \eqref{eq:tract_def} holds.  Define the closures of the sets of parameters for which our (strong) tractability conditions hold:
 \begin{equation*}
 	\cp_{\textup{trct}} : = \{\vp^* : \eqref{eq:tract_def} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}, \qquad
 	\cp_{\textup{strct}} : = \{\vp^* : \eqref{eq:strong_tract_def} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}.
@@ -131,7 +131,7 @@ The  set of optimal parameters is defined as all of those parameters satisfying 
 	\mathcal{P}_{\textup{sopt}} : = \{\vp^* \in \cp_{\textup{strct}} :  \vp* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \cp_{\textup{strct}} \setminus \{\vp^*\} \}.
 \end{gather}
 
-Certain common notions of tractability are covered by the general situation described above
+Certain common notions of tractability are covered by the general situation described above.
 \begin{equation*}
 	\begin{array}{r@{\qquad}c@{\qquad}cc}
 		& T(\varepsilon^{-1},d,\vp)
@@ -198,8 +198,8 @@ This last inequality together with \eqref{eq:comp_equiv} implies an upper bound 
 Now we take this upper bound further, specializing to the case of $d'=1$:
 \begin{align*}
        \comp(\varepsilon,d)
-       & = 1 + T(\varepsilon^{-1},1, \vp) \left [ \sum_{i=1}^{L(\vp)-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
-       + \underbrace{\sum_{i=L(p)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S(p) <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\right] \\
+       & = 1 + T(\varepsilon^{-1},1, \vp) \Biggl [ \sum_{i=1}^{L(\vp)-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
+       + \underbrace{\sum_{i=L(p)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S(p) <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\Biggr] \\
        & \le 1+ T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L(p)-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S(\vp)\right]}_{=:C_1(\vp)}\\
        & = 1+ T(\varepsilon^{-1},1,\vp) C_1 (p)\\
        &\le C_{\vp} T(\varepsilon^{-1},1,\vp),
@@ -224,7 +224,7 @@ Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
 Define
 \[
 j (\varepsilon,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1, \quad
- L(\vp):= j (\infty,\vp).
+j (\infty,\vp) = \lim_{\varepsilon \to \infty} j (\varepsilon,\vp) .
 \]
 Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{j(\varepsilon,\vp),d} \le \varepsilon$.
 Note furthermore that we always have
@@ -245,16 +245,15 @@ This implies via our technical assumption \eqref{eq:ptauassume} that
  \ge
   \left[\frac{(j-1)}{C_{\vp}}\right]^\tau \qquad \forall j \ge L(\vp)
 \end{equation*}
-Summing both sides of the inequality yields and noting that $L(\vp) \le L(\tau\vp)$, it follows that
-\begin{multline*}
-\sup_{d\in\naturals} \sum_{j=L(\tau\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau \vp)} \le
-\sup_{d\in\naturals} \sum_{j=L(\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau \vp)} \\
+Summing both sides of the inequality yields it follows that
+\begin{equation*}
+\sup_{d\in\naturals} \sum_{j=j (\infty,\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau \vp)}
 \le K_{\vp,\tau}\, C_{\vp}^\tau
-\sum_{j=L(\vp)}^\infty \frac{1}{(j-1)^\tau} \le
+\sum_{j=j (\infty,\vp)}^\infty \frac{1}{(j-1)^\tau} \le
 K_{\vp,\tau}\, C_{\vp}^\tau\, \zeta (\tau) < \infty,
-\end{multline*}
+\end{equation*}
 where $\zeta$ denotes the Riemann zeta function.
-This yields \eqref{eq:strong_tractiff3} with $p$ replaced by $\tau p$, and so we see the necessity of $\eqref{eq:strong_tractiff3}$.
+This yields \eqref{eq:strong_tractiff3} with $\vp$ replaced by $\vp' = \tau \vp$ and $L(\vp') = j (\infty,\vp)$, and so we see the necessity of $\eqref{eq:strong_tractiff3}$.
 
 \bigskip
 \noindent \textbf{Optimality:} \\
@@ -294,7 +293,7 @@ If \eqref{eq:tractiff4} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{trc
     \textbf{Sufficient Condition:}\\
 Suppose that \eqref{eq:tractiff4} holds for some $\vp \ge 0$. By the argument in the proof of the sufficient condition for Theorem \ref{thm_main_strong_tract2}, it follows from \eqref{eq:compUP} with $d'=d$ that the complexity has an upper bound of
 \begin{equation*}
-	 \comp(\varepsilon,d)} \le 1 + T(\varepsilon^{-1},d,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
+	 \comp(\varepsilon,d) \le 1 + T(\varepsilon^{-1},d,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
 \end{equation*}
 
 Let $J(\vp,d): = \lceil L(\vp)\, T(0,d,\vp)\rceil$.  Then this upper bound on the complexity can be further bounded above by
@@ -318,7 +317,7 @@ for some suitably chosen $C_{2}(2\vp)>0$. It follows that we have $T$-tractabili
 Suppose that we have
 $T$-tractability. That is, for some $\vp \ge \vzero$, there exists a positive constant $C_{\vp}$ such that
 \[
-\comp(\varepsilon,d)\le C_{\vp}\, (T(\varepsilon^{-1},d,\vp) \qquad \forall \varepsilon > 0,  \ d \in \naturals.
+\comp(\varepsilon,d)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall \varepsilon > 0,  \ d \in \naturals.
 \]
 Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
 \begin{equation}\label{eq:lambda_K4}
@@ -380,7 +379,7 @@ and then introduce $L(\tau \vp)$ to bound $C_{\vp}$ and also incorporate the ``+
 
 This yields \eqref{eq:tractiff4} with $\vp$ replaced by $\tau \vp$, and so we see the necessity of $\eqref{eq:tractiff4}$.
 
-\bigskp
+\bigskip
 
 \noindent \textbf{Optimality:}
 \fred{Not sure how to make optimality works because for sufficiency $\vp$ turns into $2\vp$.}
