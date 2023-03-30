@@ -87,13 +87,13 @@ Let $T$ be a tractability function defined as follows,
 \[
 T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow [1,\infty),
 \]
-A tractability function is a simple function that provides an upper bound on the computational complexity of a problem
-A problem is $T$-tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$ such that
+A tractability function is a function of simple form that provides an upper bound on the computational complexity of a problem.
+A problem is defined as $T$-tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$ such that
 \begin{equation} \label{eq:tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall \varepsilon >0, \ d \in \mathbb{N}.
 \end{equation}
 A problem is \emph{strongly}
-$T$-tractable with parameter $\vp$ iff the complexity is independent of the dimension, that is, there exists a positive constant $C_{\vp}$ such that
+$T$-tractable with parameter $\vp$ iff the complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$ such that
 \begin{equation} \label{eq:strong_tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},1,\vp) \qquad \forall \varepsilon >0 , \ d \in \mathbb{N}.
 \end{equation}
@@ -104,7 +104,7 @@ Note that the tractability function is bounded below away from zero even as $\va
 \begin{equation}
 	T \text{ is non-decreasing in all variables}
 \end{equation}
-which implies that the problem does not become easier by decreasing the tolerance, $\varepsilon$, or increasing the dimension, $d$. Since there are an infinite number of positive eigenvalues, it also make sense to assume that
+which implies that the problem does not become easier by decreasing the tolerance, $\varepsilon$, or increasing the dimension, $d$. Furthermore, increasing $\vp$ does not decrease $T(\cdot, \cdot, \vp)$.  Since there are an infinite number of positive eigenvalues, it also make sense to assume that
 \begin{equation}
 	\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d,\vp) = \infty \qquad \forall d \in \naturals, \ \vp \in [0,\infty)^s.
 \end{equation}
@@ -112,7 +112,7 @@ Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit:
 \begin{equation}
 	T(0,d,\vp):=\lim_{\varepsilon\to\infty}T(\varepsilon^{-1},d,\vp).
 \end{equation}
-There is a technical assumption required for our analysis.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
+Finally, there is a technical assumption required for our analysis.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:ptauassume}
 	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in (1,\infty).
 \end{equation}
@@ -126,9 +126,9 @@ If \eqref{eq:tract_def} holds for some $\vp$, it clearly holds for larger, $\vp$
 The  set of optimal parameters is defined as all of those parameters satisfying the (strong) tractability conditions that are not greater than or equal to others:
 \begin{gather}
 	\label{eq:Poptdef}
-	\mathcal{P}_{\textup{opt}} : = \{\vp^* \in \cp_{\textup{trct}} :  \vp* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \cp_{\textup{trct}} \setminus \{\vp^*\} \}, \\
+	\mathcal{P}_{\textup{opt}} : = \{\vp^* \in \cp_{\textup{trct}} :  \vp^* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \cp_{\textup{trct}} \setminus \{\vp^*\} \}, \\
 	\label{eq:Psoptdef}
-	\mathcal{P}_{\textup{sopt}} : = \{\vp^* \in \cp_{\textup{strct}} :  \vp* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \cp_{\textup{strct}} \setminus \{\vp^*\} \}.
+	\mathcal{P}_{\textup{sopt}} : = \{\vp^* \in \cp_{\textup{strct}} :  \vp^* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \cp_{\textup{strct}} \setminus \{\vp^*\} \}.
 \end{gather}
 
 Certain common notions of tractability are covered by the general situation described above.
@@ -147,7 +147,7 @@ Certain common notions of tractability are covered by the general situation desc
 Here above, $\vp = (p,q)$ in some cases.
 
 
-In the sections below we prove necessary and sufficient conditions on tractability as generally defined in \eqref{eq:tract_def} and \eqref{eq:strong_tract_def}.  These conditions  that involve the boundedness of sums defined in terms of $\{T(\lambda_{i,d}^{-1},\cdot, \cdot)\}_{i=1}^\infty$.  In practice, it may be easier to verify whether or not these conditions hold than to deal with \eqref{eq:comp_def} directly.
+In the sections below we prove necessary and sufficient conditions on tractability as generally defined in \eqref{eq:tract_def} and \eqref{eq:strong_tract_def}.  These conditions involve the boundedness of sums defined in terms of $\{T(\lambda_{i,d}^{-1},\cdot, \cdot)\}_{i=1}^\infty$.  In practice, it may be easier to verify whether or not these conditions hold than to verify \eqref{eq:comp_def} directly.
 
 
 \subsection{Strong tractability}
@@ -169,13 +169,9 @@ If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\tex
 
 \begin{proof}
 \textbf{Sufficient condition:}\newline
-We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.  Given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity:
-    \begin{equation} \label{eq:comp_equiv}
-    \comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d',\vp)}\le \frac{1}{T(\varepsilon^{-1},d',\vp) }\biggr\},
-\end{equation}
-for any $d' \in \naturals$.
+We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.  
 
-Also since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d',\vp)$ are non-decreasing in $i$. In particular, for all $n\in \mathbb{N}$, we have
+Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d',\vp)$ are non-decreasing in $i$. In particular, for all $n\in \mathbb{N}$, we have
 \begin{align*}
     \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}
     & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},d',\vp)} \le \cdots \le \frac{1}{T(\lambda_{1, d}^{-1},d',\vp)} \\
@@ -184,12 +180,17 @@ Also since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T
     \le \frac 1n \sum_{i=1}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)}.
 \end{align*}
 Thus, we can conclude from the previous line that
-\begin{multline*}
+\begin{multline} \label{eq:implicate_a}
     n \ge T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \\
    \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le
    \frac 1n \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) } \le \frac{1}{T(\varepsilon^{-1},d',\vp)} \qquad \forall \varepsilon > 0, \ d,d' \in \naturals.
-\end{multline*}
-This last inequality together with \eqref{eq:comp_equiv} implies an upper bound on the complexity: of
+\end{multline}   
+
+Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity via \eqref{eq:comp_def}:
+    \begin{equation*} %\label{eq:comp_equiv}
+    \comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d',\vp)}\le \frac{1}{T(\varepsilon^{-1},d',\vp) }\biggr\},
+\end{equation*}
+for any $d' \in \naturals$.  Combining this expression for the complexity with the implication in \eqref{eq:implicate_a}, we can conclude from the previous line that
 \begin{equation} \label{eq:compUP}
 	\comp(\varepsilon,d)
 	\le 1 + T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \qquad \forall \varepsilon > 0, \ d, d' \in \naturals
@@ -199,7 +200,7 @@ Now we take this upper bound further, specializing to the case of $d'=1$:
 \begin{align*}
        \comp(\varepsilon,d)
        & = 1 + T(\varepsilon^{-1},1, \vp) \Biggl [ \sum_{i=1}^{L_{\vp}-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
-       + \underbrace{\sum_{i=L(p)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\Biggr] \\
+       + \underbrace{\sum_{i=L_{\vp}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\Biggr] \\
        & \le 1+ T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L(p)-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp}\right]}_{=:C_{1,\vp}}\\
        & = 1+ T(\varepsilon^{-1},1,\vp) C_{1,\vp}\\
        & \le \underbrace{2 C_{1,\vp}}_{\text{since } T(\varepsilon^{-1},1,\vp) \ge 1} T(\varepsilon^{-1},1,\vp)
@@ -235,16 +236,16 @@ j(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambd
 since
 $T(\cdot,1, \vp)$ is non-decreasing.
 
-For $\varepsilon$ taking on all positive values, $j(\varepsilon,\vp)$ takes on all values greater than or equal to $L(\vp)$, so
+For $\varepsilon$ taking on all positive values, $j(\varepsilon,\vp)$ takes on all values greater than or equal to $j(\infty,\vp)$, so
 \[
-j\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{j,d}^{-1},1,\vp)+1, \qquad \forall j \ge L(\vp).
+j\le C_{\vp} T(\lambda_{j,d}^{-1},1,\vp)+1, \qquad \forall j \ge j(\infty,\vp).
 \]
 This implies via our technical assumption \eqref{eq:ptauassume} that
 \begin{equation*}
  K_{\vp,\tau}\,T (\lambda_{j,d}^{-1},1,\tau \vp) \ge
  [T(\lambda_{j,d}^{-1},1, \vp)]^\tau
  \ge
-  \left[\frac{(j-1)}{C_{\vp}}\right]^\tau \qquad \forall j \ge L(\vp)
+  \left[\frac{(j-1)}{C_{\vp}}\right]^\tau \qquad \forall j \ge j(\infty,\vp)
 \end{equation*}
 Summing both sides of the inequality yields it follows that
 \begin{equation*}
@@ -274,7 +275,7 @@ Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \
 
 
 
-
+\subsection{Tractability} \label{sec:tractability}
 
 
 \bigskip
