@@ -263,7 +263,7 @@ To complete the proof, we must show that $\cp_{\textup{strct}} = \widetilde{\cp}
 
 First we show  that if $\vp^* \in \cp_{\textup{strct}}$, then $\vp^* \in \widetilde{\cp}_{\textup{strct}}$.  If $\vp^* \in \cp_{\textup{strct}}$, then \eqref{eq:strong_tract_def} must hold for all $\vp' \in (\vp^*,\vinfty)$.  For any $\vp' \in (\vp^*,\vinfty)$, we may choose $\vp$ and $\tau$ such that $\vp^* < \vp < \vp' = \tau \vp$. Since $\vp > \vp^*$, \eqref{eq:strong_tract_def} also holds for $\vp$, and it follows that \eqref{eq:strong_tractiff3} must hold for $\vp'$ by the proof of necessity above.  Thus, $\vp^* \in \widetilde{\cp}_{\textup{strct}}$.  
 
-Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \in \cp_{\textup{strct}}$.  If $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then \eqref{eq:strong_tractiff3}  holds for all $\vp \in (\vp^*,\vinfty)$.  By the argument to prove the sufficient condition above, it follows that \eqref{eq:strong_tract_def} must also hold for all $\vp \in (\vp^*,\vinfty)$. Thus, $\vp^* \in \cp}_{\textup{strct}}$.
+Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \in \cp_{\textup{strct}}$.  If $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then \eqref{eq:strong_tractiff3}  holds for all $\vp \in (\vp^*,\vinfty)$.  By the argument to prove the sufficient condition above, it follows that \eqref{eq:strong_tract_def} must also hold for all $\vp \in (\vp^*,\vinfty)$. Thus, $\vp^* \in \cp_{\textup{strct}}$.
 
 \bigskip
 
@@ -273,23 +273,21 @@ Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \
 
 
 
-
-
 \subsection{Tractability} \label{sec:tractability}
 
 
-\bigskip
+The argument proving equivalent conditions for tractability is similar to, but somewhat more involved than the proof of Theorem \ref{thm_main_strong_tract2}.  Moreover, the specification of the set of optimal parameters is not as precise as in Theorem \ref{thm_main_strong_tract2}.
 
 \begin{theorem}\label{thm_main_tract2}
-A problem is $T$-tractable iff there exist $\vp\ge \vzero$ and a constant $L(\vp) > 0$ such that
+A problem is $T$-tractable iff there exist $\vp\ge \vzero$ and a constant $L_{\vp} > 0$ such that
 \begin{equation} \label{eq:tractiff4}
      S_{\vp}:=\sup_{d \in \naturals}
-     \sum_{i = \lceil L(\vp)\, T(0,d,\vp) \rceil}^\infty \frac{1}{T(\lambda^{-1}_{i,d},d,\vp)}< \infty.
+     \sum_{i = \lceil L_{\vp}\, T(0,d,\vp) \rceil}^\infty \frac{1}{T(\lambda^{-1}_{i,d},d,\vp)}< \infty.
 \end{equation}
-If \eqref{eq:tractiff4} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{trct}} : = \{\vp^* : \eqref{eq:tractiff4} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}$.  Then $\cp_{\textup{trct}} = \widetilde{\cp}_{\textup{trct}}$, and the set of optimal strong tractability parameters is
+If \eqref{eq:tractiff4} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{trct}} : = \{\vp^* : \eqref{eq:tractiff4} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}$, and   $\widehat{\cp}_{\textup{trct}} : = \{\vp^* : 2\vp \in \widetilde{\cp}_{\textup{trct}}\}$.  Then $\cp_{\textup{trct}} = \widetilde{\cp}_{\textup{trct}}$, and the set of optimal strong tractability parameters is
 \[
 \cp_{\textup{opt}} =
-\{\vp^* \in \widetilde{\cp}_{\textup{trct}} :  \vp* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \widetilde{\cp}_{\textup{trct}} \setminus \{\vp^*\} \}.
+\{\vp^* \in \widetilde{\cp}_{\textup{trct}} :  \vp^* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \widetilde{\cp}_{\textup{trct}} \setminus \{\vp^*\} \}.
 \]\end{theorem}
 
 
@@ -300,17 +298,17 @@ Suppose that \eqref{eq:tractiff4} holds for some $\vp \ge 0$. By the argument in
 	 \comp(\varepsilon,d) \le 1 + T(\varepsilon^{-1},d,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
 \end{equation*}
 
-Let $J(\vp,d): = \lceil L(\vp)\, T(0,d,\vp)\rceil$.  Then this upper bound on the complexity can be further bounded above by
+Let $J(\vp,d): = \lceil L_{\vp}\, T(0,d,\vp)\rceil$.  Then this upper bound on the complexity can be further bounded above by
 \begin{align*}
        \comp(\varepsilon,d)
        & = 1 + T(\varepsilon^{-1},d,\vp) \Biggl [ \sum_{i=1}^{J(\vp,d) -1} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
        + \underbrace{\sum_{i=J(\vp,d)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} \text{ by \eqref{eq:tractiff4}}} \Biggr ] \\
        & \le 1+ T(\varepsilon^{-1},d,\vp)\left[ \frac{J(\vp,d)-1}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp}\right]
         \\
-       & \le 1+ T(\varepsilon^{-1},d,\vp)\left[L(\vp)\, T(0,d,\vp) + S_{\vp}\right] \qquad \text{since } T(\lambda_{\max}^{-1},d,\vp) \ge 1\\
-       & \le 1+L(\vp)\,T(\varepsilon^{-1},d,\vp) T(0,d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
-       & \le 1+L(\vp)\,T(\varepsilon^{-1},d,\vp) T(\varepsilon^{-1},d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
-       & \le 1+L(\vp)\,K_{\vp,2} T(\varepsilon^{-1},d,2\vp)  + S_{\vp}\, T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
+       & \le 1+ T(\varepsilon^{-1},d,\vp)\left[L_{\vp}\, T(0,d,\vp) + S_{\vp}\right] \qquad \text{since } T(\lambda_{\max}^{-1},d,\vp) \ge 1\\
+       & \le 1+L_{\vp}\,T(\varepsilon^{-1},d,\vp) T(0,d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
+       & \le 1+L_{\vp}\,T(\varepsilon^{-1},d,\vp) T(\varepsilon^{-1},d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
+       & \le 1+L_{\vp}\,K_{\vp,2} T(\varepsilon^{-1},d,2\vp)  + S_{\vp}\, T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
        & \le C_{2}(2\vp) \,T(\varepsilon^{-1},d,2\vp)
 \end{align*}
 for some suitably chosen $C_{2}(2\vp)>0$. It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:tractiff4}. \\
@@ -351,7 +349,7 @@ This implies via our technical assumption \eqref{eq:ptauassume} that
 	\ge
 	\left[\frac{(j-1)}{C_{\vp}}\right]^\tau \qquad \forall j \ge j(\infty,d,\vp)
 \end{equation*}
-Summing both sides of the inequality yields and noting that $L(\vp) \le L(\tau\vp)$, it follows that
+Summing both sides of the inequality yields and noting that $L_{\vp} \le L(\tau\vp)$, it follows that
 \peter{(Peter: Why does $L(\cdot)$ ocur here?)} \fred{Because I got lost a bit.}
 
 \begin{multline*}
@@ -415,7 +413,7 @@ be defined by
 \]
 Then Theorem \ref{thm_main_tract2} yields the iff-condition
 \[
- \sup_{d\in\naturals} \sum_{i=L(\vp) d^{q_1}}^\infty (\min\{\lambda_{i,d},1\})^p d^{-q} < \infty.
+ \sup_{d\in\naturals} \sum_{i=L_{\vp} d^{q_1}}^\infty (\min\{\lambda_{i,d},1\})^p d^{-q} < \infty.
 \]
 This essentially recovers the result on polynomial tractability in \cite[Theorem 5.1]{NW08}
 
