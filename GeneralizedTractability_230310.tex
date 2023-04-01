@@ -30,7 +30,7 @@
 
 \allowdisplaybreaks
 
-\newcommand{\fred}[1]{\begingroup\color{blue}#1\endgroup}
+\newcommand{\fred}[1]{\begingroup\color{blue}Fred: #1\endgroup}
 \newcommand{\peter}[1]{\begingroup\color{purple}#1\endgroup}
 \newcommand{\kachi}[1]{\begingroup\color{ForestGreen}#1\endgroup}
 
@@ -86,8 +86,9 @@ The question is,``How hard is this problem as $\varepsilon$ tends to zero or as 
 \subsection{Notation and fundamental definitions}
 Let $T$ be a tractability function defined as follows,
 \[
-T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow [1,\infty),
+T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty),
 \]
+\fred{I think that we do not need to bound $T$ away from $0$.}
 A tractability function is a function of simple form that provides an upper bound on the computational complexity of a problem.  Some examples of tractability functions commonly considered are provided in Section \ref{sec:examples}.
 
 
@@ -117,7 +118,7 @@ Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit:
 \end{equation}
 Finally, there is a technical assumption required for our analysis.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:ptauassume}
-	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in (1,\infty).
+	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in [1,\infty). 
 \end{equation}
 \end{subequations}
 
@@ -193,21 +194,21 @@ Moreover, given that $T$ is increasing in its arguments, we have the following e
     \begin{equation*} %\label{eq:comp_equiv}
     \comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d',\vp)}\le \frac{1}{T(\varepsilon^{-1},d',\vp) }\biggr\},
 \end{equation*}
-for any $d' \in \naturals$.  Combining this expression for the complexity with the implication in \eqref{eq:implicate_a}, we can conclude from the previous line that
+for any $d' \in \naturals$.  Combining this expression for the complexity with the implication in \eqref{eq:implicate_a} implies an upper bound on the complexity: \fred{think $1+$ not needed}
 \begin{equation} \label{eq:compUP}
 	\comp(\varepsilon,d)
-	\le 1 + T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \qquad \forall \varepsilon > 0, \ d, d' \in \naturals
+	\le T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \qquad \forall \varepsilon > 0, \ d, d' \in \naturals.
 \end{equation}
 
 Now we take this upper bound further, specializing to the case of $d'=1$:
 \begin{align*}
        \comp(\varepsilon,d)
-       & = 1 + T(\varepsilon^{-1},1, \vp) \Biggl [ \sum_{i=1}^{L_{\vp}-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
+       & = T(\varepsilon^{-1},1, \vp) \Biggl [ \sum_{i=1}^{L_{\vp}-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
        + \underbrace{\sum_{i=L_{\vp}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\Biggr] \\
-       & \le 1+ T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L(p)-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp}\right]}_{=:C_{1,\vp}}\\
-       & = 1+ T(\varepsilon^{-1},1,\vp) C_{1,\vp}\\
-       & \le \underbrace{2 C_{1,\vp}}_{\text{since } T(\varepsilon^{-1},1,\vp) \ge 1} T(\varepsilon^{-1},1,\vp)
-       = \underbrace{C_{\vp}}_{:=2 C_{1,\vp}}T(\varepsilon^{-1},1,\vp).
+       & \le T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L(p)-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp}\right]}_{=:C_{\vp}}\\
+       & =  C_{\vp}T(\varepsilon^{-1},1,\vp).
+%       & \le \underbrace{2 C_{1,\vp}}_{\text{since } T(\varepsilon^{-1},1,\vp) \ge 1} T(\varepsilon^{-1},1,\vp)
+%       = \underbrace{C_{\vp}}_{:=2 C_{1,\vp}}T(\varepsilon^{-1},1,\vp).
 \end{align*}
 This means that we have strong $T$-tractability via \eqref{eq:strong_tract_def}, and verifies the sufficiency of \eqref{eq:strong_tractiff3}.
 
@@ -221,7 +222,7 @@ $T$-tractability as defined in \eqref{eq:strong_tract_def}. That is, for some $\
 \comp(\varepsilon,d)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)
 \qquad \forall \varepsilon > 0, \ d \in \mathbb{N}.
 \]
-Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
+Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non-increasing, we have
 \begin{equation}\label{eq:lambda_K_strong3}
 \lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1,d}\le \varepsilon.
 \end{equation}
@@ -229,7 +230,7 @@ Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
 Define
 \[
 j (\varepsilon,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1, \quad
-j (\infty,\vp) = \lim_{\varepsilon \to \infty} j (\varepsilon,\vp) .
+j (\infty,\vp) = \lim_{\varepsilon \to \infty} j (\varepsilon,\vp) \ge 1 .
 \]
 Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{j(\varepsilon,\vp),d} \le \varepsilon$.
 Note furthermore that we always have
@@ -244,19 +245,22 @@ For $\varepsilon$ taking on all positive values, $j(\varepsilon,\vp)$ takes on a
 j\le C_{\vp} T(\lambda_{j,d}^{-1},1,\vp)+1, \qquad \forall j \ge j(\infty,\vp).
 \]
 This implies via our technical assumption \eqref{eq:ptauassume} that
-\begin{equation*}
+\begin{gather*}
  K_{\vp,\tau}\,T (\lambda_{j,d}^{-1},1,\tau \vp) \ge
  [T(\lambda_{j,d}^{-1},1, \vp)]^\tau
  \ge
-  \left[\frac{(j-1)}{C_{\vp}}\right]^\tau \qquad \forall j \ge j(\infty,\vp)
-\end{equation*}
-Summing both sides of the inequality yields it follows that
-\begin{equation*}
+  \left[\frac{(j-1)}{C_{\vp}}\right]^\tau \qquad \forall j \ge j(\infty,\vp) \\
+ \frac{1}{T (\lambda_{j,d}^{-1},1,\tau \vp)} \le
+\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(j-1)^\tau}\qquad \forall j \ge j(\infty,\vp)
+\end{gather*}
+Summing both sides of this last inequality for $j$ from $j(\infty,\vp) \ge 1$ to $\inft$ yields 
+\begin{align*}
 \sup_{d\in\naturals} \sum_{j=j (\infty,\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau \vp)}
-\le K_{\vp,\tau}\, C_{\vp}^\tau
-\sum_{j=j (\infty,\vp)}^\infty \frac{1}{(j-1)^\tau} \le
-K_{\vp,\tau}\, C_{\vp}^\tau\, \zeta (\tau) < \infty,
-\end{equation*}
+& \le  \sup_{d\in\naturals} \frac{1}{T (\lambda_{1,d}^{-1},1, \tau \vp)} + K_{\vp,\tau}\, C_{\vp}^\tau
+\sum_{j=2}^\infty \frac{1}{(j-1)^\tau} \\
+& \le\frac{1}{T (\lambda_{\max}^{-1},1, \tau \vp)} +  K_{\vp,\tau}\, C_{\vp}^\tau
+\zeta (\tau)  < \infty,
+\end{align*}
 where $\zeta$ denotes the Riemann zeta function.
 This yields \eqref{eq:strong_tractiff3} with $\vp$ replaced by $\vp' = \tau \vp$ and $L_{\vp'} = j (\infty,\vp)$, and so we see the necessity of $\eqref{eq:strong_tractiff3}$.
 
