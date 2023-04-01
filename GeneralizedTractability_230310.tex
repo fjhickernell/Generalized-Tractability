@@ -79,7 +79,10 @@ and the complexity of our linear problem is
 \begin{equation}\label{eq:comp_def}
 \comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\}.
 \end{equation}
-The question is,``How hard is this problem as $\varepsilon$ tends to zero or as $d$ tends to infinity?''  We want to identify equivalent conditions in terms of the singular values that are easier to verify than dealing with the definition in \eqref{eq:comp_def}.
+
+By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity.  This assumes that the Hilbert spaces are defined in such a way that $\lambda_{j,\cdot}$ is non-decreasing, although this assumption is not needed for our results.  
+
+The question is,``How hard is this problem as $\varepsilon$ tends to zero or as $d$ tends to infinity?''  We want to bound the complexity in terms of a simple function of $\varepsilon$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding.
 
 \section{Main Results}
 
