@@ -60,7 +60,7 @@ TODO: Check in how far our conditions coincide with existing conditions for less
 
 \medskip
 
-Let $\cf_d$ and $\cg_d$ Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a linear solution operator with adjoint $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors
+Let $\cf_d$ and $\cg_d$ be Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a linear solution operator with adjoint $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors
 \[
 \lambda_{\max}^2 \ge \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots,
 \]
@@ -79,6 +79,7 @@ and the complexity of our linear problem is
 \begin{equation}\label{eq:comp_def}
 \comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\}.
 \end{equation}
+The question is,``How hard is this problem as $\varepsilon$ tends to zero or as $d$ tends to infinity?''  We want to identify equivalent conditions in terms of the singular values that are easier to verify than dealing with the definition in \eqref{eq:comp_def}.
 
 \section{Main Results}
 
@@ -87,7 +88,9 @@ Let $T$ be a tractability function defined as follows,
 \[
 T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow [1,\infty),
 \]
-A tractability function is a function of simple form that provides an upper bound on the computational complexity of a problem.
+A tractability function is a function of simple form that provides an upper bound on the computational complexity of a problem.  Some examples of tractability functions considered previously are provided in Section \ref{sec:examples}.
+
+
 A problem is defined as $T$-tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$ such that
 \begin{equation} \label{eq:tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall \varepsilon >0, \ d \in \mathbb{N}.
@@ -97,7 +100,7 @@ $T$-tractable with parameter $\vp$ iff the complexity is independent of the dime
 \begin{equation} \label{eq:strong_tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},1,\vp) \qquad \forall \varepsilon >0 , \ d \in \mathbb{N}.
 \end{equation}
-In this article we allow $\vp$ to be a scalar or vector as the situation requires.
+In this article we allow $\vp$ to be a scalar or vector as the situation dictates.
 
 Note that the tractability function is bounded below away from zero even as $\varepsilon \to \infty$, so that the information based complexity is not expected to vanish under arbitrarily loose error requirements.  For this definition of tractability to make sense we assume that
 \begin{subequations} \label{eq:Tconditions}
@@ -169,7 +172,7 @@ If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\tex
 
 \begin{proof}
 \textbf{Sufficient condition:}\newline
-We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.  
+We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.
 
 Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d',\vp)$ are non-decreasing in $i$. In particular, for all $n\in \mathbb{N}$, we have
 \begin{align*}
@@ -184,7 +187,7 @@ Thus, we can conclude from the previous line that
     n \ge T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \\
    \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le
    \frac 1n \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) } \le \frac{1}{T(\varepsilon^{-1},d',\vp)} \qquad \forall \varepsilon > 0, \ d,d' \in \naturals.
-\end{multline}   
+\end{multline}
 
 Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity via \eqref{eq:comp_def}:
     \begin{equation*} %\label{eq:comp_equiv}
@@ -261,7 +264,7 @@ This yields \eqref{eq:strong_tractiff3} with $\vp$ replaced by $\vp' = \tau \vp$
 \noindent \textbf{Optimality:} \\
 To complete the proof, we must show that $\cp_{\textup{strct}} = \widetilde{\cp}_{\textup{strct}}$.  Then, the expression for  $\cp_{\textup{sopt}}$ automatically follows from its definition in \eqref{eq:Psoptdef}.
 
-First we show  that if $\vp^* \in \cp_{\textup{strct}}$, then $\vp^* \in \widetilde{\cp}_{\textup{strct}}$.  If $\vp^* \in \cp_{\textup{strct}}$, then \eqref{eq:strong_tract_def} must hold for all $\vp' \in (\vp^*,\vinfty)$.  For any $\vp' \in (\vp^*,\vinfty)$, we may choose $\vp$ and $\tau$ such that $\vp^* < \vp < \vp' = \tau \vp$. Since $\vp > \vp^*$, \eqref{eq:strong_tract_def} also holds for $\vp$, and it follows that \eqref{eq:strong_tractiff3} must hold for $\vp'$ by the proof of necessity above.  Thus, $\vp^* \in \widetilde{\cp}_{\textup{strct}}$.  
+First we show  that if $\vp^* \in \cp_{\textup{strct}}$, then $\vp^* \in \widetilde{\cp}_{\textup{strct}}$.  If $\vp^* \in \cp_{\textup{strct}}$, then \eqref{eq:strong_tract_def} must hold for all $\vp' \in (\vp^*,\vinfty)$.  For any $\vp' \in (\vp^*,\vinfty)$, we may choose $\vp$ and $\tau$ such that $\vp^* < \vp < \vp' = \tau \vp$. Since $\vp > \vp^*$, \eqref{eq:strong_tract_def} also holds for $\vp$, and it follows that \eqref{eq:strong_tractiff3} must hold for $\vp'$ by the proof of necessity above.  Thus, $\vp^* \in \widetilde{\cp}_{\textup{strct}}$.
 
 Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \in \cp_{\textup{strct}}$.  If $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then \eqref{eq:strong_tractiff3}  holds for all $\vp \in (\vp^*,\vinfty)$.  By the argument to prove the sufficient condition above, it follows that \eqref{eq:strong_tract_def} must also hold for all $\vp \in (\vp^*,\vinfty)$. Thus, $\vp^* \in \cp_{\textup{strct}}$.
 
@@ -372,7 +375,7 @@ So, there exists $L(\tau \vp)$ such that
 \]
 \fred{Fred:  Not sure how $C_{\vp}^\tau$ becomes $L(\tau \vp)$?}
 
-\peter{Peter: You are right. We could probably solve this by just saying above that 
+\peter{Peter: You are right. We could probably solve this by just saying above that
 \[
  j(\infty,d,\vp) = \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1 \le \lfloor C_{\vp}\, T(0,d,\tau \vp)\rfloor +1,
 \]
@@ -389,7 +392,7 @@ This yields \eqref{eq:tractiff4} with $\vp$ replaced by $\tau \vp$, and so we se
 \end{proof}
 
 
-\section{Examples}
+\section{Examples} \label{sec:examples}
 
 \paragraph{Example 1: Strong polynomial tractability}
 
