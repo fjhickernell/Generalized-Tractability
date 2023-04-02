@@ -80,7 +80,7 @@ and the complexity of our linear problem is
 \comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\}.
 \end{equation}
 
-By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity.  This assumes that the Hilbert spaces are defined in such a way that $\lambda_{j,\cdot}$ is non-decreasing, although this assumption is not needed for our results.  
+By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity.  This assumes that the Hilbert spaces are defined in such a way that $\lambda_{j,\cdot}$ is non-decreasing, although this assumption is not needed for our results.
 
 The question is,``How hard is this problem as $\varepsilon$ tends to zero or as $d$ tends to infinity?''  We want to bound the complexity in terms of a simple function of $\varepsilon$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding.
 
@@ -91,7 +91,7 @@ Let $T$ be a tractability function defined as follows,
 \[
 T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty),
 \]
-\fred{I think that we do not need to bound $T$ away from $0$.}
+\fred{I think that we do not need to bound $T$ away from $0$, but doing so may help satisfy \eqref{eq:ptauassume}.}
 A tractability function is a function of simple form that provides an upper bound on the computational complexity of a problem.  Some examples of tractability functions commonly considered are provided in Section \ref{sec:examples}.
 
 
@@ -121,7 +121,7 @@ Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit:
 \end{equation}
 Finally, there is a technical assumption required for our analysis.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:ptauassume}
-	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in [1,\infty). 
+	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in [1,\infty).
 \end{equation}
 \end{subequations}
 
@@ -232,40 +232,40 @@ Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non
 
 Define
 \[
-j (\varepsilon,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1, \quad
-j (\infty,\vp) = \lim_{\varepsilon \to \infty} j (\varepsilon,\vp) \ge 1 .
+i(\varepsilon,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1, \quad
+i(\infty,\vp) = \lim_{\varepsilon \to \infty}  i(\varepsilon,\vp) \ge 1 .
 \]
-Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{j(\varepsilon,\vp),d} \le \varepsilon$.
+Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{i(\varepsilon,\vp),d} \le \varepsilon$.
 Note furthermore that we always have
 \[
-j(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{j(\varepsilon,\vp),d}^{-1},1,\vp)+1, \qquad \forall \varepsilon > 0,
+i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1, \qquad \forall \varepsilon > 0,
 \]
 since
 $T(\cdot,1, \vp)$ is non-decreasing.
 
-For $\varepsilon$ taking on all positive values, $j(\varepsilon,\vp)$ takes on all values greater than or equal to $j(\infty,\vp)$, so
+For $\varepsilon$ taking on all positive values, $i(\varepsilon,\vp)$ takes on all values greater than or equal to $i(\infty,\vp)$, so
 \[
-j\le C_{\vp} T(\lambda_{j,d}^{-1},1,\vp)+1, \qquad \forall j \ge j(\infty,\vp).
+i\le C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1, \qquad \forall i \ge i(\infty,\vp).
 \]
 This implies via our technical assumption \eqref{eq:ptauassume} that
 \begin{gather*}
- K_{\vp,\tau}\,T (\lambda_{j,d}^{-1},1,\tau \vp) \ge
- [T(\lambda_{j,d}^{-1},1, \vp)]^\tau
+ K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},1,\tau \vp) \ge
+ [T(\lambda_{i,d}^{-1},1, \vp)]^\tau
  \ge
-  \left[\frac{(j-1)}{C_{\vp}}\right]^\tau \qquad \forall j \ge j(\infty,\vp) \\
- \frac{1}{T (\lambda_{j,d}^{-1},1,\tau \vp)} \le
-\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(j-1)^\tau}\qquad \forall j \ge j(\infty,\vp)
+  \left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i \ge i(\infty,\vp) \\
+ \frac{1}{T (\lambda_{i,d}^{-1},1,\tau \vp)} \le
+\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \ge i(\infty,\vp).
 \end{gather*}
-Summing both sides of this last inequality for $j$ from $j(\infty,\vp) \ge 1$ to $\vinfty$ yields 
-\begin{align*}
-\sup_{d\in\naturals} \sum_{j=j (\infty,\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},1, \tau \vp)}
-& \le  \sup_{d\in\naturals} \frac{1}{T (\lambda_{1,d}^{-1},1, \tau \vp)} + K_{\vp,\tau}\, C_{\vp}^\tau
-\sum_{j=2}^\infty \frac{1}{(j-1)^\tau} \\
-& \le\frac{1}{T (\lambda_{\max}^{-1},1, \tau \vp)} +  K_{\vp,\tau}\, C_{\vp}^\tau
+Summing both sides of this last inequality over $i$ from $i(\infty,\vp) +1 \ge 2$ to $\vinfty$ yields
+\begin{equation*}
+\sup_{d\in\naturals} \sum_{i=i(\infty,\vp) +1 }^\infty \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)}
+ \le  K_{\vp,\tau}\, C_{\vp}^\tau
+\sum_{i=2}^\infty \frac{1}{(i-1)^\tau} \\
+ \le K_{\vp,\tau}\, C_{\vp}^\tau
 \zeta (\tau)  < \infty,
-\end{align*}
+\end{equation*}
 where $\zeta$ denotes the Riemann zeta function.
-This yields \eqref{eq:strong_tractiff3} with $\vp$ replaced by $\vp' = \tau \vp$ and $L_{\vp'} = j (\infty,\vp)$, and so we see the necessity of $\eqref{eq:strong_tractiff3}$.
+This yields \eqref{eq:strong_tractiff3} with $\vp$ replaced by $\vp' = \tau \vp$ and $L_{\vp'} = i(\infty,\vp) +1$, and so we see the necessity of $\eqref{eq:strong_tractiff3}$.
 
 \bigskip
 \noindent \textbf{Optimality:} \\
@@ -337,59 +337,56 @@ Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non
 \end{equation}
 Define the integers
 \[
-j (\varepsilon,d,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1, \quad
-j (\infty,d,\vp) = \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1.
+i (\varepsilon,d,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1, \qquad
+i (\infty,d,\vp) = \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1 \ge 1.
 \]
-Thus, it follows by \eqref{eq:lambda_K4} that $\lambda_{j(\varepsilon,d,\vp),d} \le \varepsilon$.
+Thus, it follows by \eqref{eq:lambda_K4} that $\lambda_{i(\varepsilon,d,\vp),d} \le \varepsilon$.
 Note furthermore that we always have
 \[
-j(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{j(\varepsilon,d,\vp),d}^{-1},d,\vp)+1, \qquad \forall \varepsilon > 0, \ d \in \naturals,
+i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,d,\vp),d}^{-1},d,\vp)+1, \qquad \forall \varepsilon > 0, \ d \in \naturals,
 \]
 since
 $T(\cdot,d,\vp)$ is non-decreasing.
 
-For $\varepsilon$ taking on all positive values, $j(\varepsilon,d,\vp)$ takes on all values greater than or equal to $j(\infty,d,\vp)$, so
+For $\varepsilon$ taking on all positive values, $i(\varepsilon,d,\vp)$ takes on all values greater than or equal to $i(\infty,d,\vp)$, so
 \[
-j\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{j,d}^{-1},d,\vp)+1, \qquad \forall j \ge j(\infty,d,\vp).
+i\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1, \qquad \forall i \ge i(\infty,d,\vp).
 \]
-This implies via our technical assumption \eqref{eq:ptauassume} that
-\begin{equation*}
-	K_{\vp,\tau}\,T (\lambda_{j,d}^{-1},d,\tau \vp) \ge
-	[T(\lambda_{j,d}^{-1},d, \vp)]^\tau
+This implies via our technical assumption \eqref{eq:ptauassume} that for any $\tau > 1$,
+\begin{gather*}
+	K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},d,\tau \vp) \ge
+	[T(\lambda_{i,d}^{-1},d, \vp)]^\tau
 	\ge
-	\left[\frac{(j-1)}{C_{\vp}}\right]^\tau \qquad \forall j \ge j(\infty,d,\vp)
-\end{equation*}
-Summing both sides of the inequality yields and noting that $L_{\vp} \le L(\tau\vp)$, it follows that
-\peter{(Peter: Why does $L(\cdot)$ ocur here?)} \fred{Because I got lost a bit.}
+	\left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i \ge i(\infty,d,\vp), \\
+	 \frac{1}{T (\lambda_{i,d}^{-1},d,\tau \vp)} \le
+	\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \ge i(\infty,\vp).
+\end{gather*}
 
-\begin{multline*}
-	\sup_{d\in\naturals} \sum_{j=j(\infty,d,\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},d, \tau \vp)} \le
-	\sup_{d\in\naturals} \sum_{j=j(\infty,d,\vp)}^\infty \frac{1}{T (\lambda_{j,d}^{-1},d, \tau \vp)} \\
-	\le K_{\vp,\tau}\, C_{\vp}^\tau
-	\sum_{j=j(\infty,d,\vp)}^\infty \frac{1}{(j-1)^\tau} \le
-	K_{\vp,\tau}\, C_{\vp}^\tau\, \zeta (\tau) < \infty,
-\end{multline*}
+Let $\vp' = \tau \vp$.  Note that $i(\infty,d,\cdot)$ is nondecreasing.  Summing both sides of the inequality over $i$ from $i(\infty,d,\vp') + 1 \ge i(\infty,d, \vp) + 1 \ge 2$ to $\infty$ it follows that
+\begin{equation*}
+	\sup_{d\in\naturals} \, \, \sum_{i=i (\infty,d,\vp')+1}^\infty \frac{1}{T (\lambda_{i,d}^{-1},d,\vp')}
+	 \le  K_{\vp,\tau}\, C_{\vp}^\tau
+	\sum_{i=2}^\infty \frac{1}{(i-1)^\tau} \\
+	 \le  K_{\vp,\tau}\, C_{\vp}^\tau
+	\zeta (\tau)  < \infty,
+\end{equation*}
 where $\zeta$ denotes the Riemann zeta function.
 
 
-Note now that, \peter{for any $d\in\naturals$,}
+Note now that, for any $d\in\naturals$,
+\begin{align*}
+ i(\infty,d,\vp') & = \lfloor C_{\vp'}\, T(0,d,\vp')\rfloor +1 \le  \left[C_{\vp'} + \frac{1}{T(0,d,\vp')}   \right]\, T(0,d,\vp')\\
+ & \le  \underbrace{\left[C_{\vp'} + \frac{1}{T(0,d,\vp')}   \right]}_{=:L_{\vp'}}\, T(0,d,\vp')
+ \le \lceil L_{\vp'} T(0,d,\vp')\rceil .
+\end{align*}
+For this choice of $ L_{\vp'}$ we have
 \[
- j(\infty,d,\vp) = \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1 \le \lfloor C_{\vp}^\tau\, T(0,d,\tau \vp)\rfloor +1.
+\sup_{d\in\naturals}}\,\, \sum_{i=\lceil L(\vp') T(0,d,\vp')\rceil}^\infty \frac{1}{T(\lambda_{i,d}^{-1},d, \vp')}
+\le
+\sup_{d\in\naturals} \, \, \sum_{i=i (\infty,d,\vp')+1}^\infty \frac{1}{T (\lambda_{i,d}^{-1},d,\vp')} <
+\infty.
 \]
-So, there exists $L(\tau \vp)$ such that
-\[
-\peter{\sup_{d\in\naturals}}\,\, \sum_{j=\lceil L(\tau \vp) T(0,d,\tau \vp)\rceil}^\infty \frac{1}{T(\lambda_{j,d}^{-1},d, \tau\vp)}<\infty.
-\]
-\fred{Fred:  Not sure how $C_{\vp}^\tau$ becomes $L(\tau \vp)$?}
-
-\peter{Peter: You are right. We could probably solve this by just saying above that
-\[
- j(\infty,d,\vp) = \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1 \le \lfloor C_{\vp}\, T(0,d,\tau \vp)\rfloor +1,
-\]
-and then introduce $L(\tau \vp)$ to bound $C_{\vp}$ and also incorporate the ``+1''?
-}
-
-This yields \eqref{eq:tractiff4} with $\vp$ replaced by $\tau \vp$, and so we see the necessity of $\eqref{eq:tractiff4}$.
+This yields \eqref{eq:tractiff4} with $\vp$ replaced by $\vp'$, so we see the necessity of $\eqref{eq:tractiff4}$.
 
 \bigskip
 
