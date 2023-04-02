@@ -305,23 +305,23 @@ If \eqref{eq:tractiff4} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{trc
     \textbf{Sufficient Condition:}\\
 Suppose that \eqref{eq:tractiff4} holds for some $\vp \ge 0$. By the argument in the proof of the sufficient condition for Theorem \ref{thm_main_strong_tract2}, it follows from \eqref{eq:compUP} with $d'=d$ that the complexity has an upper bound of
 \begin{equation*}
-	 \comp(\varepsilon,d) \le 1 + T(\varepsilon^{-1},d,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
+	 \comp(\varepsilon,d) \le  T(\varepsilon^{-1},d,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
 \end{equation*}
 
 Let $J(\vp,d): = \lceil L_{\vp}\, T(0,d,\vp)\rceil$.  Then this upper bound on the complexity can be further bounded above by
 \begin{align*}
        \comp(\varepsilon,d)
-       & = 1 + T(\varepsilon^{-1},d,\vp) \Biggl [ \sum_{i=1}^{J(\vp,d) -1} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
+       & = T(\varepsilon^{-1},d,\vp) \Biggl [ \sum_{i=1}^{J(\vp,d) -1} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
        + \underbrace{\sum_{i=J(\vp,d)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} \text{ by \eqref{eq:tractiff4}}} \Biggr ] \\
-       & \le 1+ T(\varepsilon^{-1},d,\vp)\left[ \frac{J(\vp,d)-1}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp}\right]
+       & \le T(\varepsilon^{-1},d,\vp)\left[ \frac{J(\vp,d)-1}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp}\right]
         \\
-       & \le 1+ T(\varepsilon^{-1},d,\vp)\left[L_{\vp}\, T(0,d,\vp) + S_{\vp}\right] \qquad \text{since } T(\lambda_{\max}^{-1},d,\vp) \ge 1\\
-       & \le 1+L_{\vp}\,T(\varepsilon^{-1},d,\vp) T(0,d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
-       & \le 1+L_{\vp}\,T(\varepsilon^{-1},d,\vp) T(\varepsilon^{-1},d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
-       & \le 1+L_{\vp}\,K_{\vp,2} T(\varepsilon^{-1},d,2\vp)  + S_{\vp}\, T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
-       & \le C_{2}(2\vp) \,T(\varepsilon^{-1},d,2\vp)
+       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{L_{\vp}\, T(0,d,\vp)}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp}\right] \\
+       & \le\frac{L_{\vp}}{T(\lambda_{\max}^{-1},d,\vp)} \,T(\varepsilon^{-1},d,\vp) T(0,d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
+       & \le\frac{L_{\vp}}{T(\lambda_{\max}^{-1},d,\vp)} \,T(\varepsilon^{-1},d,\vp) T(\varepsilon^{-1},d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
+       & \le \frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},d,\vp)}  T(\varepsilon^{-1},d,2\vp)  + S_{\vp}\, T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
+       & \le \underbrace{\left[\frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp}\right]}_{=:C_{2\vp}} \,T(\varepsilon^{-1},d,2\vp)
 \end{align*}
-for some suitably chosen $C_{2}(2\vp)>0$. It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:tractiff4}. \\
+It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:tractiff4}. \\
 
 
 
