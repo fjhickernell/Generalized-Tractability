@@ -331,11 +331,11 @@ $T$-tractability. That is, for some $\vp \ge \vzero$, there exists a positive co
 \[
 \comp(\varepsilon,d)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall \varepsilon > 0,  \ d \in \naturals.
 \]
-Since the eigenvalues $\lambda_{j,d}$ are non-increasing, we have
+Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non-increasing, we have
 \begin{equation}\label{eq:lambda_K4}
-	\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1,d}\le \varepsilon.
+	\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1,d}\le \varepsilon \qquad \forall \varepsilon > 0,  \ d \in \naturals..
 \end{equation}
-Define
+Define the integers
 \[
 j (\varepsilon,d,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1, \quad
 j (\infty,d,\vp) = \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1.
@@ -343,7 +343,7 @@ j (\infty,d,\vp) = \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1.
 Thus, it follows by \eqref{eq:lambda_K4} that $\lambda_{j(\varepsilon,d,\vp),d} \le \varepsilon$.
 Note furthermore that we always have
 \[
-j(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{j(\varepsilon,d,\vp),d}^{-1},1,\vp)+1, \qquad \forall \varepsilon > 0, \ d \in \naturals
+j(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{j(\varepsilon,d,\vp),d}^{-1},d,\vp)+1, \qquad \forall \varepsilon > 0, \ d \in \naturals,
 \]
 since
 $T(\cdot,d,\vp)$ is non-decreasing.
