@@ -448,11 +448,67 @@ If $n(\varepsilon,d)$ denotes the minimal number of function values needed to ap
     n(\varepsilon,d) \leq C\exp\{t(1+\ln(1/\varepsilon))(1+\ln(d))\}
     \] for all $\varepsilon \in (0,1)$ and $d\in\mathbb{N}$.
 \end{definition}
+
+\peter{
+\section{Weak $T$-$(s,t)$-weak tractability (work in progress)} \label{sec:weak}
+
+\begin{definition}[$T$-$(s,t)$-weak tractability]
+Let $s,t>0$. We say that the problem is \emph{$T$-$(s,t)$ weakly tractable} if
+    \[\lim_{\varepsilon^{-1}+d\rightarrow \infty} \frac{\log n(\varepsilon,d)}{T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp)} = 0.\]
+\end{definition}
+
+We show a necessary and sufficient condition for $T$-$(s,t)$-weak tractability, working analogously to \cite{WW17}.
+\begin{theorem}\label{thm:weak}
+For $c>0$, define
+\[
+\sigma (c,d,s,\vp):= \sum_{i=1}^\infty \exp \left(-c\, T(\lambda_{i,d}^{-s},1,\vp)\right).
+\]
+Then the problem is $T$-$(s,t)$-weakly tractable if and only if
+\[
+\mu (c,s,t,\vp)=\sup_{d\in\naturals} \sigma (c,d,s,\vp) \exp\left(-c\, T(0,d^t,p,q)\right)<\infty
+\]
+holds for all $c>0$.
+\end{theorem}
+\begin{proof}
+ We first show the necessity of the condition in the theorem.   Indeed, suppose that the problem is  $T$-$(s,t)$-weakly tractable. Then, for any $c>0$ there exists a positive integer $V=V(c)$ such that  
+ \[
+ n(\varepsilon,d)\le 
+ \left\lfloor \exp\left(c\,
+ \left(T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp)\right)
+ \right) \right\rfloor
+ \]
+ whenever $\varepsilon^{-1} + d \ge V$. For $d\in\naturals$ 
+ choose $\varepsilon>0$ such that $\varepsilon^{-1}\ge \max\{1,V-d\}$. Since the eigenvalues $\lambda{i,d}$ are non-increasing in $i$, we know that
+ \[
+ \lambda_{\lfloor \exp(c\,
+ (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))) \rfloor+1}^2 \le \varepsilon^2
+ \]
+ for any $\varepsilon$ satisfying $\varepsilon^{-1}\ge \max\{1,V-d\}$.
+Let 
+\[
+n=n(\varepsilon):= \lfloor \exp(c\,
+ (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))) \rfloor+1
+\]
+and
+\[
+n^*:= \lfloor \exp(c\,
+ (T(\max\{1,(V-d)^s\},1,\vp) + T(0,d^t,\vp))) \rfloor+1.
+\]
+By varying $\varepsilon^{-1}$ ini the interval 
+$[\max\{1,V-d\},\infty)$ we can make $n(\varepsilon)$ attain 
+any integer value greater than or equal to $n^*$.
+
+[TO BE CONTINUED]
+ 
+\end{proof}
+}
+
+
 \begin{thebibliography}{99}
 
 \bibitem{NW08} E.~Novak,H.~Wo\'zniakowski. \textit{Tractability of Multivariate Problems, Volume I: Linear Information}.
 European Mathematical Society Publishing House, Zurich, 2008.
- ×
+ \bibitem{WW17} A.G.~Werschulz,H.~Wo\'zniakowski. A new characterization of $(s,t)$-weak tractability. J. Complexity 38, 68--79, 2017. 
 \end{thebibliography}
 
 
