@@ -315,11 +315,11 @@ Let $J(\vp,d): = \lceil L_{\vp}\, T(0,d,\vp)\rceil$.  Then this upper bound on t
        + \underbrace{\sum_{i=J(\vp,d)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} \text{ by \eqref{eq:tractiff4}}} \Biggr ] \\
        & \le T(\varepsilon^{-1},d,\vp)\left[ \frac{J(\vp,d)-1}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp}\right]
         \\
-       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{L_{\vp}\, T(0,d,\vp)}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp}\right] \\
-       & \le\frac{L_{\vp}}{T(\lambda_{\max}^{-1},d,\vp)} \,T(\varepsilon^{-1},d,\vp) T(0,d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
-       & \le\frac{L_{\vp}}{T(\lambda_{\max}^{-1},d,\vp)} \,T(\varepsilon^{-1},d,\vp) T(\varepsilon^{-1},d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
-       & \le \frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},d,\vp)}  T(\varepsilon^{-1},d,2\vp)  + S_{\vp}\, T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
-       & \le \underbrace{\left[\frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp}\right]}_{=:C_{2\vp}} \,T(\varepsilon^{-1},d,2\vp)
+       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{L_{\vp}\, T(0,d,\vp)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp}\right] \\
+       & \le\frac{L_{\vp}}{T(\lambda_{\max}^{-1},1,\vp)} \,T(\varepsilon^{-1},d,\vp) T(0,d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
+       & \le\frac{L_{\vp}}{T(\lambda_{\max}^{-1},1,\vp)} \,T(\varepsilon^{-1},d,\vp) T(\varepsilon^{-1},d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
+       & \le \frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},1,\vp)}  T(\varepsilon^{-1},d,2\vp)  + S_{\vp}\, T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
+       & \le \underbrace{\left[\frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp}\right]}_{=:C_{2\vp}} \,T(\varepsilon^{-1},d,2\vp)
 \end{align*}
 It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:tractiff4}. \\
 
