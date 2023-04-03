@@ -457,7 +457,7 @@ If $n(\varepsilon,d)$ denotes the minimal number of function values needed to ap
 \end{definition}
 
 \peter{
-\section{Weak $T$-$(s,t)$-weak tractability (work in progress)} \label{sec:weak}
+\section{Weak $T$-$(s,t)$-weak tractability} \label{sec:weak}
 
 \begin{definition}[$T$-$(s,t)$-weak tractability]
 Let $s,t>0$. We say that the problem is \emph{$T$-$(s,t)$ weakly tractable} if
@@ -472,7 +472,7 @@ For $c>0$, define
 \]
 Then the problem is $T$-$(s,t)$-weakly tractable if and only if
 \[
-\mu (c,s,t,\vp)=\sup_{d\in\naturals} \sigma (c,d,s,\vp) \exp\left(-c\, T(0,d^t,p,q)\right)<\infty
+\mu (c,s,t,\vp)=\sup_{d\in\naturals} \sigma (c,d,s,\vp) \exp\left(-c\, T(0,d^t,\vp)\right)<\infty
 \]
 holds for all $c>0$.
 \end{theorem}
@@ -505,8 +505,94 @@ By varying $\varepsilon^{-1}$ ini the interval
 $[\max\{1,V-d\},\infty)$ we can make $n(\varepsilon)$ attain 
 any integer value greater than or equal to $n^*$.
 
-[TO BE CONTINUED]
- 
+Furthermore, we have, as $\lambda_{n,d}\le \varepsilon$ and as $T$ is monotonically increasing, 
+\begin{eqnarray*}
+n(\varepsilon)-1 & \le & \exp(c\, (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp)))\\
+& \le & \exp(c\, (T(\lambda_{n(\varepsilon),d}^{-s},1,\vp) + T(0,d^t,\vp))),
+\end{eqnarray*}
+which is equivalent to 
+\[
+\exp(-2c\, (T(\lambda_{n(\varepsilon),d}^{-s},1,\vp) + T(0,d^t,\vp))) \le \frac{1}{(n(\varepsilon)-1)^2}.
+\]
+Therefore,
+\begin{eqnarray*}
+    \exp(-2c\, T(0,d^t,\vp)) \sum_{i=1}^\infty \exp(-2c\, T(\lambda_{i,d}^{-s},1,\vp))
+    &\le& \exp(-2c\, T(0,d^t,\vp))\, (n^*-1) + \sum_{i=n^*}^\infty \frac{1}{(i-1)^2}\\
+    &\le& \exp(-2c\, T(0,d^t,\vp))\, (n^*-1) + \frac{\pi^2}{6}.
+\end{eqnarray*}
+Moreover,
+\begin{eqnarray*}
+    \exp(-2c\, T(0,d^t,\vp))\, (n^*-1) &\le & \exp(-2c\, T(0,d^t,\vp))\, 
+    \exp (c\, T(V^s,1,\vp) + c\, T(0,d^t,\vp))\\
+    &\le & \exp (c\, T(V^s,1,\vp))\\
+    &<& \infty,
+\end{eqnarray*}
+independently of $d$. This implies that 
+\[
+\exp(-2c\, T(0,d^t,\vp)) \sum_{i=1}^\infty \exp(-2c\, T(\lambda_{i,d}^{-s},1,\vp))<\infty,
+\]
+also independently of $d$. As $c>0$ was chosen arbitrarily, we can replace $2c$ by $c$ and see
+necessity of the condition in the theorem. 
+
+\medskip
+
+We now show sufficiency.
+
+Suppose that $\mu(c,s,t,\vp) <\infty$ for all $c>0$. It is no loss of generality to assume that 
+$\mu(c,s,t,\vp) \ge 1$. Since the terms of the series in the definition of $\mu(c,s,t,\vp) $ are non-increasing, we have 
+\[
+\exp (-c\, T(0,d^t,\vp))\, n\, \exp (-c\, T(\lambda_{n,d}^{-s},1,\vp)) \le \mu (c,s,t,\vp).
+\]
+Then we obtain 
+\[
+\exp (-c\, T(\lambda_{n,d}^{-s},1,\vp)) \le \frac{1}{n}\, \mu (c,s,t,\vp)\, 
+\exp (c\, T(0,d^t,\vp)),
+\]
+which is equivalent to 
+\[
+\exp (c\, T(\lambda_{n,d}^{-s},1,\vp)) \ge \frac{n}{\mu (c,s,t,\vp)\, 
+\exp (c\, T(0,d^t,\vp))},
+\]
+which in turn is equivalent to 
+\[
+T(\lambda_{n,d}^{-s},1,\vp) \ge \frac{1}{c}\log \left(\frac{n}{\mu (c,s,t,\vp)\, 
+\exp (c\, T(0,d^t,\vp))}\right)
+\]
+as long as 
+\[
+n> \mu (c,s,t,\vp)\, \exp (c\, T(0,d^t,\vp)).
+\]
+This implies that for the special choice 
+\[
+n= \left\lceil 
+   \mu (c,s,t,\vp)\, \exp \left(c\, (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))\right)
+   \right\rceil 
+\]
+we have
+\[
+T(\lambda_{n,d}^{-s},1,\vp) \ge T(\varepsilon^{-1},1,\vp),
+\]
+which implies that $\lambda_{n,d} \le \varepsilon$, and thus $n(\varepsilon,d)\le n$. Note that the 
+argument $x$ of the ceiling function in the definition of our special $n$ is at least one, which implies 
+$\lceil x \rceil \le 2x$.
+
+Consequently,
+\[
+n(\varepsilon, d) \le \exp\left(c\, \left(
+\frac{\log (2\mu (c,s,t,\vp) )}{c}
+T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp)
+\right)\right).
+\]
+Clearly, there must exist a positive $V=V(c,s,t,\vp)$ such that when $\varepsilon^{-1} +d \ge V$ it holds true that
+\[
+  T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp) \ge \frac{\log (2\mu (c,s,t,\vp) )}{c}.
+\]
+Hence we finally have 
+\[
+n(\varepsilon,d) \le \exp (2c\, (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))).
+\]
+Since the latter inequality holds for every $c>0$, we have $T$-$(s,t)$-weak tractability.
+
 \end{proof}
 }
 
