@@ -133,9 +133,9 @@ If \eqref{eq:tract_def} holds for some $\vp$, it clearly holds for larger, $\vp$
 The  set of optimal parameters is defined as all of those parameters satisfying the (strong) tractability conditions that are not greater than or equal to others:
 \begin{gather}
 	\label{eq:Poptdef}
-	\mathcal{P}_{\textup{opt}} : = \{\vp^* \in \cp_{\textup{trct}} :  \vp^* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \cp_{\textup{trct}} \setminus \{\vp^*\} \}, \\
+	\mathcal{P}_{\textup{opt}} : = \{\vp^* \in \cp_{\textup{trct}} :  \vp^* \notin [\vp,\boldsymbol{\infty}) \ \forall \vp \in  \cp_{\textup{trct}} \setminus \{\vp^*\} \}, \\
 	\label{eq:Psoptdef}
-	\mathcal{P}_{\textup{sopt}} : = \{\vp^* \in \cp_{\textup{strct}} :  \vp^* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \cp_{\textup{strct}} \setminus \{\vp^*\} \}.
+	\mathcal{P}_{\textup{sopt}} : = \{\vp^* \in \cp_{\textup{strct}} :  \vp^* \notin [\vp,\boldsymbol{\infty}) \ \forall \vp \in  \cp_{\textup{strct}} \setminus \{\vp^*\} \}.
 \end{gather}
 
 Certain common notions of tractability are covered by the general situation described above.
@@ -169,7 +169,7 @@ A problem is strongly $T$-tractable iff there exists $\vp \in [\vzero, \boldsymb
 If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{strct}} : = \{\vp^* : \eqref{eq:strong_tractiff3} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}$.  Then $\cp_{\textup{strct}} = \widetilde{\cp}_{\textup{strct}}$, and the set of optimal strong tractability parameters is
 \[
 	\cp_{\textup{sopt}} =
-	\{\vp^* \in \widetilde{\cp}_{\textup{strct}} :  \vp* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \widetilde{\cp}_{\textup{strct}} \setminus \{\vp^*\} \}.
+	\{\vp^* \in \widetilde{\cp}_{\textup{strct}} :  \vp^* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \widetilde{\cp}_{\textup{strct}} \setminus \{\vp^*\} \}.
 \]
 \end{theorem}
 
@@ -277,7 +277,7 @@ Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \
 
 \bigskip
 
-\noindent This concludes the proof of the theorem.
+\noindent This concludes the proof of  Theorem \ref{thm_main_strong_tract2}.
 
 \end{proof}
 
@@ -294,12 +294,13 @@ A problem is $T$-tractable iff there exist $\vp\ge \vzero$ and a constant $L_{\v
      S_{\vp}:=\sup_{d \in \naturals}
      \sum_{i = \lceil L_{\vp}\, T(0,d,\vp) \rceil}^\infty \frac{1}{T(\lambda^{-1}_{i,d},d,\vp)}< \infty.
 \end{equation}
-If \eqref{eq:tractiff4} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{trct}} : = \{\vp^* : \eqref{eq:tractiff4} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}$, and   $\widehat{\cp}_{\textup{trct}} : = \{\vp^* : 2\vp \in \widetilde{\cp}_{\textup{trct}}\}$.  Then $\cp_{\textup{trct}} = \widetilde{\cp}_{\textup{trct}}$, and the set of optimal strong tractability parameters is
+If \eqref{eq:tractiff4} holds for some $\vp$, let  
 \[
-\cp_{\textup{opt}} =
-\{\vp^* \in \widetilde{\cp}_{\textup{trct}} :  \vp^* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \widetilde{\cp}_{\textup{trct}} \setminus \{\vp^*\} \}.
-\]\end{theorem}
-
+\widetilde{\cp}_{\textup{opt}} : = \{\vp^* : \eqref{eq:tractiff4} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty}) \text{ and }  \eqref{eq:tractiff4} \text{ does not hold } \forall \vp \in [\vzero,\vp^*/2)\}.
+\]
+Then $\cp_{\textup{opt}} \subseteq \widetilde{\cp}_{\textup{opt}}$.
+\
+\end{theorem}
 
 \begin{proof}
     \textbf{Sufficient Condition:}\\
@@ -321,9 +322,9 @@ Let $J(\vp,d): = \lceil L_{\vp}\, T(0,d,\vp)\rceil$.  Then this upper bound on t
        & \le \frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},1,\vp)}  T(\varepsilon^{-1},d,2\vp)  + S_{\vp}\, T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
        & \le \underbrace{\left[\frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp}\right]}_{=:C_{2\vp}} \,T(\varepsilon^{-1},d,2\vp)
 \end{align*}
-It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:tractiff4}. \\
+It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:tractiff4}.
 
-
+\bigskip
 
 \noindent \textbf{Necessary condition:}\\
 Suppose that we have
@@ -376,7 +377,7 @@ where $\zeta$ denotes the Riemann zeta function.
 Note now that, for any $d\in\naturals$,
 \begin{align*}
  i(\infty,d,\vp') & = \lfloor C_{\vp'}\, T(0,d,\vp')\rfloor +1 \le  \left[C_{\vp'} + \frac{1}{T(0,d,\vp')}   \right]\, T(0,d,\vp')\\
- & \le  \underbrace{\left[C_{\vp'} + \frac{1}{T(0,d,\vp')}   \right]}_{=:L_{\vp'}}\, T(0,d,\vp')
+ & \le  \underbrace{\left[C_{\vp'} + \frac{1}{T(0,1,\vp')}   \right]}_{=:L_{\vp'}}\, T(0,d,\vp')
  \le \lceil L_{\vp'} T(0,d,\vp')\rceil .
 \end{align*}
 For this choice of $ L_{\vp'}$ we have
@@ -391,7 +392,13 @@ This yields \eqref{eq:tractiff4} with $\vp$ replaced by $\vp'$, so we see the ne
 \bigskip
 
 \noindent \textbf{Optimality:}
-\fred{Not sure how to make optimality works because for sufficiency $\vp$ turns into $2\vp$.}
+Finally we need to show that $\cp_{\textup{opt}} \subseteq \widetilde{\cp}_{\textup{opt}}$.  Suppose that  $\vp^* \in \cp_{\textup{opt}}$.  We show that $\vp^*$ satisfies the two conditions for membership in $\widetilde{\cp}_{\textup{opt}}$.
+
+By the definition of  $\cp_{\textup{opt}}$ \eqref{eq:tract_def}  holds for all $\vp \in (\vp^*,\boldsymbol{\infty})$, which implies by the argument for necessity that  \eqref{eq:tractiff4} holds for all $\vp \in (\vp^*,\boldsymbol{\infty})$.  This is the first condition for membership in $\widetilde{\cp}_{\textup{opt}}$.
+
+Also, if  $\vp^* \in \cp_{\textup{opt}}$, then \eqref{eq:tract_def} must not hold for all $\vp \in [\vzero, \vp^*)$.  By the sufficiency argument, this implies that \eqref{eq:tractiff4} cannot hold for all $\vp \in [\vp^*/2)$.  This is the second condition for membership in $\widetilde{\cp}_{\textup{opt}}$.
+
+Thus,  $\cp_{\textup{opt}} \subseteq \widetilde{\cp}_{\textup{opt}}$.  This concludes the proof of Theorem \ref{thm_main_tract2}.
 
 \end{proof}
 
