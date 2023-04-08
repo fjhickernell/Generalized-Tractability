@@ -106,7 +106,7 @@ $T$-tractable with parameter $\vp$ iff the complexity is independent of the dime
 \end{equation}
 In this article we allow $\vp$ to be a scalar or vector as the situation dictates.
 
-Note that the tractability function is bounded below away from zero even as $\varepsilon \to \infty$, so that the information based complexity is not expected to vanish under arbitrarily loose error requirements.  For this definition of tractability to make sense we assume that
+Note that the tractability function is bounded below away from zero even as $\varepsilon \to \infty$, so that the information-based complexity is not expected to vanish under arbitrarily loose error requirements.  For this definition of tractability to make sense we assume that
 \begin{subequations} \label{eq:Tconditions}
 \begin{equation}
 	T \text{ is non-decreasing in all variables}
@@ -452,7 +452,7 @@ If $n(\varepsilon,d)$ denotes the minimal number of function values needed to ap
 \begin{definition}[Quasi-polynomial Tractability]
     The problem is \emph{quasi-polynomially tractable}, if there exist two constants $C, t> 0$ such that
     \[
-    n(\varepsilon,d) \leq C\exp\{t(1+\ln(1/\varepsilon))(1+\ln(d))\}
+    n(\varepsilon,d) \leq C\exp\{t(1+\ln(\varepsilon^{-1}))(1+\ln(d))\}
     \] for all $\varepsilon \in (0,1)$ and $d\in\mathbb{N}$.
 \end{definition}
 
@@ -501,7 +501,7 @@ and
 n^*:= \lfloor \exp(c\,
  (T(\max\{1,(V-d)^s\},1,\vp) + T(0,d^t,\vp))) \rfloor+1.
 \]
-By varying $\varepsilon^{-1}$ ini the interval 
+By varying $\varepsilon^{-1}$ in the interval 
 $[\max\{1,V-d\},\infty)$ we can make $n(\varepsilon)$ attain 
 any integer value greater than or equal to $n^*$.
 
@@ -595,7 +595,88 @@ Since the latter inequality holds for every $c>0$, we have $T$-$(s,t)$-weak trac
 
 \end{proof}
 }
+\paragraph{Example 3: EXP-strong polynomial tractability}
 
+Let $T: (0,\infty) \times \naturals \times [0,\infty) \times [0,\infty)\Rightarrow [1,\infty)$
+be defined by
+\[
+ T(\varepsilon^{-1},d,\vp)= (1+\log\max\{\varepsilon^{-1},1\})^p.
+\]
+Then Theorem \ref{thm_main_tract2} yields the iff-condition
+\[
+ \sup_{d\in\naturals} \sum_{i=L_{\vp} d^{q_1}}^\infty (\min\{\lambda_{i,d},1\})^p  < \infty.
+\]
+\paragraph{Example 4: EXP-polynomial tractability}
+
+Let $T: (0,\infty) \times \naturals \times [0,\infty) \times [0,\infty)\Rightarrow [1,\infty)$
+be defined by
+\[
+ T(\varepsilon^{-1},d,\vp)= (1+\log \max\{\varepsilon^{-1},1\})^p\, d^q.
+\]
+Then Theorem \ref{thm_main_tract2} yields the iff-condition
+\[
+ \sup_{d\in\naturals} \sum_{i=L_{\vp} d^{q_1}}^\infty (\min\{\lambda_{i,d},1\})^p d^{-q} < \infty.
+\]
+\paragraph{Example 5: $(t,s)$-Weak tractability}
+
+Let $T: (0,\infty) \times \naturals \times [0,\infty) \times [0,\infty)\Rightarrow [1,\infty)$. Suppose we have $T$-$(s,t)$- weak tractability, such that
+\[
+ \lim_{d+\varepsilon^{-1}\rightarrow\infty} \frac{\log \max(1,n(\varepsilon,d))}{d^t +(\max(1,\varepsilon^{-1}))^s} =0.
+\]
+Then Theorem \ref{thm:weak} yields the iff-condition
+\[
+\sup_{d\in\naturals} \sigma (c,d,s,\vp) \exp\left(-c\, T(0,d^t,\vp)\right)<\infty
+\]
+where $\sigma (c,d,s,\vp) = $
+
+\section{$T$-Quasi-polynomial tractability} \label{sec:qpt}
+
+\begin{definition}[$T$-Quasi-polynomial tractability]
+We say that the problem is \emph{$T$- quasi-polynomial tractable} if there exists positive $C_{\vp}$ such that
+   %\[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(0,d,\vp))(T(\varepsilon^{-1},1,\vp)\}\]
+   \[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(\varepsilon^{-1},d,\vp)\}\]
+\end{definition}
+
+\begin{theorem}\label{thm:qpt}
+A problem is $T$-quasi-polynomial tractable iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ such that
+\begin{equation}\label{thmqpt}
+M_{\vp} := \sup_{d\in\mathbb{N}}\sum_{i=1}^\infty \frac{1}{T(\lambda_{i,d}^{-1},d,\vp)}
+<\infty
+\end{equation}
+%where $\Bar{p} = -p(1+\log(T(0,d,\vp))$.
+If it holds then 
+\[n(\varepsilon,d)\leq 1+T(0,d^\tau,\vp)+ T(0,d^\tau,\vp)T(\varepsilon^{-1},1,\vp)\]
+\end{theorem}
+\begin{proof}
+\textbf{Necessity Condition:}\\
+Suppose that we have $T$-quasi-polynomial tractability, i.e., for some $\vp\geq 0$, there exists positive $C_{\vp}$ such that
+%\[\comp(\varepsilon,d)\le C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}\quad\quad \forall\varepsilon >0, d\in \mathbb{N}\] 
+\[
+\comp(\varepsilon,d)\le C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}
+\quad\quad \forall\varepsilon >0, d\in \mathbb{N}
+\] 
+Since $\lambda_{i,d}$ are non-increasing, we have
+\[
+\lambda_{\left\lfloor C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}\right\rfloor+1,d}\leq \varepsilon^2
+\]
+Given that the estimate holds for all $\varepsilon> 0$, we assume that $\varepsilon \in (0, 1]$.\\
+
+If we vary $\varepsilon\in (0,1]$, we have that
+\[
+j(\varepsilon,d,\vp) = \left\lfloor C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}\right\rfloor+1
+\] which attains the values $j = j_d,j_{d+1},\dots$, where
+\[
+j(\infty,d,\vp)=j_d = \lfloor C_{\vp}\exp\{ T(0,d,\vp)\}\rfloor + 1
+\]
+Furthermore, we have
+\[j \leq C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}+1 \leq C_{\vp}\exp\{T(\lambda^{-1}_{j,d},d,\vp)\}+1 \]
+This implies that
+\[
+\left(\log\frac{j-1}{C_{\vp}}\right)^\tau \leq \left(T(\varepsilon^{-1},d,\vp)\right)^\tau \leq K_{\vp,\tau}T(\lambda_{j,d},d,\tau\vp) 
+\]
+we have 
+%\[\frac{1}{T(\lambda_{i,d}^{-1},d,\vp)} \leq \frac{K_{\vp,\tau}}{\left(\log\frac{j-1}{C_{\vp}}\right)^\tau}\]
+\end{proof}
 
 \begin{thebibliography}{99}
 
