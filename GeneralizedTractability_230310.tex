@@ -678,6 +678,165 @@ we have
 %\[\frac{1}{T(\lambda_{i,d}^{-1},d,\vp)} \leq \frac{K_{\vp,\tau}}{\left(\log\frac{j-1}{C_{\vp}}\right)^\tau}\]
 \end{proof}
 
+\section{Fred's Attempt at sub-$h$ $T$-Tractability}
+May we frame weak tractability more generally?
+
+Let $h:[0,\infty) \to [1,\infty)]$ satisfy
+\begin{equation} \label{eq:h_cond}
+	h \text{ is non-decreasing}, \qquad 
+	h(0)=1, \qquad  [h(x)]^\tau \le h(\tau x) \quad \forall x \ge 0, \tau > 1.
+\end{equation}
+
+\begin{definition}
+	A problem is sub-$h \circ T$ tractable if
+	\begin{equation*}
+		\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{h(cT(\varepsilon^{-1},d,\vp))} = 0 \qquad \forall c>0
+	\end{equation*}
+\end{definition}
+
+
+
+\begin{theorem}\label{thm:subhT}
+	The problem is sub-$h \circ T$ tractable if and only if
+	\[
+	S_{c,\vp}=\sup_{d\in\naturals}  \, \sum_{i=1}^\infty \frac1{h(c\, T(\lambda_{i,d},d,\vp))} <\infty \qquad \forall c > 0.
+	\]
+\end{theorem}
+\begin{proof}
+We suppress the $\vp$ dependence, because it does not enter into the proof.
+
+\bigskip
+	  
+\noindent \textbf{Necessary Condition:}\\
+Suppose that the problem is  sub-$h \circ T$ tractable. Then, for any $c>0$ there exists a positive integer $V_c$ such that  
+\[
+	\comp(\varepsilon,d)\le 
+	\left\lfloor{h(cT(\varepsilon^{-1},d)) \right\rfloor \qquad \forall \varepsilon^{-1} + d \ge V_c.
+\]
+By the definition of complexity in \eqref{eq:comp_def}, it follows that 
+\[
+	\lambda_{n(\varepsilon,d,c),d} \le \varepsilon \quad \forall \varepsilon^{-1} + d \ge V_c, \qquad \text{where }
+	n(\varepsilon,d,c):=\left\lfloor{h(cT(\varepsilon^{-1},d)) \right\rfloor.
+\]
+Since $h(cT(\cdot,d))$ is non-decreasing, it follows that
+\begin{equation*}
+		n(\varepsilon,d,c)\le  h(cT(\varepsilon^{-1},d)) \le  h(cT(\lambda^{-1}_{n(\varepsilon,d,c),d},d)) \qquad  \quad \forall \varepsilon^{-1} + d \ge V_c.
+\end{equation*}
+	
+For a fixed $d$, the largest the largest $\varepsilon$ can be and still satisfy $ \varepsilon^{-1} + d \ge V_c$ is $\max(V_c - d,1)$.   Let 
+\begin{equation} \label{eq:nstardef}
+	n^*(d,c) : = n(\max(V_c - d,1),d,c) \le h(cT(\max(V_c-d,1),d)
+\end{equation} 
+By varying $\varepsilon^{-1}$ in the interval $[\max\{1,V_c-d\},\infty)$,  the integer $	n(\varepsilon,d,c)$ attains all values greater than or equal to $n^*(d,c)$.  Thus, 
+\begin{align}
+		n &\le h(cT(\lambda^{-1}_{n,d},d)) \qquad  \forall n \ge n^*(d,c), \label{eq:subhTneq}\\
+		\nonumber
+		\frac{1}{h(2 cT(\lambda^{-1}_{n,d},d)) } & \le \frac{1}{[h(cT(\lambda^{-1}_{n,d},d))]^{2}}  \le \frac 1{n^2}   \qquad  \forall n \ge n^*(d,c) \qquad \text{by \eqref{eq:h_cond}}. \\
+		\intertext{Combining this inequality with ...}
+		\nonumber
+		S_{2c} = 	S_{2c,\vp} & =\sup_{d\in\naturals}  \, \sum_{i=1}^\infty \frac1{h(2c\, T(\lambda_{i,d},d))} \\
+		\nonumber
+		&  = \sup_{d\in\naturals} \left [
+		\sum_{i=1}^{n^*(d,c)-1} \frac1{h(2c\, T(\lambda_{i,d},d))}
+		+ \sum_{i=n^*(d,c)}^\infty \frac1{h(2c\, T(\lambda_{i,d},d))} 
+		\right]\\
+		 \nonumber
+		 & \le \sup_{d\in\naturals} \left [
+\frac{n^*(d,c)-1}{h(2c\, T(\lambda_{\max},d))}
++ \sum_{i=1}^\infty \frac1{n^2}
+\right] 
+ \qquad \text{by \eqref{eq:subhTneq}}\\ 
+		 & \le \sup_{d\in\naturals} \left [
+		 \frac{ h(cT(\max(V_c-d,1),d)}{h(2c\, T(\lambda_{\max},d))}
+		\right] + \frac{\pi^2}{6}
+		\qquad \text{by \eqref{eq:nstardef}.}
+\end{align}
+	which is equivalent to 
+	\[
+	\exp(-2c\, (T(\lambda_{n(\varepsilon),d}^{-s},1,\vp) + T(0,d^t,\vp))) \le \frac{1}{(n(\varepsilon)-1)^2}.
+	\]
+	Therefore,
+	\begin{eqnarray*}
+		\exp(-2c\, T(0,d^t,\vp)) \sum_{i=1}^\infty \exp(-2c\, T(\lambda_{i,d}^{-s},1,\vp))
+		&\le& \exp(-2c\, T(0,d^t,\vp))\, (n^*-1) + \sum_{i=n^*}^\infty \frac{1}{(i-1)^2}\\
+		&\le& \exp(-2c\, T(0,d^t,\vp))\, (n^*-1) + \frac{\pi^2}{6}.
+	\end{eqnarray*}
+	Moreover,
+	\begin{eqnarray*}
+		\exp(-2c\, T(0,d^t,\vp))\, (n^*-1) &\le & \exp(-2c\, T(0,d^t,\vp))\, 
+		\exp (c\, T(V^s,1,\vp) + c\, T(0,d^t,\vp))\\
+		&\le & \exp (c\, T(V^s,1,\vp))\\
+		&<& \infty,
+	\end{eqnarray*}
+	independently of $d$. This implies that 
+	\[
+	\exp(-2c\, T(0,d^t,\vp)) \sum_{i=1}^\infty \exp(-2c\, T(\lambda_{i,d}^{-s},1,\vp))<\infty,
+	\]
+	also independently of $d$. As $c>0$ was chosen arbitrarily, we can replace $2c$ by $c$ and see
+	necessity of the condition in the theorem. 
+	
+	\medskip
+	
+  \textbf{Sufficient Condition:}\\
+	We now show sufficiency.
+	
+	Suppose that $\mu(c,s,t,\vp) <\infty$ for all $c>0$. It is no loss of generality to assume that 
+	$\mu(c,s,t,\vp) \ge 1$. Since the terms of the series in the definition of $\mu(c,s,t,\vp) $ are non-increasing, we have 
+	\[
+	\exp (-c\, T(0,d^t,\vp))\, n\, \exp (-c\, T(\lambda_{n,d}^{-s},1,\vp)) \le \mu (c,s,t,\vp).
+	\]
+	Then we obtain 
+	\[
+	\exp (-c\, T(\lambda_{n,d}^{-s},1,\vp)) \le \frac{1}{n}\, \mu (c,s,t,\vp)\, 
+	\exp (c\, T(0,d^t,\vp)),
+	\]
+	which is equivalent to 
+	\[
+	\exp (c\, T(\lambda_{n,d}^{-s},1,\vp)) \ge \frac{n}{\mu (c,s,t,\vp)\, 
+		\exp (c\, T(0,d^t,\vp))},
+	\]
+	which in turn is equivalent to 
+	\[
+	T(\lambda_{n,d}^{-s},1,\vp) \ge \frac{1}{c}\log \left(\frac{n}{\mu (c,s,t,\vp)\, 
+		\exp (c\, T(0,d^t,\vp))}\right)
+	\]
+	as long as 
+	\[
+	n> \mu (c,s,t,\vp)\, \exp (c\, T(0,d^t,\vp)).
+	\]
+	This implies that for the special choice 
+	\[
+	n= \left\lceil 
+	\mu (c,s,t,\vp)\, \exp \left(c\, (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))\right)
+	\right\rceil 
+	\]
+	we have
+	\[
+	T(\lambda_{n,d}^{-s},1,\vp) \ge T(\varepsilon^{-1},1,\vp),
+	\]
+	which implies that $\lambda_{n,d} \le \varepsilon$, and thus $n(\varepsilon,d)\le n$. Note that the 
+	argument $x$ of the ceiling function in the definition of our special $n$ is at least one, which implies 
+	$\lceil x \rceil \le 2x$.
+	
+	Consequently,
+	\[
+	n(\varepsilon, d) \le \exp\left(c\, \left(
+	\frac{\log (2\mu (c,s,t,\vp) )}{c}
+	T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp)
+	\right)\right).
+	\]
+	Clearly, there must exist a positive $V=V(c,s,t,\vp)$ such that when $\varepsilon^{-1} +d \ge V$ it holds true that
+	\[
+	T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp) \ge \frac{\log (2\mu (c,s,t,\vp) )}{c}.
+	\]
+	Hence we finally have 
+	\[
+	n(\varepsilon,d) \le \exp (2c\, (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))).
+	\]
+	Since the latter inequality holds for every $c>0$, we have $T$-$(s,t)$-weak tractability.
+	
+\end{proof}
+
 \begin{thebibliography}{99}
 
 \bibitem{NW08} E.~Novak,H.~Wo\'zniakowski. \textit{Tractability of Multivariate Problems, Volume I: Linear Information}.
