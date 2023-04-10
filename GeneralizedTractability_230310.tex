@@ -683,7 +683,7 @@ May we frame weak tractability more generally?
 
 Let $h:[0,\infty) \to [1,\infty)]$ satisfy
 \begin{equation} \label{eq:h_cond}
-	h \text{ is non-decreasing}, \qquad 
+	h \text{ is strictly increasing}, \qquad 
 	h(0)=1, \qquad  [h(x)]^\tau \le h(\tau x) \quad \forall x \ge 0, \tau > 1.
 \end{equation}
 
@@ -699,7 +699,7 @@ Let $h:[0,\infty) \to [1,\infty)]$ satisfy
 \begin{theorem}\label{thm:subhT}
 	The problem is sub-$h \circ T$ tractable if and only if
 	\[
-	S_{c,\vp}=\sup_{d\in\naturals}  \, \sum_{i=1}^\infty \frac1{h(c\, T(\lambda_{i,d},d,\vp))} <\infty \qquad \forall c > 0.
+	S_c = S_{c,\vp} :=\sup_{d\in\naturals}  \, \sum_{i=1}^\infty \frac1{h(c\, T(\lambda_{i,d},d,\vp))} <\infty \qquad \forall c > 0.
 	\]
 \end{theorem}
 \begin{proof}
@@ -734,7 +734,7 @@ By varying $\varepsilon^{-1}$ in the interval $[\max\{1,V_c-d\},\infty)$,  the i
 		\frac{1}{h(2 cT(\lambda^{-1}_{n,d},d)) } & \le \frac{1}{[h(cT(\lambda^{-1}_{n,d},d))]^{2}}  \le \frac 1{n^2}   \qquad  \forall n \ge n^*(d,c) \qquad \text{by \eqref{eq:h_cond}}. \\
 		\intertext{Combining this inequality with ...}
 		\nonumber
-		S_{2c} = 	S_{2c,\vp} & =\sup_{d\in\naturals}  \, \sum_{i=1}^\infty \frac1{h(2c\, T(\lambda_{i,d},d))} \\
+		S_{2c} & =\sup_{d\in\naturals}  \, \sum_{i=1}^\infty \frac1{h(2c\, T(\lambda_{i,d},d))} \\
 		\nonumber
 		&  = \sup_{d\in\naturals} \left [
 		\sum_{i=1}^{n^*(d,c)-1} \frac1{h(2c\, T(\lambda_{i,d},d))}
@@ -751,17 +751,7 @@ By varying $\varepsilon^{-1}$ in the interval $[\max\{1,V_c-d\},\infty)$,  the i
 		\right] + \frac{\pi^2}{6}
 		\qquad \text{by \eqref{eq:nstardef}.}
 \end{align}
-	which is equivalent to 
-	\[
-	\exp(-2c\, (T(\lambda_{n(\varepsilon),d}^{-s},1,\vp) + T(0,d^t,\vp))) \le \frac{1}{(n(\varepsilon)-1)^2}.
-	\]
-	Therefore,
-	\begin{eqnarray*}
-		\exp(-2c\, T(0,d^t,\vp)) \sum_{i=1}^\infty \exp(-2c\, T(\lambda_{i,d}^{-s},1,\vp))
-		&\le& \exp(-2c\, T(0,d^t,\vp))\, (n^*-1) + \sum_{i=n^*}^\infty \frac{1}{(i-1)^2}\\
-		&\le& \exp(-2c\, T(0,d^t,\vp))\, (n^*-1) + \frac{\pi^2}{6}.
-	\end{eqnarray*}
-	Moreover,
+\fred{Here maybe we need additivity of $T$ .  I will pause.}	Moreover,
 	\begin{eqnarray*}
 		\exp(-2c\, T(0,d^t,\vp))\, (n^*-1) &\le & \exp(-2c\, T(0,d^t,\vp))\, 
 		\exp (c\, T(V^s,1,\vp) + c\, T(0,d^t,\vp))\\
@@ -775,66 +765,50 @@ By varying $\varepsilon^{-1}$ in the interval $[\max\{1,V_c-d\},\infty)$,  the i
 	also independently of $d$. As $c>0$ was chosen arbitrarily, we can replace $2c$ by $c$ and see
 	necessity of the condition in the theorem. 
 	
-	\medskip
+	\bigskip
 	
-  \textbf{Sufficient Condition:}\\
-	We now show sufficiency.
-	
-	Suppose that $\mu(c,s,t,\vp) <\infty$ for all $c>0$. It is no loss of generality to assume that 
-	$\mu(c,s,t,\vp) \ge 1$. Since the terms of the series in the definition of $\mu(c,s,t,\vp) $ are non-increasing, we have 
+\noindent \textbf{Sufficient Condition:}\\	
+Suppose that $S_c <\infty$ for all $c>0$.  Since the terms of the series in the definition of $S_c$ are non-increasing, we have 
 	\[
-	\exp (-c\, T(0,d^t,\vp))\, n\, \exp (-c\, T(\lambda_{n,d}^{-s},1,\vp)) \le \mu (c,s,t,\vp).
+		\frac{n}{h(cT(\lambda_{n,d}^{-1},d))}\le S_c \qquad \forall n,d \in \naturals.
 	\]
-	Then we obtain 
-	\[
-	\exp (-c\, T(\lambda_{n,d}^{-s},1,\vp)) \le \frac{1}{n}\, \mu (c,s,t,\vp)\, 
-	\exp (c\, T(0,d^t,\vp)),
-	\]
-	which is equivalent to 
-	\[
-	\exp (c\, T(\lambda_{n,d}^{-s},1,\vp)) \ge \frac{n}{\mu (c,s,t,\vp)\, 
-		\exp (c\, T(0,d^t,\vp))},
-	\]
-	which in turn is equivalent to 
-	\[
-	T(\lambda_{n,d}^{-s},1,\vp) \ge \frac{1}{c}\log \left(\frac{n}{\mu (c,s,t,\vp)\, 
-		\exp (c\, T(0,d^t,\vp))}\right)
-	\]
-	as long as 
-	\[
-	n> \mu (c,s,t,\vp)\, \exp (c\, T(0,d^t,\vp)).
-	\]
-	This implies that for the special choice 
-	\[
-	n= \left\lceil 
-	\mu (c,s,t,\vp)\, \exp \left(c\, (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))\right)
-	\right\rceil 
-	\]
+or equivalently
+\[
+	n\le S_c \, h(cT(\lambda_{n,d}^{-1},d))   \qquad \forall n,d \in \naturals.
+\]
+This implies that for the special choice 
+\[
+	n = \left\lceil 
+	S_c \, h(cT(\varepsilon^{-1},d))  
+	\right\rceil \ge 1
+\]
 	we have
 	\[
-	T(\lambda_{n,d}^{-s},1,\vp) \ge T(\varepsilon^{-1},1,\vp),
+	T(\lambda_{n,d}^{-s},d) \ge T(\varepsilon^{-1},d).
 	\]
-	which implies that $\lambda_{n,d} \le \varepsilon$, and thus $n(\varepsilon,d)\le n$. Note that the 
-	argument $x$ of the ceiling function in the definition of our special $n$ is at least one, which implies 
-	$\lceil x \rceil \le 2x$.
+Since $T(\cdot,d)$ is non-decreasing, it follows that $\lambda_{n,d} \le \varepsilon$, and thus 
+\[
+\comp(\varepsilon,d) \le  \left\lceil 
+S_c \, h(cT(\varepsilon^{-1},d))  
+\right\rceil.  
+\]
 	
-	Consequently,
-	\[
-	n(\varepsilon, d) \le \exp\left(c\, \left(
-	\frac{\log (2\mu (c,s,t,\vp) )}{c}
-	T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp)
-	\right)\right).
-	\]
-	Clearly, there must exist a positive $V=V(c,s,t,\vp)$ such that when $\varepsilon^{-1} +d \ge V$ it holds true that
-	\[
-	T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp) \ge \frac{\log (2\mu (c,s,t,\vp) )}{c}.
-	\]
-	Hence we finally have 
-	\[
-	n(\varepsilon,d) \le \exp (2c\, (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))).
-	\]
-	Since the latter inequality holds for every $c>0$, we have $T$-$(s,t)$-weak tractability.
-	
+Consequently,
+\begin{align*}
+\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{ h(2cT(\varepsilon^{-1},d))  }
+& \le \lim_{\varepsilon^{-1} + d \to \infty} \frac{ \left\lceil 
+	S_c \, h(cT(\varepsilon^{-1},d)) \right\rceil}{ [h(cT(\varepsilon^{-1},d))]^2  } \qquad \text{by \eqref{eq:h_cond}}
+\\
+& \le \lim_{\varepsilon^{-1} + d \to \infty} \frac{
+	S_c \, h(cT(\varepsilon^{-1},d))+1}{ [h(cT(\varepsilon^{-1},d))]^2  }  \\
+& = \lim_{\varepsilon^{-1} + d \to \infty} \left \{\frac{
+	S_c }{ h(cT(\varepsilon^{-1},d))  }  + \frac{
+	1}{ [h(cT(\varepsilon^{-1},d))]^2 } \right \} \\
+& = 0, \qquad \text{since } \lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty.
+\end{align*}	
+\fred{Maybe this last assumption on $T$ tending to infinity also depends on the additivity or something similar.}
+
+This completes the proof.
 \end{proof}
 
 \begin{thebibliography}{99}
