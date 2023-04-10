@@ -687,7 +687,7 @@ Let $h:[0,\infty) \to [1,\infty)]$ satisfy
 	h(0)=1, \qquad  [h(x)]^\tau \le h(\tau x) \quad \forall x \ge 0, \tau > 1.
 \end{equation}
 
-\begin{definition}
+\begin{definition} \label{def:subhT}
 	A problem is sub-$h \circ T$ tractable if
 	\begin{equation*}
 		\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{h(cT(\varepsilon^{-1},d,\vp))} = 0 \qquad \forall c>0
@@ -706,17 +706,60 @@ Let $h:[0,\infty) \to [1,\infty)]$ satisfy
 We suppress the $\vp$ dependence, because it does not enter into the proof.
 
 \bigskip
+
+\noindent \textbf{Sufficient Condition:}\\	
+Suppose that $S_c <\infty$ for all $c>0$.  Since the terms of the series in the definition of $S_c$ are non-increasing, we have 
+	\[
+		\frac{n}{h(cT(\lambda_{n,d}^{-1},d))}\le S_c \qquad \forall n,d \in \naturals.
+	\]
+or equivalently
+\[
+	n\le S_c \, h(cT(\lambda_{n,d}^{-1},d))   \qquad \forall n,d \in \naturals.
+\]
+This implies that for the special choice 
+\[
+	n = \left\lceil 
+	S_c \, h(cT(\varepsilon^{-1},d))  
+	\right\rceil \ge 1
+\]
+	we have
+	\[
+	T(\lambda_{n,d}^{-s},d) \ge T(\varepsilon^{-1},d).
+	\]
+Since $T(\cdot,d)$ is non-decreasing, it follows that $\lambda_{n,d} \le \varepsilon$, and thus 
+\[
+\comp(\varepsilon,d) \le  \left\lceil 
+S_c \, h(cT(\varepsilon^{-1},d))  
+\right\rceil.  
+\]
+	
+Consequently,
+\begin{align*}
+\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{ h(2cT(\varepsilon^{-1},d))  }
+& \le \lim_{\varepsilon^{-1} + d \to \infty} \frac{ \left\lceil 
+	S_c \, h(cT(\varepsilon^{-1},d)) \right\rceil}{ [h(cT(\varepsilon^{-1},d))]^2  } \qquad \text{by \eqref{eq:h_cond}}
+\\
+& \le \lim_{\varepsilon^{-1} + d \to \infty} \frac{
+	S_c \, h(cT(\varepsilon^{-1},d))+1}{ [h(cT(\varepsilon^{-1},d))]^2  }  \\
+& = \lim_{\varepsilon^{-1} + d \to \infty} \left \{\frac{
+	S_c }{ h(cT(\varepsilon^{-1},d))  }  + \frac{
+	1}{ [h(cT(\varepsilon^{-1},d))]^2 } \right \} \\
+& = 0, \qquad \text{since } \lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty.
+\end{align*}	
+\fred{Maybe this last assumption on $T$ tending to infinity also depends on the additivity or something similar.}  Since $c$ is arbitrary, we have satisfied the condition of Definition \ref{def:subhT}.
+
+\bigskip
 	  
 \noindent \textbf{Necessary Condition:}\\
 Suppose that the problem is  sub-$h \circ T$ tractable. Then, for any $c>0$ there exists a positive integer $V_c$ such that  
 \[
 	\comp(\varepsilon,d)\le 
-	\left\lfloor{h(cT(\varepsilon^{-1},d)) \right\rfloor \qquad \forall \varepsilon^{-1} + d \ge V_c.
+	\left\lfloor h(cT(\varepsilon^{-1},d)) \right\rfloor \qquad \forall \varepsilon^{-1} + d \ge V_c.
 \]
 By the definition of complexity in \eqref{eq:comp_def}, it follows that 
 \[
 	\lambda_{n(\varepsilon,d,c),d} \le \varepsilon \quad \forall \varepsilon^{-1} + d \ge V_c, \qquad \text{where }
-	n(\varepsilon,d,c):=\left\lfloor{h(cT(\varepsilon^{-1},d)) \right\rfloor.
+	n(\varepsilon,d,c):=\left\lfloor h(cT(\varepsilon^{-1},d)) \right\rfloor.
 \]
 Since $h(cT(\cdot,d))$ is non-decreasing, it follows that
 \begin{equation*}
@@ -766,47 +809,6 @@ By varying $\varepsilon^{-1}$ in the interval $[\max\{1,V_c-d\},\infty)$,  the i
 	necessity of the condition in the theorem. 
 	
 	\bigskip
-	
-\noindent \textbf{Sufficient Condition:}\\	
-Suppose that $S_c <\infty$ for all $c>0$.  Since the terms of the series in the definition of $S_c$ are non-increasing, we have 
-	\[
-		\frac{n}{h(cT(\lambda_{n,d}^{-1},d))}\le S_c \qquad \forall n,d \in \naturals.
-	\]
-or equivalently
-\[
-	n\le S_c \, h(cT(\lambda_{n,d}^{-1},d))   \qquad \forall n,d \in \naturals.
-\]
-This implies that for the special choice 
-\[
-	n = \left\lceil 
-	S_c \, h(cT(\varepsilon^{-1},d))  
-	\right\rceil \ge 1
-\]
-	we have
-	\[
-	T(\lambda_{n,d}^{-s},d) \ge T(\varepsilon^{-1},d).
-	\]
-Since $T(\cdot,d)$ is non-decreasing, it follows that $\lambda_{n,d} \le \varepsilon$, and thus 
-\[
-\comp(\varepsilon,d) \le  \left\lceil 
-S_c \, h(cT(\varepsilon^{-1},d))  
-\right\rceil.  
-\]
-	
-Consequently,
-\begin{align*}
-\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{ h(2cT(\varepsilon^{-1},d))  }
-& \le \lim_{\varepsilon^{-1} + d \to \infty} \frac{ \left\lceil 
-	S_c \, h(cT(\varepsilon^{-1},d)) \right\rceil}{ [h(cT(\varepsilon^{-1},d))]^2  } \qquad \text{by \eqref{eq:h_cond}}
-\\
-& \le \lim_{\varepsilon^{-1} + d \to \infty} \frac{
-	S_c \, h(cT(\varepsilon^{-1},d))+1}{ [h(cT(\varepsilon^{-1},d))]^2  }  \\
-& = \lim_{\varepsilon^{-1} + d \to \infty} \left \{\frac{
-	S_c }{ h(cT(\varepsilon^{-1},d))  }  + \frac{
-	1}{ [h(cT(\varepsilon^{-1},d))]^2 } \right \} \\
-& = 0, \qquad \text{since } \lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty.
-\end{align*}	
-\fred{Maybe this last assumption on $T$ tending to infinity also depends on the additivity or something similar.}
 
 This completes the proof.
 \end{proof}
