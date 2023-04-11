@@ -688,7 +688,8 @@ This implies that for $\tau>1$, we have
 \]
 Now, we have the following upper bound on the complexity as follows
 \begin{align*}
-    \comp(\varepsilon,d) &\leq 
+    \comp(\varepsilon,d) &\leq 1+T(\varepsilon^{-1},d,\vp)\sum_{j=1}^\infty\frac{1}{T(\lambda^{-1}_{j,d},d,\vp)}\\
+    &\leq 1+T(\varepsilon^{-1},d,\vp)\left[\sum_{j=1}^{C_{\vp}-1}\frac{1}{T(\lambda^{-1}_{j,d},d,\vp)} + \sum_{j=C_{\vp}}^\infty \frac{1}{T(\lambda_{j,d}^{-1},d,\vp)}\right]
 \end{align*}
 \end{proof}
 

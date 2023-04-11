@@ -120,9 +120,9 @@ which implies that the problem does not become easier by decreasing the toleranc
 \begin{equation}
 	\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d,\vp) = \infty \qquad \forall d \in \naturals, \ \vp \in [0,\infty)^s.
 \end{equation}
-Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit:
+Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit, which we assume will always be positive:
 \begin{equation}
-	T(0,d,\vp):=\lim_{\varepsilon\to\infty}T(\varepsilon^{-1},d,\vp).
+	T(0,d,\vp):=\lim_{\varepsilon\to\infty}T(\varepsilon^{-1},d,\vp) \ge T(0,1,\vzero) > 0.
 \end{equation}
 \end{subequations}
 Finally, there is a technical assumption required for our analysis.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
