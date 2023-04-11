@@ -62,7 +62,7 @@ TODO: Check in how far our conditions coincide with existing conditions for less
 
 Let $\cf_d$ and $\cg_d$ be Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a linear solution operator with adjoint $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors
 \[
-\lambda_{\max}^2 \ge \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots,
+\lambda_{\max}^2 \ge \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, \qquad d \in \naturals.
 \]
 This means that the non-negative $\lambda_{i,d}$ are the singular values of the $\SOL_d$. To avoid trivial cases, we assume that there are an infinite number of positive eigenvalues.
 
@@ -84,13 +84,13 @@ By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.
 
 The question is,``How hard is this problem as $\varepsilon$ tends to zero or as $d$ tends to infinity?''  We want to bound the complexity in terms of a simple function of $\varepsilon$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding.
 
-\section{Main Results}
+\section{(Strong) Tractability}
 
 \subsection{Notation and fundamental definitions}
 Let $T$ be a tractability function defined as follows,
-\[
-T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty),
-\]
+\begin{equation} \label{eq:Tspec}
+    T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty),
+\end{equation}
 \fred{I think that we do not need to bound $T$ away from $0$, but doing so may help satisfy \eqref{eq:ptauassume}.}
 A tractability function is a function of simple form that provides an upper bound on the computational complexity of a problem.  Some examples of tractability functions commonly considered are provided in Section \ref{sec:examples}.
 
@@ -119,11 +119,12 @@ Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit:
 \begin{equation}
 	T(0,d,\vp):=\lim_{\varepsilon\to\infty}T(\varepsilon^{-1},d,\vp).
 \end{equation}
+\end{subequations}
 Finally, there is a technical assumption required for our analysis.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:ptauassume}
 	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in [1,\infty).
 \end{equation}
-\end{subequations}
+
 
 If \eqref{eq:tract_def} holds for some $\vp$, it clearly holds for larger, $\vp$.  We are often interested in the optimal or smallest $\vp$ for which \eqref{eq:tract_def} holds.  Define the closures of the sets of parameters for which our (strong) tractability conditions hold:
 \begin{equation*}
@@ -162,7 +163,7 @@ In the sections below we prove necessary and sufficient conditions on tractabili
 We first consider the simpler case when the complexity is essentially independent of the dimension, $d$.  The proof also introduces the line of argument used for the case where there is $d$ dependence.
 
 \begin{theorem}\label{thm_main_strong_tract2}
-A problem is strongly $T$-tractable iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ and an integer $L_{\vp} > 0$ such that
+Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is strongly $T$-tractable iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ and an integer $L_{\vp} > 0$ such that
 \begin{equation} \label{eq:strong_tractiff3}
      S_{\vp}:=\sup_{d \in \naturals} \sum_{i = L_{\vp}}^\infty \frac{1}{T(\lambda_{i,d}^{-1},1,\vp)} < \infty.
 \end{equation}
@@ -289,7 +290,7 @@ Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \
 The argument proving equivalent conditions for tractability is similar to, but somewhat more involved than the proof of Theorem \ref{thm_main_strong_tract2}.  Moreover, the specification of the set of optimal parameters is not as precise as in Theorem \ref{thm_main_strong_tract2}.
 
 \begin{theorem}\label{thm_main_tract2}
-A problem is $T$-tractable iff there exist $\vp\ge \vzero$ and a constant $L_{\vp} > 0$ such that
+Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is $T$-tractable iff there exist $\vp\ge \vzero$ and a constant $L_{\vp} > 0$ such that
 \begin{equation} \label{eq:tractiff4}
      S_{\vp}:=\sup_{d \in \naturals}
      \sum_{i = \lceil L_{\vp}\, T(0,d,\vp) \rceil}^\infty \frac{1}{T(\lambda^{-1}_{i,d},d,\vp)}< \infty.
@@ -644,8 +645,8 @@ M_{\vp} := \sup_{d\in\mathbb{N}}\sum_{i=1}^\infty \frac{1}{T(\lambda_{i,d}^{-1},
 <\infty
 \end{equation}
 %where $\Bar{p} = -p(1+\log(T(0,d,\vp))$.
-If it holds then 
-\[n(\varepsilon,d)\leq 1+T(0,d^\tau,\vp)+ T(0,d^\tau,\vp)T(\varepsilon^{-1},1,\vp)\]
+%If it holds then 
+%\[n(\varepsilon,d)\leq 1+T(0,d^\tau,\vp)+ T(0,d^\tau,\vp)T(\varepsilon^{-1},1,\vp)\]
 \end{theorem}
 \begin{proof}
 \textbf{Necessity Condition:}\\
@@ -670,10 +671,8 @@ j(\infty,d,\vp)=j_d = \lfloor C_{\vp}\exp\{ T(0,d,\vp)\}\rfloor + 1
 \]
 Furthermore, we have
 \[j \leq C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}+1 \leq C_{\vp}\exp\{T(\lambda^{-1}_{j,d},d,\vp)\}+1 \]
-This implies that
-\[
-\left(\log\frac{j-1}{C_{\vp}}\right)^\tau \leq \left(T(\varepsilon^{-1},d,\vp)\right)^\tau \leq K_{\vp,\tau}T(\lambda_{j,d},d,\tau\vp) 
-\]
+This implies that for $\tau>1$, we have
+%\[\left(\log\frac{j-1}{C_{\vp}}\right)^\tau \leq \left(T(\varepsilon^{-1},d,\vp)\right)^\tau \leq K_{\vp,\tau}T(\lambda_{j,d},d,\tau\vp) \]
 we have 
 %\[\frac{1}{T(\lambda_{i,d}^{-1},d,\vp)} \leq \frac{K_{\vp,\tau}}{\left(\log\frac{j-1}{C_{\vp}}\right)^\tau}\]
 \end{proof}
@@ -697,7 +696,7 @@ Let $h:[0,\infty) \to [1,\infty)]$ satisfy
 
 
 \begin{theorem}\label{thm:subhT}
-	The problem is sub-$h \circ T$ tractable if and only if
+	Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions}.  Moreover, let $\lim_{d \to \infty} T(\varepsilon^{-1},d) = \infty$ for all $\varepsilon > 0$.  The problem is sub-$h \circ T$ tractable if and only if
 	\[
 	S_c = S_{c,\vp} :=\sup_{d\in\naturals}  \, \sum_{i=1}^\infty \frac1{h(c\, T(\lambda_{i,d},d,\vp))} <\infty \qquad \forall c > 0.
 	\]
@@ -734,19 +733,20 @@ S_c \, h(cT(\varepsilon^{-1},d))
 \]
 	
 Consequently,
-\begin{align*}
+\begin{align}
+\nonumber
 \lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{ h(2cT(\varepsilon^{-1},d))  }
 & \le \lim_{\varepsilon^{-1} + d \to \infty} \frac{ \left\lceil 
 	S_c \, h(cT(\varepsilon^{-1},d)) \right\rceil}{ [h(cT(\varepsilon^{-1},d))]^2  } \qquad \text{by \eqref{eq:h_cond}}
 \\
+\nonumber
 & \le \lim_{\varepsilon^{-1} + d \to \infty} \frac{
 	S_c \, h(cT(\varepsilon^{-1},d))+1}{ [h(cT(\varepsilon^{-1},d))]^2  }  \\
 & = \lim_{\varepsilon^{-1} + d \to \infty} \left \{\frac{
 	S_c }{ h(cT(\varepsilon^{-1},d))  }  + \frac{
-	1}{ [h(cT(\varepsilon^{-1},d))]^2 } \right \} \\
-& = 0, \qquad \text{since } \lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty.
-\end{align*}	
-\fred{Maybe this last assumption on $T$ tending to infinity also depends on the additivity or something similar.}  Since $c$ is arbitrary, we have satisfied the condition of Definition \ref{def:subhT}.
+	1}{ [h(cT(\varepsilon^{-1},d))]^2 } \right \} \label{eq:alastone}.
+\end{align}	
+The finiteness of $S_c$ implies that $\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d) = \infty$ for all $d \in \naturals$.  Together with the hypothesis on $\lim_{d \to \infty} T(\varepsilon^{-1},d)$, we can infer that $\lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty$.  This implies that the limit in \eqref{eq:alastone} vanishes.  Since $c$ is arbitrary, we have satisfied the condition of Definition \ref{def:subhT}.
 
 \bigskip
 	  
@@ -766,48 +766,75 @@ Since $h(cT(\cdot,d))$ is non-decreasing, it follows that
 		n(\varepsilon,d,c)\le  h(cT(\varepsilon^{-1},d)) \le  h(cT(\lambda^{-1}_{n(\varepsilon,d,c),d},d)) \qquad  \quad \forall \varepsilon^{-1} + d \ge V_c.
 \end{equation*}
 	
-For a fixed $d$, the largest the largest $\varepsilon$ can be and still satisfy $ \varepsilon^{-1} + d \ge V_c$ is $\max(V_c - d,1)$.   Let 
+For a fixed $d$, define $\varepsilon^{-1}_{\max,d} = \max(V_c - d,\lambda_{\max}^{-1})$.  the largest the largest $\varepsilon$ can be and still satisfy $ \varepsilon^{-1} + d \ge V_c$ is $\max(V_c - d,1)$.   Let 
 \begin{equation} \label{eq:nstardef}
-	n^*(d,c) : = n(\max(V_c - d,1),d,c) \le h(cT(\max(V_c-d,1),d)
+	\varepsilon^{-1}_{\max,d} := \max(V_c - d,\lambda_{\max}^{-1}), \qquad n^*(d,c) : = n(\varepsilon^{-1}_{\max,d},d,c) \le h(cT(\varepsilon^{-1}_{\max,d},d)).
 \end{equation} 
-By varying $\varepsilon^{-1}$ in the interval $[\max\{1,V_c-d\},\infty)$,  the integer $	n(\varepsilon,d,c)$ attains all values greater than or equal to $n^*(d,c)$.  Thus, 
+By varying $\varepsilon^{-1}$ in the interval $[\varepsilon^{-1}_{\max,d},\infty)$,  the integer $n(\varepsilon,d,c)$ attains all values greater than or equal to $n^*(d,c)$.  Thus, 
 \begin{align}
 		n &\le h(cT(\lambda^{-1}_{n,d},d)) \qquad  \forall n \ge n^*(d,c), \label{eq:subhTneq}\\
 		\nonumber
 		\frac{1}{h(2 cT(\lambda^{-1}_{n,d},d)) } & \le \frac{1}{[h(cT(\lambda^{-1}_{n,d},d))]^{2}}  \le \frac 1{n^2}   \qquad  \forall n \ge n^*(d,c) \qquad \text{by \eqref{eq:h_cond}}. \\
-		\intertext{Combining this inequality with ...}
+		\intertext{Combining this inequality with the upper bound on $n^*(d,c)$ yields}
 		\nonumber
-		S_{2c} & =\sup_{d\in\naturals}  \, \sum_{i=1}^\infty \frac1{h(2c\, T(\lambda_{i,d},d))} \\
+		S_{2c} & =\sup_{d\in\naturals}  \, \sum_{i=1}^\infty \frac1{h(2cT(\lambda_{i,d}^{-1},d))} \\
 		\nonumber
 		&  = \sup_{d\in\naturals} \left [
-		\sum_{i=1}^{n^*(d,c)-1} \frac1{h(2c\, T(\lambda_{i,d},d))}
-		+ \sum_{i=n^*(d,c)}^\infty \frac1{h(2c\, T(\lambda_{i,d},d))} 
+		\sum_{i=1}^{n^*(d,c)-1} \frac1{h(2cT(\lambda_{i,d}^{-1},d))}
+		+ \sum_{i=n^*(d,c)}^\infty \frac1{h(2cT(\lambda_{i,d}^{-1},d))} 
 		\right]\\
 		 \nonumber
 		 & \le \sup_{d\in\naturals} \left [
-\frac{n^*(d,c)-1}{h(2c\, T(\lambda_{\max},d))}
+\frac{n^*(d,c)-1}{h(2cT(\lambda_{\max}^{-1},d))}
 + \sum_{i=1}^\infty \frac1{n^2}
 \right] 
  \qquad \text{by \eqref{eq:subhTneq}}\\ 
+ \label{eq:lastone}
 		 & \le \sup_{d\in\naturals} \left [
-		 \frac{ h(cT(\max(V_c-d,1),d)}{h(2c\, T(\lambda_{\max},d))}
+		 \frac{ h(cT(\varepsilon^{-1}_{\max,d},d))}{h(2cT(\lambda_{\max}^{-1},d))}
 		\right] + \frac{\pi^2}{6}
 		\qquad \text{by \eqref{eq:nstardef}.}
 \end{align}
-\fred{Here maybe we need additivity of $T$ .  I will pause.}	Moreover,
-	\begin{eqnarray*}
-		\exp(-2c\, T(0,d^t,\vp))\, (n^*-1) &\le & \exp(-2c\, T(0,d^t,\vp))\, 
-		\exp (c\, T(V^s,1,\vp) + c\, T(0,d^t,\vp))\\
-		&\le & \exp (c\, T(V^s,1,\vp))\\
-		&<& \infty,
-	\end{eqnarray*}
-	independently of $d$. This implies that 
-	\[
-	\exp(-2c\, T(0,d^t,\vp)) \sum_{i=1}^\infty \exp(-2c\, T(\lambda_{i,d}^{-s},1,\vp))<\infty,
-	\]
-	also independently of $d$. As $c>0$ was chosen arbitrarily, we can replace $2c$ by $c$ and see
-	necessity of the condition in the theorem. 
-	
+
+Note that 
+\[
+\varepsilon^{-1}_{\max,d} = \max(V_c - d,\lambda_{\max}^{-1}) 
+= \begin{cases} V_c - d \le V_c, & d \in \{1, \ldots, d^* : = \lfloor V_c - \lambda_{\max}^{-1} \rfloor\} \\
+\lambda_{\max}^{-1}, & d \in \{d^*+1, \ldots\}
+\end{cases}
+\]
+Recalling that $T$ is non-decreasing in it's arguments, this implies that 
+\begin{align*}
+    \sup_{d\in\naturals} \,
+		 \frac{ h(cT(\varepsilon^{-1}_{\max,d},d))}{h(2cT(\lambda_{\max}^{-1},d))}
+  &\le \max \left \{  
+  \sup_{d \in \{1, \ldots, d^*\}} \,
+		 \frac{ h(cT(\varepsilon^{-1}_{\max,d},d))}{h(2cT(\lambda_{\max}^{-1},d))}, 
+  \sup_{d\in \{d^*+1, \ldots \}} \,
+		 \frac{ h(cT(\varepsilon^{-1}_{\max,d},d))}{h(2cT(\lambda_{\max}^{-1},d))}
+  \right \} \\
+  & \le \max \left \{  
+  \sup_{d \in \{1, \ldots, d^*\}}  \,
+		 \frac{ h(cT(V_c,d))}{h(2cT(\lambda_{\max}^{-1},d))}
+  , 
+  \sup_{d\in \{d^*+1, \ldots \}}  \,
+		 \frac{ h(cT(\lambda_{\max}^{-1},d))}{h(2cT(\lambda_{\max}^{-1},d))}
+  \right \}
+  \\
+  & \le \max \left \{  
+		 \frac{ h(cT(V_c,d^*))}{h(2cT(\lambda_{\max}^{-1},1))}, 
+  \sup_{d\in \{d^*+1, \ldots \}}  \,
+		 \frac{ h(cT(\lambda_{\max}^{-1},d))}{[h(cT(\lambda_{\max}^{-1},d))]^2}
+  \right \} \\
+  & = \max \left \{  
+		 \frac{ h(cT(V_c,d^*))}{h(2cT(\lambda_{\max}^{-1},1))}, 
+  \sup_{d\in \{d^*+1, \ldots \}} \,
+		 \frac{1}{h(cT(\lambda_{\max}^{-1},d))}
+  \right \} \\
+  & < \infty \qquad \text{since }h \ge 1.
+\end{align*}
+Combining this bound with \eqref{eq:lastone} establishes the finiteness of $S_2c$ and completes the proof of the necessary condition.
+
 	\bigskip
 
 This completes the proof.
