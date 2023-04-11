@@ -682,7 +682,14 @@ This implies that for $\tau>1$, we have
 \textbf{Sufficient condition:} Suppose that (\ref{}) holds for some $\vp \geq 0$. We need to show that for some $C_{\vp}>0$ we have 
 \[
 \text{comp}(\varepsilon,d) \leq C_{\vp}\exp\{T(0,d,\vp)T(\varepsilon^{-1},1,\vp)\} \quad \forall \varepsilon > , d \in \mathbb{N}
-\] Let
+\] Given that $\lambda_{j,d}$ are non-increasing, it follows that $T$ is increasing in its arguments, hence we have the following arguments from previous theorems, i.e.,
+\[
+\text{comp}(\varepsilon,d) \leq 1 + T(\varepsilon^{-1},d,\vp)\sum_{j=1}^\infty\frac{1}{T(\lambda^{-1}_{j,d},d,\vp)}
+\]
+Now, we have the following upper bound on the complexity as follows
+\begin{align*}
+    \comp(\varepsilon,d) &\leq 
+\end{align*}
 \end{proof}
 
 \section{Fred's Attempt at sub-$h$ $T$-Tractability}

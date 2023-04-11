@@ -61,9 +61,9 @@ TODO: Check in how far our conditions coincide with existing conditions for less
 \medskip
 
 Let $\cf_d$ and $\cg_d$ be Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a linear solution operator \peter{(PETER: do we need to assume compactness of $\SOL_d$ to guarantee solvability of the problem?)} with adjoint $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors
-\[
+\begin{equation} \label{eq:eigenvalues}
 \lambda_{\max}^2 \ge \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, \qquad d \in \naturals.
-\]
+\end{equation}
 This means that the non-negative $\lambda_{i,d}$ are the singular values of the \peter{operator} $\SOL_d$. To avoid trivial cases, we assume that there are an infinite number of positive eigenvalues. \peter{We remark that in the literature on Information-Based Complexity the singular values of $\SOL_d$ are often denoted by $\sqrt{\lambda_{i,d}}$ instead of $\lambda_{i,d}$. However, since we assume non-negativity of the $\lambda_{i,d}$, the notation used here is equivalent.}
 
 
@@ -81,7 +81,7 @@ and the \peter{information} complexity of our linear problem is
 \end{equation}
 
 By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity.  \peter{This means that we are actually considering 
-a whole sequence of problems  $\SOL_d : \cf_d \to \cg_d$, for $d\in\naturals$, and we furthermore assume} that the Hilbert spaces are defined in such a way that $\lambda_{j,\cdot}$ is non-decreasing, although this assumption is not needed for our results.
+a whole sequence of problems  $\SOL_d : \cf_d \to \cg_d$, for $d\in\naturals$, and we furthermore assume} that the Hilbert spaces are defined in such a way that $\lambda_{\cdot,d}$ is non-decreasing for every $d$, as spelled out in \eqref{eq:eigenvalues}, although this assumption is not needed for our results.
 
 The question is,``How hard is this problem as $\varepsilon$ tends to zero or as $d$ tends to infinity?''  We want to bound the complexity in terms of a simple function of $\varepsilon$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding.
 
@@ -110,7 +110,8 @@ $T$-tractable with parameter $\vp$ iff the complexity is independent of the dime
 \end{equation}
 In this article we allow $\vp$ to be a scalar or vector as the situation dictates.
 
-Note that the tractability function is bounded below away from zero even as $\varepsilon \to \infty$ \peter{[PETER: Is it?]}, so that the information complexity is not expected to vanish under arbitrarily loose error requirements.  For this definition of tractability to make sense we assume that
+%Note that the tractability function is bounded below away from zero even as $\varepsilon \to \infty$ \peter{[PETER: Is it?]}, so that the information complexity is not expected to vanish under arbitrarily loose error requirements.  
+For this definition of tractability to make sense we assume that
 \begin{subequations} \label{eq:Tconditions}
 \begin{equation}
 	T \text{ is non-decreasing in all variables,}
@@ -177,9 +178,9 @@ Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfyi
 If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{strct}} : = \{\vp^* : \eqref{eq:strong_tractiff3} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}$.  Then $\cp_{\textup{strct}} = \widetilde{\cp}_{\textup{strct}}$, and the set of optimal strong tractability parameters is
 \[
 	\cp_{\textup{sopt}} =
-	\{\vp^* \in \widetilde{\cp}_{\textup{strct}} :  \vp^* \notin [\vp^\dagger,\boldsymbol{\infty}) \ \forall \vp^\dagger \in  \widetilde{\cp}_{\textup{strct}} \setminus \{\vp^*\} \}.
+	\{\vp^* \in \widetilde{\cp}_{\textup{strct}} :  \vp^* \notin [\widetilde{\vp},\boldsymbol{\infty}) \ \forall \widetilde{\vp}\in  \widetilde{\cp}_{\textup{strct}} \setminus \{\vp^*\} \}.
 \]
-\peter{[PETER: Maybe using $\widetilde{\vp}$ instead of $\vp^\dagger$ in the definition of $\cp_{\textup{sopt}}$ is more intuitive?]}
+%\peter{[PETER: Maybe using $\widetilde{\vp}$ instead of $\vp^\dagger$ in the definition of $\cp_{\textup{sopt}}$ is more intuitive?]}
 \end{theorem}
 
 
