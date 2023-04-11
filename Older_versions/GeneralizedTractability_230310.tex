@@ -634,8 +634,8 @@ where $\sigma (c,d,s,\vp) = $
 
 \begin{definition}[$T$-Quasi-polynomial tractability]
 We say that the problem is \emph{$T$- quasi-polynomial tractable} if there exists positive $C_{\vp}$ such that
-   %\[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(0,d,\vp))(T(\varepsilon^{-1},1,\vp)\}\]
-   \[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(\varepsilon^{-1},d,\vp)\}\]
+   \[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(0,d,\vp))(T(\varepsilon^{-1},1,\vp)\}\]
+  % \[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(\varepsilon^{-1},d,\vp)\}\]
 \end{definition}
 
 \begin{theorem}\label{thm:qpt}
@@ -651,30 +651,38 @@ M_{\vp} := \sup_{d\in\mathbb{N}}\sum_{i=1}^\infty \frac{1}{T(\lambda_{i,d}^{-1},
 \begin{proof}
 \textbf{Necessity Condition:}\\
 Suppose that we have $T$-quasi-polynomial tractability, i.e., for some $\vp\geq 0$, there exists positive $C_{\vp}$ such that
-%\[\comp(\varepsilon,d)\le C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}\quad\quad \forall\varepsilon >0, d\in \mathbb{N}\] 
-\[
-\comp(\varepsilon,d)\le C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}
-\quad\quad \forall\varepsilon >0, d\in \mathbb{N}
-\] 
+\[\comp(\varepsilon,d)\le C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}\quad\quad \forall\varepsilon >0, d\in \mathbb{N}\] 
+%\[\comp(\varepsilon,d)\le C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}\quad\quad \forall\varepsilon >0, d\in \mathbb{N}\] 
 Since $\lambda_{i,d}$ are non-increasing, we have
 \[
-\lambda_{\left\lfloor C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}\right\rfloor+1,d}\leq \varepsilon^2
+\lambda_{\left\lfloor C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}\right\rfloor+1,d}\leq \varepsilon^2
 \]
 Given that the estimate holds for all $\varepsilon> 0$, we assume that $\varepsilon \in (0, 1]$.\\
 
 If we vary $\varepsilon\in (0,1]$, we have that
 \[
-j(\varepsilon,d,\vp) = \left\lfloor C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}\right\rfloor+1
+j(\varepsilon,d,\vp) = \left\lfloor C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}\right\rfloor+1
 \] which attains the values $j = j_d,j_{d+1},\dots$, where
 \[
 j(\infty,d,\vp)=j_d = \lfloor C_{\vp}\exp\{ T(0,d,\vp)\}\rfloor + 1
 \]
 Furthermore, we have
-\[j \leq C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}+1 \leq C_{\vp}\exp\{T(\lambda^{-1}_{j,d},d,\vp)\}+1 \]
+\[j \leq C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}+1 \leq C_{\vp}\exp\{(T(0,d,\vp)(T(\lambda^{-1}_{j,d},1,\vp))\}+1 \quad \forall j \geq j_d \]
 This implies that for $\tau>1$, we have
-%\[\left(\log\frac{j-1}{C_{\vp}}\right)^\tau \leq \left(T(\varepsilon^{-1},d,\vp)\right)^\tau \leq K_{\vp,\tau}T(\lambda_{j,d},d,\tau\vp) \]
-we have 
+\[
+\left(\frac{j-1}{C_{\vp}}\right)^{\tau/T(0,d,\vp)} \leq \exp\{T(\lambda^{-1}_{j,d},1,\vp)\}
+\]
+\[
+\exp\{-\tau T(\lambda^{-1}_{j,d},1,\vp\} \leq \left(\frac{C_{\vp}}{j-1}\right)^{\tau/T(0,d,\vp)}\Rightarrow
+\exp\{-\tau T(\lambda^{-1}_{j,d},1,\vp)(T(0,d,\vp)\} \leq C_{\vp}^\tau (j-1)^{-\tau}
+\]
+
 %\[\frac{1}{T(\lambda_{i,d}^{-1},d,\vp)} \leq \frac{K_{\vp,\tau}}{\left(\log\frac{j-1}{C_{\vp}}\right)^\tau}\]
+
+\textbf{Sufficient condition:} Suppose that (\ref{}) holds for some $\vp \geq 0$. We need to show that for some $C_{\vp}>0$ we have 
+\[
+\text{comp}(\varepsilon,d) \leq C_{\vp}\exp\{T(0,d,\vp)T(\varepsilon^{-1},1,\vp)\} \quad \forall \varepsilon > , d \in \mathbb{N}
+\] Let
 \end{proof}
 
 \section{Fred's Attempt at sub-$h$ $T$-Tractability}
@@ -762,15 +770,15 @@ By the definition of complexity in \eqref{eq:comp_def}, it follows that
 	n(\varepsilon,d,c):=\left\lfloor h(cT(\varepsilon^{-1},d)) \right\rfloor.
 \]
 Since $h(cT(\cdot,d))$ is non-decreasing, it follows that
-\begin{equation*}
-		n(\varepsilon,d,c)\le  h(cT(\varepsilon^{-1},d)) \le  h(cT(\lambda^{-1}_{n(\varepsilon,d,c),d},d)) \qquad  \quad \forall \varepsilon^{-1} + d \ge V_c.
-\end{equation*}
+\begin{equation}
+		n(\varepsilon,d,c)\le  h(cT(\varepsilon^{-1},d)) \le  h(cT(\lambda^{-1}_{n(\varepsilon,d,c),d},d)) \qquad  \quad \forall \varepsilon^{-1} + d \ge V_c. \label{eq:nedcbound}
+\end{equation}
 	
-For a fixed $d$, define $\varepsilon^{-1}_{\max,d} = \max(V_c - d,\lambda_{\max}^{-1})$.  the largest the largest $\varepsilon$ can be and still satisfy $ \varepsilon^{-1} + d \ge V_c$ is $\max(V_c - d,1)$.   Let 
+For a fixed $c$ and $d$, define
 \begin{equation} \label{eq:nstardef}
-	\varepsilon^{-1}_{\max,d} := \max(V_c - d,\lambda_{\max}^{-1}), \qquad n^*(d,c) : = n(\varepsilon^{-1}_{\max,d},d,c) \le h(cT(\varepsilon^{-1}_{\max,d},d)).
+	\varepsilon^{-1}_{\max}(d,c) := \max(V_c - d,\lambda_{\max}^{-1}), \qquad n^*(d,c) : = n(\varepsilon^{-1}_{\max}(d,c),d,c) \le h(cT(\varepsilon^{-1}_{\max}(d,c),d)).
 \end{equation} 
-By varying $\varepsilon^{-1}$ in the interval $[\varepsilon^{-1}_{\max,d},\infty)$,  the integer $n(\varepsilon,d,c)$ attains all values greater than or equal to $n^*(d,c)$.  Thus, 
+By varying $\varepsilon^{-1}$ in the interval $[\varepsilon^{-1}_{\max}(d,c),\infty)$,  the integer $n(\varepsilon,d,c)$ attains all values greater than or equal to $n^*(d,c)$.  Thus, by \eqref{eq:nedcbound},
 \begin{align}
 		n &\le h(cT(\lambda^{-1}_{n,d},d)) \qquad  \forall n \ge n^*(d,c), \label{eq:subhTneq}\\
 		\nonumber
@@ -791,49 +799,48 @@ By varying $\varepsilon^{-1}$ in the interval $[\varepsilon^{-1}_{\max,d},\infty
  \qquad \text{by \eqref{eq:subhTneq}}\\ 
  \label{eq:lastone}
 		 & \le \sup_{d\in\naturals} \left [
-		 \frac{ h(cT(\varepsilon^{-1}_{\max,d},d))}{h(2cT(\lambda_{\max}^{-1},d))}
+		 \frac{ h(cT(\varepsilon^{-1}_{\max}(d,c),d))}{h(2cT(\lambda_{\max}^{-1},d))}
 		\right] + \frac{\pi^2}{6}
 		\qquad \text{by \eqref{eq:nstardef}.}
 \end{align}
 
 Note that 
 \[
-\varepsilon^{-1}_{\max,d} = \max(V_c - d,\lambda_{\max}^{-1}) 
-= \begin{cases} V_c - d \le V_c, & d \in \{1, \ldots, d^* : = \lfloor V_c - \lambda_{\max}^{-1} \rfloor\} \\
-\lambda_{\max}^{-1}, & d \in \{d^*+1, \ldots\}
+\varepsilon^{-1}_{\max}(d,c) = \max(V_c - d,\lambda_{\max}^{-1}) 
+= \begin{cases} V_c - d \le V_c, & d \in \{1, \ldots, d^*_c : = \lfloor V_c - \lambda_{\max}^{-1} \rfloor\} \\
+\lambda_{\max}^{-1}, & d \in \{d^*_c+1, \ldots\}
 \end{cases}
 \]
 Recalling that $T$ is non-decreasing in it's arguments, this implies that 
 \begin{align*}
-    \sup_{d\in\naturals} \,
-		 \frac{ h(cT(\varepsilon^{-1}_{\max,d},d))}{h(2cT(\lambda_{\max}^{-1},d))}
+    \MoveEqLeft{\sup_{d\in\naturals} \,
+		 \frac{ h(cT(\varepsilon^{-1}_{\max}(d,c),d))}{h(2cT(\lambda_{\max}^{-1},d))}}\\
   &\le \max \left \{  
-  \sup_{d \in \{1, \ldots, d^*\}} \,
-		 \frac{ h(cT(\varepsilon^{-1}_{\max,d},d))}{h(2cT(\lambda_{\max}^{-1},d))}, 
-  \sup_{d\in \{d^*+1, \ldots \}} \,
-		 \frac{ h(cT(\varepsilon^{-1}_{\max,d},d))}{h(2cT(\lambda_{\max}^{-1},d))}
+  \sup_{d \in \{1, \ldots, d^*_c\}} \,
+		 \frac{ h(cT(\varepsilon^{-1}_{\max}(d,c),d))}{h(2cT(\lambda_{\max}^{-1},d))}, 
+  \sup_{d\in \{d^*_c+1, \ldots \}} \,
+		 \frac{ h(cT(\varepsilon^{-1}_{\max}(d,c),d))}{h(2cT(\lambda_{\max}^{-1},d))}
   \right \} \\
   & \le \max \left \{  
-  \sup_{d \in \{1, \ldots, d^*\}}  \,
+  \sup_{d \in \{1, \ldots, d^*_c\}}  \,
 		 \frac{ h(cT(V_c,d))}{h(2cT(\lambda_{\max}^{-1},d))}
   , 
-  \sup_{d\in \{d^*+1, \ldots \}}  \,
+  \sup_{d\in \{d^*_c+1, \ldots \}}  \,
 		 \frac{ h(cT(\lambda_{\max}^{-1},d))}{h(2cT(\lambda_{\max}^{-1},d))}
   \right \}
   \\
   & \le \max \left \{  
-		 \frac{ h(cT(V_c,d^*))}{h(2cT(\lambda_{\max}^{-1},1))}, 
-  \sup_{d\in \{d^*+1, \ldots \}}  \,
+		 \frac{ h(cT(V_c,d^*_c))}{h(2cT(\lambda_{\max}^{-1},1))}, 
+  \sup_{d\in \{d^*_c+1, \ldots \}}  \,
 		 \frac{ h(cT(\lambda_{\max}^{-1},d))}{[h(cT(\lambda_{\max}^{-1},d))]^2}
   \right \} \\
   & = \max \left \{  
-		 \frac{ h(cT(V_c,d^*))}{h(2cT(\lambda_{\max}^{-1},1))}, 
-  \sup_{d\in \{d^*+1, \ldots \}} \,
-		 \frac{1}{h(cT(\lambda_{\max}^{-1},d))}
+		 \frac{ h(cT(V_c,d^*_c))}{h(2cT(\lambda_{\max}^{-1},1))}, 
+		 \frac{1}{h(cT(\lambda_{\max}^{-1},d^*_c+1))}
   \right \} \\
-  & < \infty \qquad \text{since }h \ge 1.
+  & < \infty.
 \end{align*}
-Combining this bound with \eqref{eq:lastone} establishes the finiteness of $S_2c$ and completes the proof of the necessary condition.
+Combining this bound with \eqref{eq:lastone} establishes the finiteness of $S_{2c}$ and completes the proof of the necessary condition.
 
 	\bigskip
 
