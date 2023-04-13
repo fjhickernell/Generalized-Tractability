@@ -626,22 +626,22 @@ Let $T: (0,\infty) \times \naturals \times [0,\infty) \times [0,\infty)\Rightarr
 \]
 Then Theorem \ref{thm:weak} yields the iff-condition
 \[
-\sup_{d\in\naturals} \sigma (c,d,s,\vp) \exp\left(-c\, T(0,d^t,\vp)\right)<\infty
+\sup_{d\in\naturals} \sigma (c,d,s,\vp) \exp\left(-cd^t\right)<\infty
 \]
-where $\sigma (c,d,s,\vp) = $
+where $\displaystyle\sigma (c,d,s,\vp) =\sum_{i=1}^\infty \exp\left(-c\left(\lambda^{-1}_{i,d}\right)^{s/2}\right) $
 
 \section{$T$-Quasi-polynomial tractability} \label{sec:qpt}
 
 \begin{definition}[$T$-Quasi-polynomial tractability]
 We say that the problem is \emph{$T$- quasi-polynomial tractable} if there exists positive $C_{\vp}$ such that
-   \[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(0,d,\vp))(T(\varepsilon^{-1},1,\vp)\}\]
-  % \[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(\varepsilon^{-1},d,\vp)\}\]
+ %  \[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(0,d,\vp))(T(\varepsilon^{-1},1,\vp)\}\]
+  \[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(\varepsilon^{-1},d,\vp)\}\]
 \end{definition}
 
 \begin{theorem}\label{thm:qpt}
 A problem is $T$-quasi-polynomial tractable iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ such that
 \begin{equation}\label{thmqpt}
-M_{\vp} := \sup_{d\in\mathbb{N}}\sum_{i=1}^\infty \frac{1}{T(\lambda_{i,d}^{-1},d,\vp)}
+M_{\vp} := \sup_{d\in\mathbb{N}}\sum_{i=1}^\infty \left[\frac{1}{T(\lambda_{i,d}^{-1},d,\vp)}\right]^{T(0,d,\vp)}
 <\infty
 \end{equation}
 %where $\Bar{p} = -p(1+\log(T(0,d,\vp))$.
@@ -651,47 +651,62 @@ M_{\vp} := \sup_{d\in\mathbb{N}}\sum_{i=1}^\infty \frac{1}{T(\lambda_{i,d}^{-1},
 \begin{proof}
 \textbf{Necessity Condition:}\\
 Suppose that we have $T$-quasi-polynomial tractability, i.e., for some $\vp\geq 0$, there exists positive $C_{\vp}$ such that
-\[\comp(\varepsilon,d)\le C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}\quad\quad \forall\varepsilon >0, d\in \mathbb{N}\] 
-%\[\comp(\varepsilon,d)\le C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}\quad\quad \forall\varepsilon >0, d\in \mathbb{N}\] 
+%\[\comp(\varepsilon,d)\le C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}\quad\quad \forall\varepsilon >0, d\in \mathbb{N}\] 
+\[\comp(\varepsilon,d)\le C_{\vp}\exp\{(T(0,d,\vp))(T(\varepsilon^{-1},d,\vp))\}\quad\quad \forall\varepsilon >0, d\in \mathbb{N}\] 
 Since $\lambda_{i,d}$ are non-increasing, we have
+%\[\lambda_{\left\lfloor C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}\right\rfloor+1,d}\leq \varepsilon^2\]
 \[
-\lambda_{\left\lfloor C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}\right\rfloor+1,d}\leq \varepsilon^2
+\lambda_{\left\lfloor C_{\vp}\exp\{(T(0,d,\vp))(T(\varepsilon^{-1},d,\vp))\}\right\rfloor+1,d}\leq \varepsilon
 \]
 Given that the estimate holds for all $\varepsilon> 0$, we assume that $\varepsilon \in (0, 1]$.\\
 
 If we vary $\varepsilon\in (0,1]$, we have that
 \[
-j(\varepsilon,d,\vp) = \left\lfloor C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}\right\rfloor+1
+j(\varepsilon,d,\vp) = \left\lfloor C_{\vp}\exp\{(T(0,d,\vp))(T(\varepsilon^{-1},d,\vp))\}\}\right\rfloor+1
 \] which attains the values $j = j_d,j_{d+1},\dots$, where
 \[
-j(\infty,d,\vp)=j_d = \lfloor C_{\vp}\exp\{ T(0,d,\vp)\}\rfloor + 1
+j(\infty,d,\vp)=j_d = \lfloor C_{\vp}\exp\{(T(0,d,\vp))T(0,d,\vp)\}\rfloor + 1
 \]
 Furthermore, we have
-\[j \leq C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}+1 \leq C_{\vp}\exp\{(T(0,d,\vp)(T(\lambda^{-1}_{j,d},1,\vp))\}+1 \quad \forall j \geq j_d \]
+\[j \leq C_{\vp}\exp\{(T(0,d,\vp))(T(\varepsilon^{-1},d,\vp)\}+1 \leq C_{\vp}\exp\{(T(0,d,\vp))(T(\lambda_{j,d}^{-1},d,\vp)\}+1 \quad \forall j \geq j_d \]
 This implies that for $\tau>1$, we have
 \[
-\left(\frac{j-1}{C_{\vp}}\right)^{\tau/T(0,d,\vp)} \leq \exp\{T(\lambda^{-1}_{j,d},1,\vp)\}
+(j-1)^{\tau} \leq C_{\vp}\exp\{\tau(T(0,d,\vp)) (T(\lambda_{j,d}^{-1},d,\vp)\}
 \]
+This implies
 \[
-\exp\{-\tau T(\lambda^{-1}_{j,d},1,\vp\} \leq \left(\frac{C_{\vp}}{j-1}\right)^{\tau/T(0,d,\vp)}\Rightarrow
-\exp\{-\tau T(\lambda^{-1}_{j,d},1,\vp)(T(0,d,\vp)\} \leq C_{\vp}^\tau (j-1)^{-\tau}
+\exp\{-\tau(T(0,d,\vp))( T(\lambda_{j,d}^{-1},d,\vp) \leq \frac{C_{\vp}}{(j-1)^\tau}
 \]
-
+We can get
+\[
+T(\lambda_{i,d},d,\vp))^{-\tau T(0,d,\vp)}\leq C_{\tau,\vp}\frac{1}{(j-1)^\tau} 
+\]provided $T(\lambda_{i,d},d,\vp)\geq e$. Therefore, we get
+\[
+\sum_{i=1}^\infty T(\lambda_{i,d},d,\vp))^{-\tau T(0,d,\vp)} \leq C_{\tau,\vp}\sum_{i=1}^\infty \frac{1}{(j-1)^\tau}
+< \infty\]
 %\[\frac{1}{T(\lambda_{i,d}^{-1},d,\vp)} \leq \frac{K_{\vp,\tau}}{\left(\log\frac{j-1}{C_{\vp}}\right)^\tau}\]
-
-\textbf{Sufficient condition:} Suppose that (\ref{}) holds for some $\vp \geq 0$. We need to show that for some $C_{\vp}>0$ we have 
+This yields \eqref{thmqpt}.\\
+\textbf{Sufficient condition:} Suppose that (\ref{thmqpt}) holds for some $\vp \geq 0$. We need to show that for some $C_{\vp}>0$ we have 
 \[
-\text{comp}(\varepsilon,d) \leq C_{\vp}\exp\{T(0,d,\vp)T(\varepsilon^{-1},1,\vp)\} \quad \forall \varepsilon > , d \in \mathbb{N}
-\] Given that $\lambda_{j,d}$ are non-increasing, it follows that $T$ is increasing in its arguments, hence we have the following arguments from previous theorems, i.e.,
+\text{comp}(\varepsilon,d) \leq C_{\vp}\exp\{(T(0,d,\vp))(T(\varepsilon^{-1},d,\vp)\} \quad \forall \varepsilon > , d \in \mathbb{N}
+\] Given that $\lambda_{i,d}$ are non-increasing, it follows that $T$ is increasing in its arguments, hence we have the following arguments from previous theorems, i.e.,
 \[
-\text{comp}(\varepsilon,d) \leq 1 + T(\varepsilon^{-1},d,\vp)\sum_{j=1}^\infty\frac{1}{T(\lambda^{-1}_{j,d},d,\vp)}
+\text{comp}(\varepsilon,d) \leq \left(T(\varepsilon^{-1},d,\vp)\right)^{T(0,d,\vp)}\sum_{j=1}^\infty\left[\frac{1}{T(\lambda^{-1}_{j,d},d,\vp)}\right]^{T(0,d,\vp)}
 \]
 Now, we have the following upper bound on the complexity as follows
 \begin{align*}
-    \comp(\varepsilon,d) &\leq 1+T(\varepsilon^{-1},d,\vp)\sum_{j=1}^\infty\frac{1}{T(\lambda^{-1}_{j,d},d,\vp)}\\
-    &\leq 1+T(\varepsilon^{-1},d,\vp)\left[\sum_{j=1}^{C_{\vp}-1}\frac{1}{T(\lambda^{-1}_{j,d},d,\vp)} + \sum_{j=C_{\vp}}^\infty \frac{1}{T(\lambda_{j,d}^{-1},d,\vp)}\right]
+    \comp(\varepsilon,d) &\leq T(\varepsilon^{-1},d,\vp)^{T(0,d,\vp)}\sum_{j=1}^\infty\left[\frac{1}{T(\lambda^{-1}_{j,d},d,\vp)}\right]^{T(0,d,\vp)}\\
+    &\leq T(\varepsilon^{-1},d,\vp)^{T(0,d,\vp)}\left[\sum_{j=1}^{C_{\vp}-1}\left[\frac{1}{T(\lambda^{-1}_{j,d},d,\vp)}\right]^{T(0,d,\vp)} + \sum_{j=C_{\vp}}^\infty\left[ \frac{1}{T(\lambda_{j,d}^{-1},d,\vp)}\right]^{T(0,d,\vp)}\right]\\
+     & \le T(\varepsilon^{-1},d,\vp)^{T(0,d,\vp)}\left[ \left[\frac{C_{\vp}-1}{T(\lambda_{\max}^{-1},d,\vp)}\right]^{T(0,d,\vp)} + M_{\vp}\right]
+        \qquad \text{by \eqref{thmqpt}} \\
+       & \le T(\varepsilon^{-1},d,\vp)^{T(0,d,\vp)}\left[(C_{\vp})^{T(0,d,\vp)} + M_{\vp}\right]\\ 
+       & \le \left(C_{\vp}\,T(\varepsilon^{-1},d,\vp)\right)^{T(0,d,\vp)} + M_{\vp}\, T(\varepsilon^{-1},d,\vp)^{T(0,d,\vp)}\\
+       & \le C_{\vp}\,T(\varepsilon^{-1},d,\vp)^{T(0,d,\vp)}
 \end{align*}
+%It follows that we have $T$-quasi-polynomial tractability.
 \end{proof}
+\kachi{To do: Find an example for this case.}
+
 
 \section{Fred's Attempt at sub-$h$ $T$-Tractability}
 May we frame weak tractability more generally?

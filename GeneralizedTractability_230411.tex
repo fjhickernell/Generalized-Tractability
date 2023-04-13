@@ -5,7 +5,7 @@
 %\usepackage[active]{srcltx}
 \usepackage{enumitem}
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
-
+\usepackage[normalem]{ulem}
 \usepackage{algorithmic}
 
 %\input{common-macros}
@@ -60,11 +60,14 @@ TODO: Check in how far our conditions coincide with existing conditions for less
 
 \medskip
 
-Let $\cf_d$ and $\cg_d$ be Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a linear solution operator \peter{(PETER: do we need to assume compactness of $\SOL_d$ to guarantee solvability of the problem?)} with adjoint $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors
+Let $\cf_d$ and $\cg_d$ be Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a linear solution operator  with adjoint $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors
 \begin{equation} \label{eq:eigenvalues}
 \lambda_{\max}^2 \ge \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, \qquad d \in \naturals.
 \end{equation}
-This means that the non-negative $\lambda_{i,d}$ are the singular values of the \peter{operator} $\SOL_d$. To avoid trivial cases, we assume that there are an infinite number of positive eigenvalues. \peter{We remark that in the literature on Information-Based Complexity the singular values of $\SOL_d$ are often denoted by $\sqrt{\lambda_{i,d}}$ instead of $\lambda_{i,d}$. However, since we assume non-negativity of the $\lambda_{i,d}$, the notation used here is equivalent.}
+This means that the non-negative $\lambda_{i,d}$ are the singular values of the \peter{operator} $\SOL_d$. 
+We make the technical assumption that $\SOL_d$ is a compact operator. This implies (see, e.g., \cite{NW08}) that the $\lambda_{i,d}$ converge to zero as $i$ tends to infinity, which in turn implies that the problem is solvable by suitable algorithms. 
+
+To avoid trivial cases, we assume that there are an infinite number of positive eigenvalues. \peter{We remark that in the literature on Information-Based Complexity the singular values of $\SOL_d$ are often denoted by $\sqrt{\lambda_{i,d}}$ instead of $\lambda_{i,d}$. However, since we assume non-negativity of the $\lambda_{i,d}$, the notation used here is equivalent.}
 
 
 The goal is to find an approximate solution, $\APP_d:\cb_d \times (0,\infty) \to \cg_d$ satisfying
@@ -95,7 +98,6 @@ Let $T$ be a tractability function defined as follows,
 \begin{equation} \label{eq:Tspec}
     T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty),
 \end{equation}
-\fred{I think that we do not need to bound $T$ away from $0$, but doing so may help satisfy \eqref{eq:ptauassume}.}
 A tractability function is a function of simple form that provides an upper bound on the computational complexity of a problem.  Some examples of tractability functions commonly considered are provided in Section \ref{sec:examples}.
 
 
@@ -113,7 +115,7 @@ In this article we allow $\vp$ to be a scalar or vector as the situation dictate
 %Note that the tractability function is bounded below away from zero even as $\varepsilon \to \infty$ \peter{[PETER: Is it?]}, so that the information complexity is not expected to vanish under arbitrarily loose error requirements.  
 For this definition of tractability to make sense we assume that
 \begin{subequations} \label{eq:Tconditions}
-\begin{equation}
+\begin{equation} \label{eq:Tnondecreasing}
 	T \text{ is non-decreasing in all variables,}
 \end{equation}
 which implies that the problem does not become easier by decreasing the tolerance, $\varepsilon$, or increasing the dimension, $d$. Furthermore, increasing $\vp$ does not decrease $T(\cdot, \cdot, \vp)$.  Since there are an infinite number of positive eigenvalues, it also makes sense to assume that
@@ -204,22 +206,23 @@ Thus, we can conclude from the previous line that
 \end{multline}
 
 Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity via \eqref{eq:comp_def}:
-    \begin{equation*} %\label{eq:comp_equiv}
-    \comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d',\vp)}\le \frac{1}{T(\varepsilon^{-1},d',\vp) }\biggr\},
-\end{equation*}
-for any $d' \in \naturals$.  Combining this expression for the complexity with the implication in \eqref{eq:implicate_a} implies an upper bound on the complexity: \fred{think $1+$ not needed} 
-\peter{[PETER: I think we do need $+1$, because from \eqref{eq:implicate_a} we obtain a lower bound on $n$, but we still need to take the ceiling function.]}
-\begin{equation} \label{eq:compUP}
-	\comp(\varepsilon,d)
-	\le T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \qquad \forall \varepsilon > 0, \ d, d' \in \naturals.
-\end{equation}
+    \begin{align} %\label{eq:comp_equiv}
+    \nonumber 
+    \comp(\varepsilon, d) & = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
+    \nonumber 
+    & = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d',\vp)}\le \frac{1}{T(\varepsilon^{-1},d',\vp) }\biggr\} \qquad \forall d' \in \naturals\\
+    \nonumber 
+    & \le  \min \biggl\{n \in \natzero : n \ge T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \biggr\} \quad \forall d' \in \naturals \qquad \text{by \eqref{eq:implicate_a}} \\
+    & \le  T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} + 1 \quad \forall d' \in \naturals. \label{eq:compUP}
+\end{align}
 
 Now we take this upper bound further, specializing to the case of $d'=1$:
 \begin{align*}
        \comp(\varepsilon,d)
        & \peter{\le} T(\varepsilon^{-1},1, \vp) \Biggl [ \sum_{i=1}^{L_{\vp}-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
-       + \underbrace{\sum_{i=L_{\vp}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }\Biggr] \\
-       & \le T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L_{\vp}-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp}\right]}_{=:C_{\vp}}\\
+       + \underbrace{\sum_{i=L_{\vp}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }
+       + \frac{1}{T(\varepsilon^{-1},1, \vp)} \Biggr] \\
+       & \le T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L_{\vp}-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp} + \frac{1}{T(0,1, \vp)}\right]}_{=:C_{\vp}}\\
        & =  C_{\vp}T(\varepsilon^{-1},1,\vp).
 %       & \le \underbrace{2 C_{1,\vp}}_{\text{since } T(\varepsilon^{-1},1,\vp) \ge 1} T(\varepsilon^{-1},1,\vp)
 %       = \underbrace{C_{\vp}}_{:=2 C_{1,\vp}}T(\varepsilon^{-1},1,\vp).
@@ -317,22 +320,23 @@ Then $\cp_{\textup{opt}} \subseteq \widetilde{\cp}_{\textup{opt}}$.
     \textbf{Sufficient Condition:}\\
 Suppose that \eqref{eq:tractiff4} holds for some $\vp \ge 0$. By the argument in the proof of the sufficient condition for Theorem \ref{thm_main_strong_tract2}, it follows from \eqref{eq:compUP} with $d'=d$ that the \peter{information} complexity has an upper bound of
 \begin{equation*}
-	 \comp(\varepsilon,d) \le  T(\varepsilon^{-1},d,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
+	 \comp(\varepsilon,d) \le  T(\varepsilon^{-1},d,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)} + 1
 \end{equation*}
-\peter{[PETER: Again, it seems to me we need +1.]}
+%\peter{[PETER: Again, it seems to me we need +1.]}
 
 Let $J(\vp,d): = \lceil L_{\vp}\, T(0,d,\vp)\rceil$.  Then this upper bound on the complexity can be further bounded above by
 \begin{align*}
        \comp(\varepsilon,d)
        & \peter{\le} T(\varepsilon^{-1},d,\vp) \Biggl [ \sum_{i=1}^{J(\vp,d) -1} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
-       + \underbrace{\sum_{i=J(\vp,d)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} \text{ by \eqref{eq:tractiff4}}} \Biggr ] \\
-       & \le T(\varepsilon^{-1},d,\vp)\left[ \frac{J(\vp,d)-1}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp}\right]
-        \\
-       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{L_{\vp}\, T(0,d,\vp)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp}\right] \\
-       & \peter{=}\frac{L_{\vp}}{T(\lambda_{\max}^{-1},1,\vp)} \,T(\varepsilon^{-1},d,\vp) T(0,d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
-       & \le\frac{L_{\vp}}{T(\lambda_{\max}^{-1},1,\vp)} \,T(\varepsilon^{-1},d,\vp) T(\varepsilon^{-1},d,\vp) + S_{\vp}\, T(\varepsilon^{-1},d,\vp)\\
-       & \le \frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},1,\vp)}  T(\varepsilon^{-1},d,2\vp)  + S_{\vp}\, T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
-       & \le \underbrace{\left[\frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp}\right]}_{=:C_{2\vp}} \,T(\varepsilon^{-1},d,2\vp).
+       + \underbrace{\sum_{i=J(\vp,d)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} \text{ by \eqref{eq:tractiff4}}} 
+       + \frac{1}{T(\varepsilon^{-1},d, \vp)} \Biggr ] \\
+       & \le T(\varepsilon^{-1},d,\vp)\left[ \frac{J(\vp,d)-1}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp} + \frac{1}{T(0,1, \vp)}\right]
+       \qquad \text{by \eqref{eq:Tnondecreasing}}  \\
+       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{L_{\vp}\, T(0,d,\vp)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp} + \frac{1}{T(0,1, \vp)}\right] \\
+       & \peter{=}\frac{L_{\vp}}{T(\lambda_{\max}^{-1},1,\vp)} \,T(\varepsilon^{-1},d,\vp) T(0,d,\vp) + \left [  S_{\vp} + \frac{1}{T(0,1, \vp)}\right] T(\varepsilon^{-1},d,\vp)\\
+       & \le\frac{L_{\vp}}{T(\lambda_{\max}^{-1},1,\vp)} \,T(\varepsilon^{-1},d,\vp) T(\varepsilon^{-1},d,\vp) +\left [  S_{\vp} + \frac{1}{T(0,1, \vp)}\right] T(\varepsilon^{-1},d,\vp)\\
+       & \le \frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},1,\vp)}  T(\varepsilon^{-1},d,2\vp)  +\left [  S_{\vp} + \frac{1}{T(0,1, \vp)}\right] T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
+       & \le \underbrace{\left[\frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp} + \frac{1}{T(0,1, \vp)}\right]}_{=:C_{2\vp}} \,T(\varepsilon^{-1},d,2\vp) \qquad \text{by \eqref{eq:Tnondecreasing}}.
 \end{align*}
 It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:tractiff4}.
 
@@ -701,7 +705,7 @@ Let $h:[0,\infty) \to [1,\infty)]$ satisfy
 \begin{definition} \label{def:subhT}
 	A problem is sub-$h \circ T$ tractable if
 	\begin{equation*}
-		\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{h(cT(\varepsilon^{-1},d,\vp))} = 0 \qquad \forall c>0
+		\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{h(cT(\varepsilon^{-1},d,\vp))} = 0 \qquad \text{\sout{$\forall c>0$}}
 	\end{equation*}
 \end{definition}
 
@@ -840,7 +844,7 @@ Recalling that $T$ is non-decreasing in it's arguments, this implies that
   \right \} \\
   & = \max \left \{  
 		 \frac{ h(cT(V_c,d^*_c))}{h(2cT(\lambda_{\max}^{-1},1))}, 
-		 \frac{1}{h(cT(\lambda_{\max}^{-1},d^*_c+1))}
+		 \frac{1}{h(cT(\lambda_{\max}^{-1},d_c^*+1))}
   \right \} \\
   & < \infty.
 \end{align*}
@@ -850,6 +854,12 @@ Combining this bound with \eqref{eq:lastone} establishes the finiteness of $S_{2
 
 This completes the proof.
 \end{proof}
+
+If $f(x)$ and $g(x)$ are both positive, and $\lim_{x \to \infty} g(x) = \infty$, is it true that
+\[
+\lim_{x \to \infty} \frac{f(x)}{g(x)} = 0 \iff 
+\lim_{x \to \infty} \frac{\log(f(x))}{\log(g(x))} = 0?
+\]
 
 \begin{thebibliography}{99}
 
