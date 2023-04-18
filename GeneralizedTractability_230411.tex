@@ -696,16 +696,46 @@ we have
 \section{Fred's Attempt at sub-$h$ $T$-Tractability}
 May we frame weak tractability more generally?
 
-Let $h:[0,\infty) \to [1,\infty)]$ satisfy
+Let $h:[0,\infty) \to [1,\infty)$ satisfy
 \begin{equation} \label{eq:h_cond}
 	h \text{ is strictly increasing}, \qquad 
-	h(0)=1, \qquad  [h(x)]^\tau \le h(\tau x) \quad \forall x \ge 0, \tau > 1.
+	h(0)=1, \qquad  [h(x)]^c \le h(c x) \quad \forall x \ge 0, c > 0.
 \end{equation}
+\peter{Let us make the slightly stronger assumption on $h$ that
+\[
+h(x)\cdot h(y) \le h(x+y)\quad \forall x,y\in [0,\infty),
+\]
+and let us denote the inverse function of $h$ by $h^{-1}$. 
+Then, for arbitrary $z,w \in [1,\infty)$ we choose $x=h^{-1}(z)$ and $y=h^{-1}(w)$, to obtain
+\[
+z w \le h (h^{-1}(z)+h^{-1}(w)),
+\]
+which yields by the monotonicity of $h^{-1}$ that
+\begin{equation}\label{eq:submult_h_inverse}
+h^{-1}(z w) \le h^{-1}(z)+h^{-1}(w).
+\end{equation}
+}
+
+
+\fred{There is a problem here because I was assuming that 
+\[
+\lim_{x \to \infty} \frac{f(x)}{g(x)} = 0 \iff 
+\lim_{x \to \infty} \frac{\log(f(x))}{\log(g(x))} = 0.
+\]
+But this is NOT the case, e.g., $f(x) = x^2$ and $g(x) = x^4$.  So we may need 
+\begin{definition} \label{def:subhT}
+	A problem is sub-$h \circ T$ tractable if
+	\begin{equation*}
+		\lim_{\varepsilon^{-1} + d \to \infty} \frac{h^{-1}(\comp(\varepsilon,d))}{T(\varepsilon^{-1},d,\vp)} = 0.
+	\end{equation*}
+\end{definition}
+And NOT what I had below.}
+
 
 \begin{definition} \label{def:subhT}
 	A problem is sub-$h \circ T$ tractable if
 	\begin{equation*}
-		\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{h(cT(\varepsilon^{-1},d,\vp))} = 0 \qquad \text{\sout{$\forall c>0$}}
+		\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{h(T(\varepsilon^{-1},d,\vp))} = 0.
 	\end{equation*}
 \end{definition}
 
@@ -745,13 +775,46 @@ Since $T(\cdot,d)$ is non-decreasing, it follows that $\lambda_{n,d} \le \vareps
 \[
 \comp(\varepsilon,d) \le  \left\lceil 
 S_c \, h(cT(\varepsilon^{-1},d))  
-\right\rceil.  
+\right\rceil \qquad \forall c > 0.  
 \]
-	
-Consequently,
+
+\peter{
+We could go on like this:
+
+It is no loss of generality to assume that $S_c \ge 1$. From above we get 
+\[
+h^{-1}(\comp(\varepsilon,d)) \le h^{-1} \left( \left\lceil 
+S_c \, h(cT(\varepsilon^{-1},d))  
+\right\rceil \right) \le h^{-1} \left(  
+2 S_c \, h(cT(\varepsilon^{-1},d))  
+ \right) \qquad \forall c > 0,
+\]
+where we used that the argument of the ceiling function is at least one.
+
+From this we deduce, by \eqref{eq:submult_h_inverse},
+\[
+h^{-1}(\comp(\varepsilon,d)) \le
+ h^{-1} (2 S_c) + cT (\varepsilon^{-1},d).
+\]
+Now, for sufficiently large $\varepsilon^{-1}+d$, we must have
+\[
+c T (\varepsilon^{-1},d) \ge h^{-1} (2 S_c).
+\]
+This is because the finiteness of $S_c$ implies that $\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d) = \infty$ for all $d \in \naturals$,  together with the hypothesis on $\lim_{d \to \infty} T(\varepsilon^{-1},d)$.
+So, 
+\[
+h^{-1}(\comp(\varepsilon,d)) \le 2 cT (\varepsilon^{-1},d).
+\]
+Since the latter holds for any $c>0$, we have sub-$h\circ T$-tractability.
+
+}
+
+ 
+Consequently, choosing $c=1/2$, it follows that 
 \begin{align}
 \nonumber
-\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{ h(2cT(\varepsilon^{-1},d))  }
+\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{ h(T(\varepsilon^{-1},d))  }
+& = \lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{ h(2cT(\varepsilon^{-1},d))  } \\
 & \le \lim_{\varepsilon^{-1} + d \to \infty} \frac{ \left\lceil 
 	S_c \, h(cT(\varepsilon^{-1},d)) \right\rceil}{ [h(cT(\varepsilon^{-1},d))]^2  } \qquad \text{by \eqref{eq:h_cond}}
 \\
@@ -762,29 +825,29 @@ Consequently,
 	S_c }{ h(cT(\varepsilon^{-1},d))  }  + \frac{
 	1}{ [h(cT(\varepsilon^{-1},d))]^2 } \right \} \label{eq:alastone}.
 \end{align}	
-The finiteness of $S_c$ implies that $\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d) = \infty$ for all $d \in \naturals$.  Together with the hypothesis on $\lim_{d \to \infty} T(\varepsilon^{-1},d)$, we can infer that $\lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty$.  This implies that the limit in \eqref{eq:alastone} vanishes.  Since $c$ is arbitrary, we have satisfied the condition of Definition \ref{def:subhT}.
+The finiteness of $S_c$ implies that $\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d) = \infty$ for all $d \in \naturals$.  Together with the hypothesis on $\lim_{d \to \infty} T(\varepsilon^{-1},d)$, we can infer that $\lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty$.  This implies that the limit in \eqref{eq:alastone} vanishes.
 
 \bigskip
 	  
 \noindent \textbf{Necessary Condition:}\\
-Suppose that the problem is  sub-$h \circ T$ tractable. Then, for any $c>0$ there exists a positive integer $V_c$ such that  
+Suppose that the problem is  sub-$h \circ T$ tractable. Then, for any $c>0$ there exists a positive integer $V_c$ such that  \fred{having a little trouble removing the $c$ here.} \peter{Here we do not need to remove the $c$, and actually shouldn't. Just in the limit relation it was not necessary.}
 \[
 	\comp(\varepsilon,d)\le 
 	\left\lfloor h(cT(\varepsilon^{-1},d)) \right\rfloor \qquad \forall \varepsilon^{-1} + d \ge V_c.
 \]
-By the definition of complexity in \eqref{eq:comp_def}, it follows that 
+By the definition of the information complexity in \eqref{eq:comp_def}, it follows that 
 \[
 	\lambda_{n(\varepsilon,d,c),d} \le \varepsilon \quad \forall \varepsilon^{-1} + d \ge V_c, \qquad \text{where }
-	n(\varepsilon,d,c):=\left\lfloor h(cT(\varepsilon^{-1},d)) \right\rfloor.
+	n(\varepsilon,d,c):=\left\lfloor h(cT(\varepsilon^{-1},d)) \right\rfloor \peter{+1}.
 \]
 Since $h(cT(\cdot,d))$ is non-decreasing, it follows that
 \begin{equation}
-		n(\varepsilon,d,c)\le  h(cT(\varepsilon^{-1},d)) \le  h(cT(\lambda^{-1}_{n(\varepsilon,d,c),d},d)) \qquad  \quad \forall \varepsilon^{-1} + d \ge V_c. \label{eq:nedcbound}
+		n(\varepsilon,d,c)\le  h(cT(\varepsilon^{-1},d)) \peter{+1}\le  h(cT(\lambda^{-1}_{n(\varepsilon,d,c),d},d)) \peter{+1}\qquad  \quad \forall \varepsilon^{-1} + d \ge V_c. \label{eq:nedcbound}
 \end{equation}
 	
 For a fixed $c$ and $d$, define
 \begin{equation} \label{eq:nstardef}
-	\varepsilon^{-1}_{\max}(d,c) := \max(V_c - d,\lambda_{\max}^{-1}), \qquad n^*(d,c) : = n(\varepsilon^{-1}_{\max}(d,c),d,c) \le h(cT(\varepsilon^{-1}_{\max}(d,c),d)).
+	\varepsilon^{-1}_{\max}(d,c) := \max(V_c - d,\lambda_{\max}^{-1}), \qquad n^*(d,c) : = n(\varepsilon^{-1}_{\max}(d,c),d,c) \le h(cT(\varepsilon^{-1}_{\max}(d,c),d)) \peter{+1}.
 \end{equation} 
 By varying $\varepsilon^{-1}$ in the interval $[\varepsilon^{-1}_{\max}(d,c),\infty)$,  the integer $n(\varepsilon,d,c)$ attains all values greater than or equal to $n^*(d,c)$.  Thus, by \eqref{eq:nedcbound},
 \begin{align}
@@ -819,7 +882,7 @@ Note that
 \lambda_{\max}^{-1}, & d \in \{d^*_c+1, \ldots\}
 \end{cases}
 \]
-Recalling that $T$ is non-decreasing in it's arguments, this implies that 
+Recalling that $T$ is non-decreasing in its arguments, this implies that 
 \begin{align*}
     \MoveEqLeft{\sup_{d\in\naturals} \,
 		 \frac{ h(cT(\varepsilon^{-1}_{\max}(d,c),d))}{h(2cT(\lambda_{\max}^{-1},d))}}\\
