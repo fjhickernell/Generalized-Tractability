@@ -42,7 +42,7 @@
 \newtheorem{theorem}{Theorem}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
-
+\newtheorem{example}{Example}
 
 \title{Generalized Tractability}
 \author{\fred{Fred J. Hickernell}, \peter{Peter Kritzer}, \kachi{Onyekachi Osisiogu}, and \\ Henryk Wo\'zniakwoski}
@@ -71,27 +71,38 @@ To avoid trivial cases, we assume that there are an infinite number of positive 
 
 
 The goal is to find an approximate solution, $\APP_d:\cb_d \times (0,\infty) \to \cg_d$ satisfying
-\[
-\norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon,
-\]
-where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals \peter{(note that we also allow adaptive information, i.e., the linear functionals may sequentially depend on each other)}.  In this case, the optimal solution is
+\begin{equation}
+    \label{eq:errcrit}
+    \norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon \qquad \forall f \in \cb_d, \ \varepsilon \in (0,\infty)
+\end{equation}
+where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals \peter{(note that we also allow adaptive information, i.e., the linear functionals may sequentially depend on each other)}.  
+
+The information complexity of the problem $\SOL_d$ is denoted $\comp(\varepsilon,d)$ and defined as the minimum number of linear functionals required to satisfy the error criterion \eqref{eq:errcrit}, 
+\begin{equation*}
+\comp:(0,\infty) \times \naturals \to \natzero.
+\end{equation*}
+By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity.  \peter{This means that we are actually considering 
+a whole sequence of problems  $\SOL_d : \cf_d \to \cg_d$, for $d\in\naturals$, and we furthermore assume} that the Hilbert spaces are defined in such a way that $\lambda_{\cdot,d}$ is non-decreasing for every $d$, as spelled out in \eqref{eq:eigenvalues}, although this assumption is not needed for our results.
+
+For this case where arbitrary linear functionals are allowed, the optimal solution is
 \[
 \APP_d(f,\varepsilon) = \sum_{i=1}^n \SOL(u_i) \ip[\cf_d]{f}{u_i},
 \]
 and the \peter{information} complexity of our linear problem is
 \begin{equation}\label{eq:comp_def}
-\comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\}.
+\comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\}, \qquad \comp:(0,\infty) \times \naturals \to \natzero.
 \end{equation}
 
-By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity.  \peter{This means that we are actually considering 
-a whole sequence of problems  $\SOL_d : \cf_d \to \cg_d$, for $d\in\naturals$, and we furthermore assume} that the Hilbert spaces are defined in such a way that $\lambda_{\cdot,d}$ is non-decreasing for every $d$, as spelled out in \eqref{eq:eigenvalues}, although this assumption is not needed for our results.
 
 The question is,``How hard is this problem as $\varepsilon$ tends to zero or as $d$ tends to infinity?''  We want to bound the complexity in terms of a simple function of $\varepsilon$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding.
 
-\peter{TODO: Maybe add a short paragraph on notation used in the paper and on its structure? In particular, we should introduce 
-an ordering of the parameters $\vp$.}
+\peter{TODO: Maybe add a short paragraph on the notation used in the paper and on its structure? In particular, we should introduce 
+an ordering of the parameters $\vp$.}\\
+\kachi{Throughout the article, we use the following notation.}\\
 
-\section{(Strong) Tractability}
+\kachi{In Section \ref{sec:spt}, we give the definitions of the considered tractability notions, in particular (strong) tractability. We then consider the strong tractability where the complexity is independent of the dimension, $d$. We then turn to tractability. In Section \ref{sec:examples} we provided examples of strong(traceability) functions for both the algebraic and exponential cases. }
+ 
+\section{(Strong) Tractability}\label{sec:spt}
 
 \subsection{Notation and fundamental definitions}
 Let $T$ be a tractability function defined as follows,
@@ -422,9 +433,9 @@ Thus,  $\cp_{\textup{opt}} \subseteq \widetilde{\cp}_{\textup{opt}}$.  This conc
 
 \section{Examples} \label{sec:examples}
 
-\paragraph{Example 1: Strong polynomial tractability}
+\begin{example}[Strong polynomial tractability]
 
-Let $T: (0,\infty) \times \naturals \times [0,\infty) \times [0,\infty)\Rightarrow [1,\infty)$
+Let $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$
 be defined by
 \[
  T(\varepsilon^{-1},d,\vp)= (\max\{\varepsilon^{-1},1\})^p .
@@ -434,10 +445,10 @@ Then Theorem \ref{thm_main_strong_tract2} yields the iff-condition
  \sup_{d\in\naturals} \sum_{i=L(p)}^\infty (\min\{\lambda_{i,d},1\})^p < \infty.
 \]
 This essentially recovers the result on strong polynomial tractability in \cite[Theorem 5.1]{NW08}
+\end{example}
 
-\paragraph{Example 2: Polynomial tractability}
-
-Let $T: (0,\infty) \times \naturals \times [0,\infty) \times [0,\infty)\Rightarrow [1,\infty)$
+\begin{example}[Polynomial traceability]
+Let $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$
 be defined by
 \[
  T(\varepsilon^{-1},d,\vp)= (\max\{\varepsilon^{-1},1\})^p\, d^q.
@@ -447,11 +458,33 @@ Then Theorem \ref{thm_main_tract2} yields the iff-condition
  \sup_{d\in\naturals} \sum_{i=L_{\vp} d^{q_1}}^\infty (\min\{\lambda_{i,d},1\})^p d^{-q} < \infty.
 \]
 This essentially recovers the result on polynomial tractability in \cite[Theorem 5.1]{NW08}
-
+\end{example}
 
 
 \peter{(PETER: Add further examples (e.g., EXP- polynomial tractability, etc.)}
+\kachi{\begin{example}[EXP-strong polynomial tractability]
+Let $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$
+be defined by
+\[
+ T(\varepsilon^{-1},d,\vp)= (1+\log\max\{\varepsilon^{-1},1\})^p.
+\]
+Then Theorem \ref{thm_main_tract2} yields the iff-condition
+\[
+ \sup_{d\in\naturals} \sum_{i=L_{\vp} d^{q_1}}^\infty (\min\{\lambda_{i,d},1\})^p  < \infty.
+\]
+\end{example}
+\begin{example}[EXP-polynomial traceability]
 
+Let $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$
+be defined by
+\[
+ T(\varepsilon^{-1},d,\vp)= (1+\log \max\{\varepsilon^{-1},1\})^p\, d^q.
+\]
+Then Theorem \ref{thm_main_tract2} yields the iff-condition
+\[
+ \sup_{d\in\naturals} \sum_{i=L_{\vp} d^{q_1}}^\infty (\min\{\lambda_{i,d},1\})^p d^{-q} < \infty.
+\]
+\end{example}}
 \bigskip
 
 \fred{We need to check the proof for
@@ -466,12 +499,12 @@ This essentially recovers the result on polynomial tractability in \cite[Theorem
 If $n(\varepsilon,d)$ denotes the minimal number of function values needed to approximate all functions. We say that the problem is \emph{weakly tractable} if
     \[\lim_{\varepsilon^{-1}+d\rightarrow \infty} \frac{\ln n(\varepsilon,d)}{\varepsilon^{-1}+d} = 0\]
 \end{definition}
-\begin{definition}[Quasi-polynomial Tractability]
-    The problem is \emph{quasi-polynomially tractable}, if there exist two constants $C, t> 0$ such that
-    \[
-    n(\varepsilon,d) \leq C\exp\{t(1+\ln(\varepsilon^{-1}))(1+\ln(d))\}
-    \] for all $\varepsilon \in (0,1)$ and $d\in\mathbb{N}$.
-\end{definition}
+%\begin{definition}[Quasi-polynomial Tractability]
+ %   The problem is \emph{quasi-polynomially tractable}, if there exist two constants $C, t> 0$ such that
+  %  \[
+   % n(\varepsilon,d) \leq C\exp\{t(1+\ln(\varepsilon^{-1}))(1+\ln(d))\}
+    %\] for all $\varepsilon \in (0,1)$ and $d\in\mathbb{N}$.
+%\end{definition}
 
 \peter{
 \section{Weak $T$-$(s,t)$-weak tractability} \label{sec:weak}
@@ -612,100 +645,47 @@ Since the latter inequality holds for every $c>0$, we have $T$-$(s,t)$-weak trac
 
 \end{proof}
 }
-\paragraph{Example 3: EXP-strong polynomial tractability}
 
-Let $T: (0,\infty) \times \naturals \times [0,\infty) \times [0,\infty)\Rightarrow [1,\infty)$
-be defined by
+%\paragraph{Example 5: $(t,s)$-Weak tractability}
+%Let $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$. Suppose we have $T$-$(s,t)$- weak tractability, such that
+%\[ \lim_{d+\varepsilon^{-1}\rightarrow\infty} \frac{\log \max(1,n(\varepsilon,d))}{d^t +(\max(1,\varepsilon^{-1}))^s} =0.\]
+%Then Theorem \ref{thm:weak} yields the iff-condition
+%\[
+%\sup_{d\in\naturals} \sigma (c,d,s,\vp) \exp\left(-c\, T(0,d^t,\vp)\right)<\infty
+%\]
+%where $\displaystyle\sigma (c,d,s,\vp) =\sum_{i=1}^\infty \exp\left(-c\left(\lambda^{-1}_{i,d}\right)^{s/2}\right) $
+\kachi{
+\begin{example}[Quasi-$T$-polynomial tractability] 
+\begin{definition}
+    As defined in \cite{GW11}, we say that a problem is \emph{quasi-polynomially tractable} if there exist two constants $C$, $t > 0$, such that
 \[
- T(\varepsilon^{-1},d,\vp)= (1+\log\max\{\varepsilon^{-1},1\})^p.
-\]
-Then Theorem \ref{thm_main_tract2} yields the iff-condition
-\[
- \sup_{d\in\naturals} \sum_{i=L_{\vp} d^{q_1}}^\infty (\min\{\lambda_{i,d},1\})^p  < \infty.
-\]
-\paragraph{Example 4: EXP-polynomial tractability}
-
-Let $T: (0,\infty) \times \naturals \times [0,\infty) \times [0,\infty)\Rightarrow [1,\infty)$
-be defined by
-\[
- T(\varepsilon^{-1},d,\vp)= (1+\log \max\{\varepsilon^{-1},1\})^p\, d^q.
-\]
-Then Theorem \ref{thm_main_tract2} yields the iff-condition
-\[
- \sup_{d\in\naturals} \sum_{i=L_{\vp} d^{q_1}}^\infty (\min\{\lambda_{i,d},1\})^p d^{-q} < \infty.
-\]
-\paragraph{Example 5: $(t,s)$-Weak tractability}
-
-Let $T: (0,\infty) \times \naturals \times [0,\infty) \times [0,\infty)\Rightarrow [1,\infty)$. Suppose we have $T$-$(s,t)$- weak tractability, such that
-\[
- \lim_{d+\varepsilon^{-1}\rightarrow\infty} \frac{\log \max(1,n(\varepsilon,d))}{d^t +(\max(1,\varepsilon^{-1}))^s} =0.
-\]
-Then Theorem \ref{thm:weak} yields the iff-condition
-\[
-\sup_{d\in\naturals} \sigma (c,d,s,\vp) \exp\left(-c\, T(0,d^t,\vp)\right)<\infty
-\]
-where $\sigma (c,d,s,\vp) = $
-
-\section{$T$-Quasi-polynomial tractability} \label{sec:qpt}
-
-\begin{definition}[$T$-Quasi-polynomial tractability]
-We say that the problem is \emph{$T$- quasi-polynomial tractable} if there exists positive $C_{\vp}$ such that
-   %\[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(0,d,\vp))(T(\varepsilon^{-1},1,\vp)\}\]
-   \[ n(\varepsilon,d)\leq C_{\vp}\exp\{(T(\varepsilon^{-1},d,\vp)\}\]
+n(\varepsilon,d) \leq C\exp\{t(1+\ln(\varepsilon^{-1}))(1+\ln(d))\}\] 
+for all $\varepsilon \in (0,1)$ and $d\in\mathbb{N}$.\\
 \end{definition}
-
-\begin{theorem}\label{thm:qpt}
-A problem is $T$-quasi-polynomial tractable iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ such that
-\begin{equation}\label{thmqpt}
-M_{\vp} := \sup_{d\in\mathbb{N}}\sum_{i=1}^\infty \frac{1}{T(\lambda_{i,d}^{-1},d,\vp)}
-<\infty
-\end{equation}
-%where $\Bar{p} = -p(1+\log(T(0,d,\vp))$.
-%If it holds then 
-%\[n(\varepsilon,d)\leq 1+T(0,d^\tau,\vp)+ T(0,d^\tau,\vp)T(\varepsilon^{-1},1,\vp)\]
-\end{theorem}
-\begin{proof}
-\textbf{Necessity Condition:}\\
-Suppose that we have $T$-quasi-polynomial tractability, i.e., for some $\vp\geq 0$, there exists positive $C_{\vp}$ such that
-%\[\comp(\varepsilon,d)\le C_{\vp}\exp\{(T(0,d,\vp)(T(\varepsilon^{-1},1,\vp))\}\quad\quad \forall\varepsilon >0, d\in \mathbb{N}\] 
+Suppose $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$
+be defined by
 \[
-\comp(\varepsilon,d)\le C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}
-\quad\quad \forall\varepsilon >0, d\in \mathbb{N}
-\] 
-Since $\lambda_{i,d}$ are non-increasing, we have
-\[
-\lambda_{\left\lfloor C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}\right\rfloor+1,d}\leq \varepsilon^2
+ T(\varepsilon^{-1},d,\vp)= \exp\{\vp(1+\ln d)(1+\ln \max(\varepsilon^{-1},1))\}
 \]
-Given that the estimate holds for all $\varepsilon> 0$, we assume that $\varepsilon \in (0, 1]$.\\
+\end{example}
 
-If we vary $\varepsilon\in (0,1]$, we have that
+Then Theorem \ref{sec:tractability} yields the iff-condition as follows
+
 \[
-j(\varepsilon,d,\vp) = \left\lfloor C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}\right\rfloor+1
-\] which attains the values $j = j_d,j_{d+1},\dots$, where
-\[
-j(\infty,d,\vp)=j_d = \lfloor C_{\vp}\exp\{ T(0,d,\vp)\}\rfloor + 1
+\sup_{d\in\mathbb{N}}\sum_{i=Lpd^{q_1}} \left(\min\{\lambda_{i,d},1\} \right)^{p(1+\ln d)}d^{-q} < \infty
 \]
-Furthermore, we have
-\[j \leq C_{\vp}\exp\{T(\varepsilon^{-1},d,\vp)\}+1 \leq C_{\vp}\exp\{T(\lambda^{-1}_{j,d},d,\vp)\}+1 \]
-This implies that for $\tau>1$, we have
-%\[\left(\log\frac{j-1}{C_{\vp}}\right)^\tau \leq \left(T(\varepsilon^{-1},d,\vp)\right)^\tau \leq K_{\vp,\tau}T(\lambda_{j,d},d,\tau\vp) \]
-we have 
-%\[\frac{1}{T(\lambda_{i,d}^{-1},d,\vp)} \leq \frac{K_{\vp,\tau}}{\left(\log\frac{j-1}{C_{\vp}}\right)^\tau}\]
-\end{proof}
+}
 
-\section{Fred's Attempt at sub-$h$ $T$-Tractability}
-May we frame weak tractability more generally?
-
-Let $h:[0,\infty) \to [1,\infty)$ satisfy
+\section{Sub-$h$ Tractability}
+In this section we generalize the concept of weak tractability \cite{}.  Let  $h:[0,\infty) \to [1,\infty)$ satisfy
 \begin{equation} \label{eq:h_cond}
 	h \text{ is strictly increasing}, \qquad 
-	h(0)=1, \qquad  [h(x)]^c \le h(c x) \quad \forall x \ge 0, c > 0.
+	h(0)=1, \qquad  
+ h(x+y) \ge  h(x)\cdot h(y)  \quad \forall x,y \ge 0.
 \end{equation}
-\peter{Let us make the slightly stronger assumption on $h$ that
-\[
-h(x)\cdot h(y) \le h(x+y)\quad \forall x,y\in [0,\infty),
-\]
-and let us denote the inverse function of $h$ by $h^{-1}$. 
+This means that $\log(h(\cdot))$ is a superadditive function.  The function $h$ here can be thought of as the exponential function for weak tractability.
+
+Furthermore, let us denote the inverse function of $h$ by $h^{-1}$. 
 Then, for arbitrary $z,w \in [1,\infty)$ we choose $x=h^{-1}(z)$ and $y=h^{-1}(w)$, to obtain
 \[
 z w \le h (h^{-1}(z)+h^{-1}(w)),
@@ -714,32 +694,15 @@ which yields by the monotonicity of $h^{-1}$ that
 \begin{equation}\label{eq:submult_h_inverse}
 h^{-1}(z w) \le h^{-1}(z)+h^{-1}(w).
 \end{equation}
-}
-
-
-\fred{There is a problem here because I was assuming that 
-\[
-\lim_{x \to \infty} \frac{f(x)}{g(x)} = 0 \iff 
-\lim_{x \to \infty} \frac{\log(f(x))}{\log(g(x))} = 0.
-\]
-But this is NOT the case, e.g., $f(x) = x^2$ and $g(x) = x^4$.  So we may need 
+Now we define a generalized notion of weak tractability.
 \begin{definition} \label{def:subhT}
 	A problem is sub-$h \circ T$ tractable if
 	\begin{equation*}
-		\lim_{\varepsilon^{-1} + d \to \infty} \frac{h^{-1}(\comp(\varepsilon,d))}{T(\varepsilon^{-1},d,\vp)} = 0.
-	\end{equation*}
-\end{definition}
-And NOT what I had below.}
-
-
-\begin{definition} \label{def:subhT}
-	A problem is sub-$h \circ T$ tractable if
-	\begin{equation*}
-		\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{h(T(\varepsilon^{-1},d,\vp))} = 0.
+		\lim_{\varepsilon^{-1} + d \to \infty} \frac{h^{-1}(\max(1,\comp(\varepsilon,d)))}{T(\varepsilon^{-1},d,\vp)} = 0.
 	\end{equation*}
 \end{definition}
 
-
+\fred{Can we say that this notion of tractabilty is stronger or weaker than $\comp(\varepsilon,d)/h(T(\varepsilon^{-1},d,\vp)) \to 0$ as $\varepsilon^{-1} + d \to \infty$?}
 
 \begin{theorem}\label{thm:subhT}
 	Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions}.  Moreover, let $\lim_{d \to \infty} T(\varepsilon^{-1},d) = \infty$ for all $\varepsilon > 0$.  The problem is sub-$h \circ T$ tractable if and only if
@@ -925,7 +888,7 @@ If $f(x)$ and $g(x)$ are both positive, and $\lim_{x \to \infty} g(x) = \infty$,
 \]
 
 \begin{thebibliography}{99}
-
+\bibitem{GW11} M. Gnewuch, H.~~Wo\'zniakowski. Quasi-polynomial tractability, J.~Complexity, 27, 312--330 2011.
 \bibitem{HKW19} F.J.~Hickernell, P. Kritzer, H.~Wo\'zniakowski.  Exponential tractability of linear tensor product problems. In: 
 D.R.~Wood, J.~DeGier, C.~Praeger, T.~Tao (eds.), 2018 MATRIX Annals, 61--78, Springer, Cham, 2020. 
 \bibitem{KW19} P. Kritzer, H.~Wo\'zniakowski.
@@ -934,6 +897,7 @@ multivariate problems. J.~Complexity 51, 110--128, 2019.
 \bibitem{NW08} E.~Novak, H.~Wo\'zniakowski. \textit{Tractability of Multivariate Problems, Volume I: Linear Information}.
 European Mathematical Society Publishing House, Zurich, 2008.
  \bibitem{WW17} A.G.~Werschulz, H.~Wo\'zniakowski. A new characterization of $(s,t)$-weak tractability. J. Complexity 38, 68--79, 2017. 
+
 \end{thebibliography}
 
 
