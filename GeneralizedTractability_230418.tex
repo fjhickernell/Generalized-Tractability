@@ -98,9 +98,9 @@ The question is,``How hard is this problem as $\varepsilon$ tends to zero or as 
 
 \peter{TODO: Maybe add a short paragraph on the notation used in the paper and on its structure? In particular, we should introduce 
 an ordering of the parameters $\vp$.}\\
-\kachi{Throughout the article, we use the following notation.}\\
+%\kachi{Throughout the article, we use the following notation.}\\
 
-\kachi{In Section \ref{sec:spt}, we give the definitions of the considered tractability notions, in particular (strong) tractability. We then consider the strong tractability where the complexity is independent of the dimension, $d$. We then turn to tractability. In Section \ref{sec:examples} we provided examples of strong(traceability) functions for both the algebraic and exponential cases. }
+\kachi{In Section \ref{sec:spt}, we give the definitions of the considered tractability notions, in particular (strong) tractability. We consider the strong tractability when the information complexity is independent of the dimension, $d$. We then turn to tractability  when the information complexity is polynomial in $d$ and $\varepsilon^{-1}$. In Section \ref{sec:examples} we provide examples of strong(tractability) functions for both the algebraic and exponential cases. We also consider other notions of tractability such as quasi-polynomial tractability, and a generalized notion of weak tractability. In the case of the generalized weak tractability, we give the necessary and sufficient conditions on the notion of exponential tractability in Section \ref{sec:subh}. }
  
 \section{(Strong) Tractability}\label{sec:spt}
 
@@ -447,7 +447,7 @@ Then Theorem \ref{thm_main_strong_tract2} yields the iff-condition
 This essentially recovers the result on strong polynomial tractability in \cite[Theorem 5.1]{NW08}
 \end{example}
 
-\begin{example}[Polynomial traceability]
+\begin{example}[Polynomial tractability]
 Let $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$
 be defined by
 \[
@@ -473,7 +473,7 @@ Then Theorem \ref{thm_main_tract2} yields the iff-condition
  \sup_{d\in\naturals} \sum_{i=L_{\vp} d^{q_1}}^\infty (\min\{\lambda_{i,d},1\})^p  < \infty.
 \]
 \end{example}
-\begin{example}[EXP-polynomial traceability]
+\begin{example}[EXP-polynomial tractability]
 
 Let $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$
 be defined by
@@ -657,26 +657,28 @@ Since the latter inequality holds for every $c>0$, we have $T$-$(s,t)$-weak trac
 \kachi{
 \begin{example}[Quasi-$T$-polynomial tractability] 
 \begin{definition}
-    As defined in \cite{GW11}, we say that a problem is \emph{quasi-polynomially tractable} if there exist two constants $C$, $t > 0$, such that
-\[
-n(\varepsilon,d) \leq C\exp\{t(1+\ln(\varepsilon^{-1}))(1+\ln(d))\}\] 
-for all $\varepsilon \in (0,1)$ and $d\in\mathbb{N}$.\\
+    As defined in \cite{GW11}, we say that a problem is \emph{ quasi-polynomially tractable (QPT)} if there exist two constants $C$, $t > 0$, such that
+\begin{equation}\label{expqpt}
+    n(\varepsilon,d) \leq C\exp\{t(1+\log(\varepsilon^{-1}))(1+\log(d))\}
+\end{equation}
+for all $\varepsilon \in (0,1]$ and $d\in\mathbb{N}$.\\
 \end{definition}
 Suppose $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$
 be defined by
 \[
- T(\varepsilon^{-1},d,\vp)= \exp\{\vp(1+\ln d)(1+\ln \max(\varepsilon^{-1},1))\}
+ T(\varepsilon^{-1},d,\vp)= \exp\{\vp(1+\log d)(1+\log\max\{\varepsilon^{-1},1\})\}
 \]
-\end{example}
+Observe that this is a special case of the $T$-tractability function, where the function is polynomial in exponent $1+\log d$ and $1+\log\max\{\varepsilon^{-1},1\}$.
 
 Then Theorem \ref{sec:tractability} yields the iff-condition as follows
 
 \[
 \sup_{d\in\mathbb{N}}\sum_{i=Lpd^{q_1}} \left(\min\{\lambda_{i,d},1\} \right)^{p(1+\ln d)}d^{-q} < \infty
 \]
+\end{example}
 }
 
-\section{Sub-$h$ Tractability}
+\section{Sub-$h$ Tractability}\label{sec:subh}
 In this section we generalize the concept of weak tractability \cite{}.  Let  $h:[0,\infty) \to [1,\infty)$ satisfy
 \begin{equation} \label{eq:h_cond}
 	h \text{ is strictly increasing}, \qquad 
@@ -696,7 +698,7 @@ h^{-1}(z w) \le h^{-1}(z)+h^{-1}(w).
 \end{equation}
 Now we define a generalized notion of weak tractability.
 \begin{definition} \label{def:subhT}
-	A problem is sub-$h \circ T$ tractable if
+	A problem is sub-$h$-$T$ tractable for parameter $\vp > \vzero$ if
 	\begin{equation*}
 		\lim_{\varepsilon^{-1} + d \to \infty} \frac{h^{-1}(\max(1,\comp(\varepsilon,d)))}{T(\varepsilon^{-1},d,\vp)} = 0.
 	\end{equation*}
@@ -705,7 +707,7 @@ Now we define a generalized notion of weak tractability.
 \fred{Can we say that this notion of tractabilty is stronger or weaker than $\comp(\varepsilon,d)/h(T(\varepsilon^{-1},d,\vp)) \to 0$ as $\varepsilon^{-1} + d \to \infty$?}
 
 \begin{theorem}\label{thm:subhT}
-	Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions}.  Moreover, let $\lim_{d \to \infty} T(\varepsilon^{-1},d) = \infty$ for all $\varepsilon > 0$.  The problem is sub-$h \circ T$ tractable if and only if
+	Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions}.  Moreover, let $\lim_{d \to \infty} T(\varepsilon^{-1},d,\vp) = \infty$ for all $\varepsilon > 0$, $\vp > \vzero$.  The problem is sub-$h$-$T$ tractable if and only if
 	\[
 	S_c = S_{c,\vp} :=\sup_{d\in\naturals}  \, \sum_{i=1}^\infty \frac1{h(c\, T(\lambda_{i,d}^{-1},d,\vp))} <\infty \qquad \forall c > 0.
 	\]
