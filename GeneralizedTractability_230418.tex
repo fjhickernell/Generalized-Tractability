@@ -559,7 +559,11 @@ Now we define a generalized notion of weak tractability.
 	\end{equation*}
 \end{definition}
 
-\fred{Can we say that this notion of tractabilty is stronger or weaker than $\comp(\varepsilon,d)/h(T(\varepsilon^{-1},d,\vp)) \to 0$ as $\varepsilon^{-1} + d \to \infty$?}
+Note that this definition of sub-$h$-$T$ tractability implies that
+\begin{equation} \label{eq:comp_slow_hcT}
+		\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{h(cT(\varepsilon^{-1},d,\vp))} = 0 \qquad \forall c > 0,
+\end{equation}
+which means that for $\varepsilon \to 0$ or $d \to \infty$  $\comp(\varepsilon,d))$ must increase slower than $h(cT(\varepsilon^{-1},d,\vp))$, no matter how small $c$ is.
 
 \begin{theorem}\label{thm:subhT}
 	Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions}.  Moreover, let $\lim_{d \to \infty} T(\varepsilon^{-1},d,\vp) = \infty$ for all $\varepsilon > 0$, $\vp > \vzero$.  The problem is sub-$h$-$T$ tractable if and only if
@@ -630,11 +634,10 @@ Since this limit is bounded above by all positive $c$, it must be zero, and the 
 \bigskip
 	  
 \noindent \textbf{Necessary Condition:}\\
-Suppose that the problem is  sub-$h \circ T$ tractable. Then, for any $c>0$ there exists a positive integer $V_c$ such that  
-\begin{gather*}
-	h^{-1}(\comp(\varepsilon,d))\le h^{-1}(\max(1,\comp(\varepsilon,d))) \le cT(\varepsilon^{-1},d)  \qquad \forall \varepsilon^{-1} + d \ge V_c, \\
+Suppose that the problem is  sub-$h \circ T$ tractable. Then by \eqref{eq:comp_slow_hcT}, for any $c>0$ there exists a positive integer $V_c$ such that  
+\begin{equation*}
 	\comp(\varepsilon,d) \le \left\lfloor h(cT(\varepsilon^{-1},d)) \right\rfloor \qquad \forall \varepsilon^{-1} + d \ge V_c.
-\end{gather*}
+\end{equation*}
 By the definition of the information complexity in \eqref{eq:comp_def}, it follows that 
 \[
 	\lambda_{n(\varepsilon,d,c),d} \le \varepsilon \quad \forall \varepsilon^{-1} + d \ge V_c, \qquad \text{where }
