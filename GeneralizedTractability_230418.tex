@@ -60,29 +60,23 @@ TODO: Check in how far our conditions coincide with existing conditions for less
 
 \medskip
 
-Let $\cf_d$ and $\cg_d$ be Hilbert spaces, and $\SOL_d : \cf_d \to \cg_d$ be a linear solution operator  with adjoint $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors
+Let $\{\cf_d\}_{d \in \naturals}$ and $\{\cg_d\}_{d \in \naturals}$ be sequences of Hilbert spaces, and $\{\SOL_d : \cf_d \to \cg_d\}_{d \in \naturals}$ be a sequence of linear solution operators  with adjoints $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors
 \begin{equation} \label{eq:eigenvalues}
 \lambda_{\max}^2 \ge \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, \qquad d \in \naturals.
 \end{equation}
-This means that the non-negative $\lambda_{i,d}$ are the singular values of the \peter{operator} $\SOL_d$. 
-We make the technical assumption that $\SOL_d$ is a compact operator. This implies (see, e.g., \cite{NW08}) that the $\lambda_{i,d}$ converge to zero as $i$ tends to infinity, which in turn implies that the problem is solvable by suitable algorithms. 
+This means that the non-negative $\lambda_{i,d}$ are the singular values of the operator $\SOL_d$. We remark that in the literature on Information-Based Complexity the singular values of $\SOL_d$ are often denoted by $\sqrt{\lambda_{i,d}}$ instead of $\lambda_{i,d}$. However, since we assume non-negativity of the $\lambda_{i,d}$, the notation used here is equivalent.  The non-decreasing ordering of the eigenvalues for each $d$ facilitates the proof of conditions for tractability, but our conditions do not depend on the ordering.
 
-To avoid trivial cases, we assume that there are an infinite number of positive eigenvalues. \peter{We remark that in the literature on Information-Based Complexity the singular values of $\SOL_d$ are often denoted by $\sqrt{\lambda_{i,d}}$ instead of $\lambda_{i,d}$. However, since we assume non-negativity of the $\lambda_{i,d}$, the notation used here is equivalent.}
+We make the technical assumption that $\SOL_d$ is a compact operator. This implies (see, e.g., \cite{NW08}) that $\lambda_{i,d}$ converges to zero as $i$ tends to infinity for every $d$, which in turn implies that the problem is solvable by suitable algorithms. To avoid trivial cases, we assume that there are an infinite number of positive eigenvalues.
 
-
-The goal is to find an approximate solution, $\APP_d:\cb_d \times (0,\infty) \to \cg_d$ satisfying
+The goal is to find a sequence of approximate solution operators, $\{\APP_d:\cb_d \times (0,\infty) \to \cg_d\}_{d \in \naturals}$ satisfying
 \begin{equation}
     \label{eq:errcrit}
     \norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon \qquad \forall f \in \cb_d, \ \varepsilon \in (0,\infty)
 \end{equation}
-where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals \peter{(note that we also allow adaptive information, i.e., the linear functionals may sequentially depend on each other)}.  
+where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals.  Note that we also allow adaptive information, i.e., the linear functionals may sequentially depend on each other.  
 
-The information complexity of the problem $\SOL_d$ is denoted $\comp(\varepsilon,d)$ and defined as the minimum number of linear functionals required to satisfy the error criterion \eqref{eq:errcrit}, 
-\begin{equation*}
-\comp:(0,\infty) \times \naturals \to \natzero.
-\end{equation*}
-By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity.  \peter{This means that we are actually considering 
-a whole sequence of problems  $\SOL_d : \cf_d \to \cg_d$, for $d\in\naturals$, and we furthermore assume} that the Hilbert spaces are defined in such a way that $\lambda_{\cdot,d}$ is non-decreasing for every $d$, as spelled out in \eqref{eq:eigenvalues}, although this assumption is not needed for our results.
+The information complexity of the problem $\SOL_d$ is given by the function $\comp:(0,\infty) \times \naturals \to \natzero$, where $\comp(\varepsilon,d)$ is the minimum number of linear functionals required to satisfy the error criterion \eqref{eq:errcrit}.
+By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity, since $d$ is typically the number of variables for the functions in $\cf_d$.
 
 For this case where arbitrary linear functionals are allowed, the optimal solution is
 \[
@@ -94,7 +88,7 @@ and the \peter{information} complexity of our linear problem is
 \end{equation}
 
 
-The question is,``How hard is this problem as $\varepsilon$ tends to zero or as $d$ tends to infinity?''  We want to bound the complexity in terms of a simple function of $\varepsilon$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding.
+The question of tractability is one of determining how fast the complexity increases as $\varepsilon$ tends to zero and/or as $d$ tends to infinity.  We want to bound the complexity in terms of a simple function of $\varepsilon^{-1}$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding.
 
 \peter{TODO: Maybe add a short paragraph on the notation used in the paper and on its structure? In particular, we should introduce 
 an ordering of the parameters $\vp$.}\\
