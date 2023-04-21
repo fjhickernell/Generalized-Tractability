@@ -439,7 +439,7 @@ be defined by
  T(\varepsilon^{-1},d,p)= (\max\{\varepsilon^{-1},1\})^p 
  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, p \ge 0.
 \]
-Then Theorem \ref{thm_main_strong_tract2} yields the  equivalent condition for strong algebraic polynomial tractability: 
+\fred{May we pull the exponent $p$ inside the $\max$?} Then Theorem \ref{thm_main_strong_tract2} yields the  equivalent condition for strong algebraic polynomial tractability: 
 \[
  \sup_{d\in\naturals} \sum_{i=L_p}^\infty (\min\{\lambda_{i,d},1\})^p < \infty \text{ for some } p \ge 0, L_p \in \naturals.
 \]
@@ -727,12 +727,12 @@ This completes the proof.
 \begin{example}[Weak Tractability]
 	Suppose that 
 	\[
-	T(\varepsilon^{-1},d,\vp) = \varepsilon^{-s} + d^t, \quad \forall \varepsilon > 0, \ d \in \naturals, \quad \text{where } \vp = (s,t), \qquad h(x) = \exp(x) \quad \forall x \ge 0.
+	T(\varepsilon^{-1},d,s,t) = \max(1,\varepsilon^{-1})^s + d^t, \quad \forall \varepsilon,s,t > 0, \, d \in \naturals, \qquad h(x) = \exp(x) \quad \forall x \ge 0.
 	\]
 	Then Theorem \ref{thm:subhT} implies that 
-	\[\lim_{\varepsilon^{-1}+d\rightarrow \infty} \frac{\log( \max(1,\comp(\varepsilon,d)))}{\varepsilon^{-s}+d^t} = 0 
+	\[\lim_{\varepsilon^{-1}+d\rightarrow \infty} \frac{\log( \comp(\varepsilon,d))}{\varepsilon^{-s}+d^t} = 0 
 	\iff 
-	 \sup_{d\in\naturals}  \, \sum_{i=1}^\infty \exp(-c\, (\lambda_{i,d}^{-s} + d^t )) <\infty \qquad \forall c > 0.
+	 \sup_{d\in\naturals}  \, \sum_{i=1}^\infty \exp(-c\, (\min(1,\lambda_{i,d})^{s} + d^t )) <\infty \qquad \forall c > 0.
 	\]
 	The expression on the left is the notion of $(s,t)$-weak tractability \cite{??}, and the condition on the right was derived in \cite{??}.  Weak tractability corresponds to $(s,t)=(1,1)$, and uniform weak tractability corresponds to the case when a problem is weakly tractable for all positive $s$ and $t$.
 \end{example}
