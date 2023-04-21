@@ -152,7 +152,7 @@ Certain common notions of tractability are covered by the general situation desc
 		\text{polynomial exponential } &
 		[\max(1,\log(1 + \varepsilon^{-1}))]^p  d^{q} & d^{q} \\
         \text{quasi-polynomial} & 
-        \exp\{p(1+\log(\max(1,\varepsilon^{-p}))(1+\log(d))\} &
+        \exp\{p(1+\log(\max(1,\varepsilon^{-1}))(1+\log(d))\} &
         \exp\{p(1+\log(d))\}
 	\end{array}
 \end{equation*}}
@@ -572,7 +572,8 @@ which means that for $\varepsilon \to 0$ or $d \to \infty$  $\comp(\varepsilon,d
 	\]
 \end{theorem}
 \begin{proof}
-We suppress the $\vp$ dependence, because it does not enter into the proof.
+The idea of this proof follows \cite{WW17}.
+We suppress the $\vp$ dependence in the proof, because it insignificant.
 
 \bigskip
 
@@ -614,13 +615,13 @@ Since $S_c \ge 1/h(cT(0,1))$ by definition, it follows that $S_c \, h(cT(0,1)) \
 & \le   \widetilde{S}_c \, h(cT(\varepsilon^{-1},d))  
 \qquad\forall c, \varepsilon > 0, \, d \in \naturals.
 \end{align*}
-Since $h$ is strictly increasing, so is $h^{-1}$, and thus
+Since $h$ is strictly increasing, so is $h^{-1}$, and thus by \eqref{eq:submult_h_inverse}, 
 \begin{align*}
 h^{-1}(\max(1,\comp(\varepsilon,d)) ) & \le  h^{-1} \left(  
 \widetilde{S}_c \, h(cT(\varepsilon^{-1},d))  \right) 
 \\
 &  \le  h^{-1} (2 S_c) + cT (\varepsilon^{-1},d).
-\quad \forall c, \varepsilon > 0, \, d \in \naturals \qquad \text{by \eqref{eq:submult_h_inverse}.}
+\quad \forall c, \varepsilon > 0, \, d \in \naturals.
 \end{align*}
 
 The finiteness of $S_c$ implies that $\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d) = \infty$ for all $d \in \naturals$.  Together with  the hypothesis on $\lim_{d \to \infty} T(\varepsilon^{-1},d)$ in \eqref{eq:h_cond}, it follows that $\lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty$.  Therefore
@@ -714,11 +715,8 @@ Recalling that $T$ is non-decreasing in its arguments, this implies that
   \right \} \\
   & < \infty.
 \end{align*}
-Combining this bound with \eqref{eq:lastone} establishes the finiteness of $S_{2c}$ and completes the proof of the necessary condition.
-
-	\bigskip
-
-This completes the proof.
+Combining this bound with the upper bound on $S_c$ in \eqref{eq:lastone} establishes the finiteness of $S_{2c}$ and completes the proof of the necessary condition.
+This concludes the proof of Theorem \ref{thm:subhT}.
 \end{proof}
 
 
@@ -738,6 +736,11 @@ This completes the proof.
 \end{example}
 
 
+\section{Summary}
+
+\fred{Do we consider the case of normalized error?}
+
+
 \begin{thebibliography}{99}
 \bibitem{GW11} M. Gnewuch, H.~~Wo\'zniakowski. Quasi-polynomial tractability, J.~Complexity, 27, 312--330 2011.
 \bibitem{HKW19} F.J.~Hickernell, P. Kritzer, H.~Wo\'zniakowski.  Exponential tractability of linear tensor product problems. In: 
@@ -748,6 +751,7 @@ multivariate problems. J.~Complexity 51, 110--128, 2019.
 \bibitem{NW08} E.~Novak, H.~Wo\'zniakowski. \textit{Tractability of Multivariate Problems, Volume I: Linear Information}.
 European Mathematical Society Publishing House, Zurich, 2008.
  \bibitem{WW17} A.G.~Werschulz, H.~Wo\'zniakowski. A new characterization of $(s,t)$-weak tractability. J. Complexity 38, 68--79, 2017. 
+
 
 \end{thebibliography}
 
