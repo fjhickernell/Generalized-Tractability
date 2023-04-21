@@ -98,7 +98,7 @@ an ordering of the parameters $\vp$.}\\
  
 \section{(Strong) Tractability}\label{sec:spt}
 
-\subsection{Notation and fundamental definitions}
+\subsection{Notation and fundamental definitions} \label{sec:not}
 Let $T$ be a tractability function defined as follows,
 \begin{equation} \label{eq:Tspec}
     T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty),
@@ -137,6 +137,28 @@ Finally, there is a technical assumption required for our analysis.  There exist
 \end{equation}
 
 
+
+
+Certain common notions of tractability are covered by the general situation described above.
+{\small 
+\begin{equation*}
+	\begin{array}{r@{\qquad}c@{\qquad}cc}
+		\text{Tractability type} & T(\varepsilon^{-1},d,\vp)
+		& T(0,d,\vp)\\
+		\toprule
+		\text{strong polynomial algebraic} & \max(1,\varepsilon^{-p}) & 1\\
+		\text{polynomial algebraic} & \max(1,\varepsilon^{-p})d^{q} & d^{q}\\
+		\text{strong polynomial exponential} &  [\max(1,\log(1 + \varepsilon^{-1})]^p & 1\\
+		\text{polynomial exponential } &
+		[\max(1,\log(1 + \varepsilon^{-1}))]^p  d^{q} & d^{q} \\
+        \text{quasi-polynomial} & 
+        \exp\{p(1+\log(\max(1,\varepsilon^{-p}))(1+\log(d))\} &
+        \exp\{p(1+\log(d))\}
+	\end{array}
+\end{equation*}}
+Here above, $\vp = (p,q)$ in some cases and $\vp$ is a scalar in other cases. A general reference 
+for results on algebraic tractability is \cite{NW08}, for exponential tractability we refer to \cite{HKW19} and \cite{KW19}.
+
 If \eqref{eq:tract_def} holds for some $\vp$, it clearly holds for larger $\vp$.  We are often interested in the optimal or smallest $\vp$ for which \eqref{eq:tract_def} holds.  Define the closures of the sets of parameters for which our (strong) tractability conditions hold:
 \begin{equation*}
 	\cp_{\textup{trct}} : = \{\vp^* : \eqref{eq:tract_def} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}, \qquad
@@ -149,23 +171,6 @@ The  set of optimal parameters is defined as all of those parameters satisfying 
 	\label{eq:Psoptdef}
 	\mathcal{P}_{\textup{sopt}} : = \{\vp^* \in \cp_{\textup{strct}} :  \vp^* \notin [\vp,\boldsymbol{\infty}) \ \forall \vp \in  \cp_{\textup{strct}} \setminus \{\vp^*\} \}.
 \end{gather}
-
-Certain common notions of tractability are covered by the general situation described above.
-\begin{equation*}
-	\begin{array}{r@{\qquad}c@{\qquad}cc}
-		& T(\varepsilon^{-1},d,\vp)
-		& T(0,d,\vp)\\
-		\toprule
-		\text{strong polynomial algebraic  tractability} & \max(1,\varepsilon^{-p}) & 1\\
-		\text{polynomial algebraic tractability} & \max(1,\varepsilon^{-p})d^{q} & d^{q}\\
-		\text{strong polynomial exponential tractability} &  [\max(1,\log(1 + \varepsilon^{-1})]^p & 1\\
-		\text{polynomial exponential tractability} &
-		[\max(1,\log(1 + \varepsilon^{-1}))]^p  d^{q} & d^{q}
-	\end{array}
-\end{equation*}
-Here above, $\vp = (p,q)$ in some cases. A general reference 
-for results on algebraic tractability is \cite{NW08}, for exponential tractability we refer to \cite{HKW19} and \cite{KW19}.
-
 
 In the sections below we prove necessary and sufficient conditions on tractability as generally defined in \eqref{eq:tract_def} and \eqref{eq:strong_tract_def}.  These conditions involve the boundedness of sums defined in terms of $(T(\lambda_{i,d}^{-1},\cdot, \cdot))_{i=1}^\infty$.  In practice, it may be easier to verify whether or not these conditions hold than to verify \eqref{eq:tract_def} and \eqref{eq:strong_tract_def} directly.
 
@@ -306,7 +311,7 @@ Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \
 The argument proving equivalent conditions for tractability is similar to, but somewhat more involved than the proof of Theorem \ref{thm_main_strong_tract2}.  Moreover, the specification of the set of optimal parameters is not as precise as in Theorem \ref{thm_main_strong_tract2}.
 
 \begin{theorem}\label{thm_main_tract2}
-Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is $T$-tractable iff there exist $\vp\ge \vzero$ and a constant $L_{\vp} > 0$ such that
+Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is $T$-tractable iff there exists $\vp\ge \vzero$ and a positive integer $L_{\vp}$ such that
 \begin{equation} \label{eq:tractiff4}
      S_{\vp}:=\sup_{d \in \naturals}
      \sum_{i = \lceil L_{\vp}\, T(0,d,\vp) \rceil}^\infty \frac{1}{T(\lambda^{-1}_{i,d},d,\vp)}< \infty.
@@ -424,35 +429,44 @@ Thus,  $\cp_{\textup{opt}} \subseteq \widetilde{\cp}_{\textup{opt}}$.  This conc
 
 \section{Examples} \label{sec:examples}
 
-\begin{example}[Strong polynomial tractability]
+In this section, we illustrate Theorems \ref{thm_main_strong_tract2} and \ref{thm_main_tract2} for the types of tractability given in the table in Section \ref{sec:not}.
 
-Let $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$
+\begin{example}[Strong algebraic polynomial tractability]
+
+Let the tractability function, $T$,
 be defined by
 \[
- T(\varepsilon^{-1},d,\vp)= (\max\{\varepsilon^{-1},1\})^p .
+ T(\varepsilon^{-1},d,p)= (\max\{\varepsilon^{-1},1\})^p 
+ \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, p \ge 0.
 \]
-Then Theorem \ref{thm_main_strong_tract2} yields the iff-condition
+Then Theorem \ref{thm_main_strong_tract2} yields the  equivalent condition for strong algebraic polynomial tractability: 
 \[
- \sup_{d\in\naturals} \sum_{i=L(p)}^\infty (\min\{\lambda_{i,d},1\})^p < \infty.
+ \sup_{d\in\naturals} \sum_{i=L_p}^\infty (\min\{\lambda_{i,d},1\})^p < \infty \text{ for some } p \ge 0, L_p \in \naturals.
 \]
-This essentially recovers the result on strong polynomial tractability in \cite[Theorem 5.1]{NW08}
+Furthermore, the optimal $p$ is the infimum of all $p$ for which the above condition holds.
+This essentially recovers the result in \cite[Theorem 5.1]{NW08}.
 \end{example}
 
-\begin{example}[Polynomial tractability]
-Let $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$
+\begin{example}[Algebraic polynomial tractability]
+Let the tractability function, $T$,
 be defined by
 \[
- T(\varepsilon^{-1},d,\vp)= (\max\{\varepsilon^{-1},1\})^p\, d^q.
+ T(\varepsilon^{-1},d,p,q)= (\max\{\varepsilon^{-1},1\})^p\, d^q
+ \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, p,q \ge 0.
 \]
-Then Theorem \ref{thm_main_tract2} yields the iff-condition
+Then Theorem \ref{thm_main_tract2} yields the  equivalent condition for algebraic polynomial tractability: 
 \[
- \sup_{d\in\naturals} \sum_{i=L_{\vp} d^{q_1}}^\infty (\min\{\lambda_{i,d},1\})^p d^{-q} < \infty.
+ \sup_{d\in\naturals} \sum_{i=L_{p,q} d^{q}}^\infty (\min\{\lambda_{i,d},1\})^p d^{-q} < \infty \text{ for some } p,q \ge 0, L_{p,q} \in \naturals.
 \]
-This essentially recovers the result on polynomial tractability in \cite[Theorem 5.1]{NW08}
+Furthermore, the set of optimal $(p,q)$ is a subset of 
+\begin{multline*}
+\{(p^*,q^*) : \text{the above condition holds for all }(p,q) \in (p^*,\infty) \times (q^*,\infty) \\
+\text{but not for any }(p,q) \in [0,p^*/2) \times [0,q^*/2)\}.
+\end{multline*}
+This essentially recovers the result on polynomial tractability in \cite[Theorem 5.1]{NW08} \fred{same theorem as above??, what about optimality in \cite[Theorem 5.1]{NW08}}.
 \end{example}
 
 
-\peter{(PETER: Add further examples (e.g., EXP- polynomial tractability, etc.)}
 \kachi{\begin{example}[EXP-strong polynomial tractability]
 Let $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$
 be defined by
