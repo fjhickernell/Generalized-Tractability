@@ -478,18 +478,6 @@ Then Theorem \ref{thm_main_tract2} yields the iff-condition
 \end{example}}
 \bigskip
 
-\fred{We need to check the proof for
-\begin{itemize}
-\item correctness
-\item exponents
-\item whether the additional assumptions are too restrictive and can be generalized
-\item whether we need $\tau$ in the assumption
-\item Do we need non-decreasing or strictly increasing?
-\end{itemize}}
-\begin{definition}[Weak Tractability]
-If $n(\varepsilon,d)$ denotes the minimal number of function values needed to approximate all functions. We say that the problem is \emph{weakly tractable} if
-    \[\lim_{\varepsilon^{-1}+d\rightarrow \infty} \frac{\ln n(\varepsilon,d)}{\varepsilon^{-1}+d} = 0\]
-\end{definition}
 %\begin{definition}[Quasi-polynomial Tractability]
  %   The problem is \emph{quasi-polynomially tractable}, if there exist two constants $C, t> 0$ such that
   %  \[
@@ -497,145 +485,7 @@ If $n(\varepsilon,d)$ denotes the minimal number of function values needed to ap
     %\] for all $\varepsilon \in (0,1)$ and $d\in\mathbb{N}$.
 %\end{definition}
 
-\peter{
-\section{Weak $T$-$(s,t)$-weak tractability} \label{sec:weak}
 
-\begin{definition}[$T$-$(s,t)$-weak tractability]
-Let $s,t>0$. We say that the problem is \emph{$T$-$(s,t)$ weakly tractable} if
-    \[\lim_{\varepsilon^{-1}+d\rightarrow \infty} \frac{\log n(\varepsilon,d)}{T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp)} = 0.\]
-\end{definition}
-
-We show a necessary and sufficient condition for $T$-$(s,t)$-weak tractability, working analogously to \cite{WW17}.
-\begin{theorem}\label{thm:weak}
-For $c>0$, define
-\[
-\sigma (c,d,s,\vp):= \sum_{i=1}^\infty \exp \left(-c\, T(\lambda_{i,d}^{-s},1,\vp)\right).
-\]
-Then the problem is $T$-$(s,t)$-weakly tractable if and only if
-\[
-\mu (c,s,t,\vp)=\sup_{d\in\naturals} \sigma (c,d,s,\vp) \exp\left(-c\, T(0,d^t,\vp)\right)<\infty
-\]
-holds for all $c>0$.
-\end{theorem}
-\begin{proof}
- We first show the necessity of the condition in the theorem.   Indeed, suppose that the problem is  $T$-$(s,t)$-weakly tractable. Then, for any $c>0$ there exists a positive integer $V=V(c)$ such that  
- \[
- n(\varepsilon,d)\le 
- \left\lfloor \exp\left(c\,
- \left(T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp)\right)
- \right) \right\rfloor
- \]
- whenever $\varepsilon^{-1} + d \ge V$. For $d\in\naturals$ 
- choose $\varepsilon>0$ such that $\varepsilon^{-1}\ge \max\{1,V-d\}$. Since the eigenvalues $\lambda{i,d}$ are non-increasing in $i$, we know that
- \[
- \lambda_{\lfloor \exp(c\,
- (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))) \rfloor+1}^2 \le \varepsilon^2
- \]
- for any $\varepsilon$ satisfying $\varepsilon^{-1}\ge \max\{1,V-d\}$.
-Let 
-\[
-n=n(\varepsilon):= \lfloor \exp(c\,
- (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))) \rfloor+1
-\]
-and
-\[
-n^*:= \lfloor \exp(c\,
- (T(\max\{1,(V-d)^s\},1,\vp) + T(0,d^t,\vp))) \rfloor+1.
-\]
-By varying $\varepsilon^{-1}$ in the interval 
-$[\max\{1,V-d\},\infty)$ we can make $n(\varepsilon)$ attain 
-any integer value greater than or equal to $n^*$.
-
-Furthermore, we have, as $\lambda_{n,d}\le \varepsilon$ and as $T$ is monotonically increasing, 
-\begin{eqnarray*}
-n(\varepsilon)-1 & \le & \exp(c\, (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp)))\\
-& \le & \exp(c\, (T(\lambda_{n(\varepsilon),d}^{-s},1,\vp) + T(0,d^t,\vp))),
-\end{eqnarray*}
-which is equivalent to 
-\[
-\exp(-2c\, (T(\lambda_{n(\varepsilon),d}^{-s},1,\vp) + T(0,d^t,\vp))) \le \frac{1}{(n(\varepsilon)-1)^2}.
-\]
-Therefore,
-\begin{eqnarray*}
-    \exp(-2c\, T(0,d^t,\vp)) \sum_{i=1}^\infty \exp(-2c\, T(\lambda_{i,d}^{-s},1,\vp))
-    &\le& \exp(-2c\, T(0,d^t,\vp))\, (n^*-1) + \sum_{i=n^*}^\infty \frac{1}{(i-1)^2}\\
-    &\le& \exp(-2c\, T(0,d^t,\vp))\, (n^*-1) + \frac{\pi^2}{6}.
-\end{eqnarray*}
-Moreover,
-\begin{eqnarray*}
-    \exp(-2c\, T(0,d^t,\vp))\, (n^*-1) &\le & \exp(-2c\, T(0,d^t,\vp))\, 
-    \exp (c\, T(V^s,1,\vp) + c\, T(0,d^t,\vp))\\
-    &\le & \exp (c\, T(V^s,1,\vp))\\
-    &<& \infty,
-\end{eqnarray*}
-independently of $d$. This implies that 
-\[
-\exp(-2c\, T(0,d^t,\vp)) \sum_{i=1}^\infty \exp(-2c\, T(\lambda_{i,d}^{-s},1,\vp))<\infty,
-\]
-also independently of $d$. As $c>0$ was chosen arbitrarily, we can replace $2c$ by $c$ and see
-necessity of the condition in the theorem. 
-
-\medskip
-
-We now show sufficiency.
-
-Suppose that $\mu(c,s,t,\vp) <\infty$ for all $c>0$. It is no loss of generality to assume that 
-$\mu(c,s,t,\vp) \ge 1$. Since the terms of the series in the definition of $\mu(c,s,t,\vp) $ are non-increasing, we have 
-\[
-\exp (-c\, T(0,d^t,\vp))\, n\, \exp (-c\, T(\lambda_{n,d}^{-s},1,\vp)) \le \mu (c,s,t,\vp).
-\]
-Then we obtain 
-\[
-\exp (-c\, T(\lambda_{n,d}^{-s},1,\vp)) \le \frac{1}{n}\, \mu (c,s,t,\vp)\, 
-\exp (c\, T(0,d^t,\vp)),
-\]
-which is equivalent to 
-\[
-\exp (c\, T(\lambda_{n,d}^{-s},1,\vp)) \ge \frac{n}{\mu (c,s,t,\vp)\, 
-\exp (c\, T(0,d^t,\vp))},
-\]
-which in turn is equivalent to 
-\[
-T(\lambda_{n,d}^{-s},1,\vp) \ge \frac{1}{c}\log \left(\frac{n}{\mu (c,s,t,\vp)\, 
-\exp (c\, T(0,d^t,\vp))}\right)
-\]
-as long as 
-\[
-n> \mu (c,s,t,\vp)\, \exp (c\, T(0,d^t,\vp)).
-\]
-This implies that for the special choice 
-\[
-n= \left\lceil 
-   \mu (c,s,t,\vp)\, \exp \left(c\, (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))\right)
-   \right\rceil 
-\]
-we have
-\[
-T(\lambda_{n,d}^{-s},1,\vp) \ge T(\varepsilon^{-1},1,\vp),
-\]
-which implies that $\lambda_{n,d} \le \varepsilon$, and thus $n(\varepsilon,d)\le n$. Note that the 
-argument $x$ of the ceiling function in the definition of our special $n$ is at least one, which implies 
-$\lceil x \rceil \le 2x$.
-
-Consequently,
-\[
-n(\varepsilon, d) \le \exp\left(c\, \left(
-\frac{\log (2\mu (c,s,t,\vp) )}{c}
-T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp)
-\right)\right).
-\]
-Clearly, there must exist a positive $V=V(c,s,t,\vp)$ such that when $\varepsilon^{-1} +d \ge V$ it holds true that
-\[
-  T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp) \ge \frac{\log (2\mu (c,s,t,\vp) )}{c}.
-\]
-Hence we finally have 
-\[
-n(\varepsilon,d) \le \exp (2c\, (T(\varepsilon^{-s},1,\vp) + T(0,d^t,\vp))).
-\]
-Since the latter inequality holds for every $c>0$, we have $T$-$(s,t)$-weak tractability.
-
-\end{proof}
-}
 
 %\paragraph{Example 5: $(t,s)$-Weak tractability}
 %Let $ T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty)$. Suppose we have $T$-$(s,t)$- weak tractability, such that
@@ -725,72 +575,52 @@ This implies that for the special choice
 \]
 	we have
 	\[
-	T(\lambda_{n,d}^{-s},d) \ge T(\varepsilon^{-1},d).
+	T(\lambda_{n,d}^{-s},d) \ge T(\varepsilon^{-1},d) \qquad \forall \varepsilon > 0, \, d \in \naturals.
 	\]
 Since $T(\cdot,d)$ is non-decreasing, it follows that $\lambda_{n,d} \le \varepsilon$, and thus 
 \[
 \comp(\varepsilon,d) \le  \left\lceil 
 S_c \, h(cT(\varepsilon^{-1},d))  
-\right\rceil \qquad \forall c > 0.  
+\right\rceil \le   \lceil \underbrace{
+S_c \, h(cT(0,1))}_{=: \widetilde{S}_c/2} \, h(cT(\varepsilon^{-1},d))  
+\rceil\qquad \forall c, \varepsilon > 0, \, d \in \naturals.
 \]
 
-\peter{
-We could go on like this:
-
-It is no loss of generality to assume that $S_c \ge 1$. From above we get 
-\[
-h^{-1}(\comp(\varepsilon,d)) \le h^{-1} \left( \left\lceil 
-S_c \, h(cT(\varepsilon^{-1},d))  
-\right\rceil \right) \le h^{-1} \left(  
-2 S_c \, h(cT(\varepsilon^{-1},d))  
- \right) \qquad \forall c > 0,
-\]
-where we used that the argument of the ceiling function is at least one.
-
-From this we deduce, by \eqref{eq:submult_h_inverse},
-\[
-h^{-1}(\comp(\varepsilon,d)) \le
- h^{-1} (2 S_c) + cT (\varepsilon^{-1},d).
-\]
-Now, for sufficiently large $\varepsilon^{-1}+d$, we must have
-\[
-c T (\varepsilon^{-1},d) \ge h^{-1} (2 S_c).
-\]
-This is because the finiteness of $S_c$ implies that $\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d) = \infty$ for all $d \in \naturals$,  together with the hypothesis on $\lim_{d \to \infty} T(\varepsilon^{-1},d)$.
-So, 
-\[
-h^{-1}(\comp(\varepsilon,d)) \le 2 cT (\varepsilon^{-1},d).
-\]
-Since the latter holds for any $c>0$, we have sub-$h\circ T$-tractability.
-
-}
-
- 
-Consequently, choosing $c=1/2$, it follows that 
-\begin{align}
-\nonumber
-\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{ h(T(\varepsilon^{-1},d))  }
-& = \lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{ h(2cT(\varepsilon^{-1},d))  } \\
-& \le \lim_{\varepsilon^{-1} + d \to \infty} \frac{ \left\lceil 
-	S_c \, h(cT(\varepsilon^{-1},d)) \right\rceil}{ [h(cT(\varepsilon^{-1},d))]^2  } \qquad \text{by \eqref{eq:h_cond}}
+Since $S_c \ge 1/h(cT(0,1))$ by definition, it follows that $S_c \, h(cT(0,1)) \, h(cT(\varepsilon^{-1},d))  \ge 1$ and so 
+\begin{align*}
+\max(1,\comp(\varepsilon,d)) 
+& \le  \lceil  S_c \, h(cT(0,1)) \, h(cT(\varepsilon^{-1},d))   \rceil 
+ =  \lceil 
+(\widetilde{S}_c/2) \, h(cT(\varepsilon^{-1},d))  
+\rceil \\
+& \le   \widetilde{S}_c \, h(cT(\varepsilon^{-1},d))  
+\qquad\forall c, \varepsilon > 0, \, d \in \naturals.
+\end{align*}
+Since $h$ is strictly increasing, so is $h^{-1}$, and thus
+\begin{align*}
+h^{-1}(\max(1,\comp(\varepsilon,d)) ) & \le  h^{-1} \left(  
+\widetilde{S}_c \, h(cT(\varepsilon^{-1},d))  \right) 
 \\
-\nonumber
-& \le \lim_{\varepsilon^{-1} + d \to \infty} \frac{
-	S_c \, h(cT(\varepsilon^{-1},d))+1}{ [h(cT(\varepsilon^{-1},d))]^2  }  \\
-& = \lim_{\varepsilon^{-1} + d \to \infty} \left \{\frac{
-	S_c }{ h(cT(\varepsilon^{-1},d))  }  + \frac{
-	1}{ [h(cT(\varepsilon^{-1},d))]^2 } \right \} \label{eq:alastone}.
-\end{align}	
-The finiteness of $S_c$ implies that $\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d) = \infty$ for all $d \in \naturals$.  Together with the hypothesis on $\lim_{d \to \infty} T(\varepsilon^{-1},d)$, we can infer that $\lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty$.  This implies that the limit in \eqref{eq:alastone} vanishes.
+&  \le  h^{-1} (2 S_c) + cT (\varepsilon^{-1},d).
+\quad \forall c, \varepsilon > 0, \, d \in \naturals \qquad \text{by \eqref{eq:submult_h_inverse}.}
+\end{align*}
+
+The finiteness of $S_c$ implies that $\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d) = \infty$ for all $d \in \naturals$.  Together with  the hypothesis on $\lim_{d \to \infty} T(\varepsilon^{-1},d)$ in \eqref{eq:h_cond}, it follows that $\lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty$.  Therefore
+\begin{equation*}
+	\lim_{\varepsilon^{-1} + d \to \infty} \frac{h^{-1}(\max(1,\comp(\varepsilon,d)))}{T(\varepsilon^{-1},d)} 
+	\le \lim_{\varepsilon^{-1} + d \to \infty} \frac{h^{-1} (2 S_c)}{T(\varepsilon^{-1},d)}  + c = c \qquad\forall c >  0.
+\end{equation*}
+Since this limit is bounded above by all positive $c$, it must be zero, and the problem is sub-$h$-$T$ tractable.
+
 
 \bigskip
 	  
 \noindent \textbf{Necessary Condition:}\\
-Suppose that the problem is  sub-$h \circ T$ tractable. Then, for any $c>0$ there exists a positive integer $V_c$ such that  \fred{having a little trouble removing the $c$ here.} \peter{Here we do not need to remove the $c$, and actually shouldn't. Just in the limit relation it was not necessary.}
-\[
-	\comp(\varepsilon,d)\le 
-	\left\lfloor h(cT(\varepsilon^{-1},d)) \right\rfloor \qquad \forall \varepsilon^{-1} + d \ge V_c.
-\]
+Suppose that the problem is  sub-$h \circ T$ tractable. Then, for any $c>0$ there exists a positive integer $V_c$ such that  
+\begin{gather*}
+	h^{-1}(\comp(\varepsilon,d))\le h^{-1}(\max(1,\comp(\varepsilon,d))) \le cT(\varepsilon^{-1},d)  \qquad \forall \varepsilon^{-1} + d \ge V_c, \\
+	\comp(\varepsilon,d) \le \left\lfloor h(cT(\varepsilon^{-1},d)) \right\rfloor \qquad \forall \varepsilon^{-1} + d \ge V_c.
+\end{gather*}
 By the definition of the information complexity in \eqref{eq:comp_def}, it follows that 
 \[
 	\lambda_{n(\varepsilon,d,c),d} \le \varepsilon \quad \forall \varepsilon^{-1} + d \ge V_c, \qquad \text{where }
@@ -874,11 +704,22 @@ Combining this bound with \eqref{eq:lastone} establishes the finiteness of $S_{2
 This completes the proof.
 \end{proof}
 
-If $f(x)$ and $g(x)$ are both positive, and $\lim_{x \to \infty} g(x) = \infty$, is it true that
-\[
-\lim_{x \to \infty} \frac{f(x)}{g(x)} = 0 \iff 
-\lim_{x \to \infty} \frac{\log(f(x))}{\log(g(x))} = 0?
-\]
+
+
+
+\begin{example}[Weak Tractability]
+	Suppose that 
+	\[
+	T(\varepsilon^{-1},d,\vp) = \varepsilon^{-s} + d^t, \quad \forall \varepsilon > 0, \ d \in \naturals, \quad \text{where } \vp = (s,t), \qquad h(x) = \exp(x) \quad \forall x \ge 0.
+	\]
+	Then Theorem \ref{thm:subhT} implies that 
+	\[\lim_{\varepsilon^{-1}+d\rightarrow \infty} \frac{\log( \max(1,\comp(\varepsilon,d)))}{\varepsilon^{-s}+d^t} = 0 
+	\iff 
+	 \sup_{d\in\naturals}  \, \sum_{i=1}^\infty \exp(-c\, (\lambda_{i,d}^{-s} + d^t )) <\infty \qquad \forall c > 0.
+	\]
+	The expression on the left is the notion of $(s,t)$-weak tractability \cite{??}, and the condition on the right was derived in \cite{??}.  Weak tractability corresponds to $(s,t)=(1,1)$, and uniform weak tractability corresponds to the case when a problem is weakly tractable for all positive $s$ and $t$.
+\end{example}
+
 
 \begin{thebibliography}{99}
 \bibitem{GW11} M. Gnewuch, H.~~Wo\'zniakowski. Quasi-polynomial tractability, J.~Complexity, 27, 312--330 2011.
