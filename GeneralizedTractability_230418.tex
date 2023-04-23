@@ -64,6 +64,7 @@ Let $\{\cf_d\}_{d \in \naturals}$ and $\{\cg_d\}_{d \in \naturals}$ be sequences
 \begin{equation} \label{eq:eigenvalues}
 \lambda_{\max}^2 \ge \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, \qquad d \in \naturals.
 \end{equation}
+\fred{Are we restricting ourselves by not allowing $\lambda_{1,d} \to \infty$ as $d \to \infty$}
 This means that the non-negative $\lambda_{i,d}$ are the singular values of the operator $\SOL_d$. We remark that in the literature on Information-Based Complexity the singular values of $\SOL_d$ are often denoted by $\sqrt{\lambda_{i,d}}$ instead of $\lambda_{i,d}$. However, since we assume non-negativity of the $\lambda_{i,d}$, the notation used here is equivalent.  The non-decreasing ordering of the eigenvalues for each $d$ facilitates the proof of conditions for tractability, but our conditions do not depend on the ordering.
 
 We make the technical assumption that $\SOL_d$ is a compact operator. This implies (see, e.g., \cite{NW08}) that $\lambda_{i,d}$ converges to zero as $i$ tends to infinity for every $d$, which in turn implies that the problem is solvable by suitable algorithms. To avoid trivial cases, we assume that there are an infinite number of positive eigenvalues for every $d$.
@@ -93,6 +94,8 @@ The question of tractability is one of determining how fast the complexity incre
 \peter{TODO: Maybe add a short paragraph on the notation used in the paper and on its structure? In particular, we should introduce
 an ordering of the parameters $\vp$.}\\
 %\kachi{Throughout the article, we use the following notation.}\\
+
+\fred{Point out that $T$ could increase quite rapidly, but this does not affect our theorems.}
 
 \kachi{In Section \ref{sec:spt}, we give the definitions of the considered tractability notions, in particular (strong) tractability. We consider the strong tractability when the information complexity is independent of the dimension, $d$. We then turn to tractability  when the information complexity is polynomial in $d$ and $\varepsilon^{-1}$. In Section \ref{sec:examples} we provide examples of strong(tractability) functions for both the algebraic and exponential cases. We also consider other notions of tractability such as quasi-polynomial tractability, and a generalized notion of weak tractability. In the case of the generalized weak tractability, we give the necessary and sufficient conditions on the notion of exponential tractability in Section \ref{sec:subh}. }
 
@@ -563,7 +566,7 @@ Note that this definition of sub-$h$-$T$ tractability implies that
 \begin{equation} \label{eq:comp_slow_hcT}
 		\lim_{\varepsilon^{-1} + d \to \infty} \frac{\comp(\varepsilon,d)}{h(cT(\varepsilon^{-1},d,\vp))} = 0 \qquad \forall c > 0,
 \end{equation}
-which means that for $\varepsilon \to 0$ or $d \to \infty$  $\comp(\varepsilon,d))$ must increase slower than $h(cT(\varepsilon^{-1},d,\vp))$, no matter how small $c$ is.
+which means that for $\varepsilon \to 0$ or $d \to \infty$  $\comp(\varepsilon,d)$ must increase slower than $h(cT(\varepsilon^{-1},d,\vp))$, no matter how small $c$ is.
 
 \begin{theorem}\label{thm:subhT}
 	Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions}.  Moreover, let $\lim_{d \to \infty} T(\varepsilon^{-1},d,\vp) = \infty$ for all $\varepsilon > 0$, $\vp > \vzero$.  The problem is sub-$h$-$T$ tractable if and only if
@@ -736,9 +739,14 @@ This concludes the proof of Theorem \ref{thm:subhT}.
 \end{example}
 
 
-\section{Summary}
+\section{Discussion and Summary}
 
-\fred{Do we consider the case of normalized error?}
+\fred{
+\begin{itemize}
+\item Do we consider the case of normalized error? (Peter) 
+\item Are there cases of $T$ that do not correspond to known tractability measures? (Kachi)
+\item Restricted domain? (Fred)
+\end{itemize}}
 
 
 \begin{thebibliography}{99}
