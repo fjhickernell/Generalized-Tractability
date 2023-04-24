@@ -738,6 +738,141 @@ This concludes the proof of Theorem \ref{thm:subhT}.
 	The expression on the left is the notion of $(s,t)$-weak tractability \cite{??}, and the condition on the right was derived in \cite{??}.  Weak tractability corresponds to $(s,t)=(1,1)$, and uniform weak tractability corresponds to the case when a problem is weakly tractable for all positive $s$ and $t$.
 \end{example}
 
+\section{Try Restricted Region}
+
+Suppose that the domain of interesting $(\varepsilon^{-1},d)$ is given by 
+\begin{equation}
+    \Omega  = \{(\varepsilon^{-1},d) : \varepsilon \ge E(d), \ d \in \naturals \},
+\end{equation}
+where $E$ is a non-increasing function.  Furthermore, for all $d \in \naturals$, let $N(d) = \min \{n : \lambda_{n+1,d} \le E(d) \}$.
+
+\subsection{Strong tractability}
+
+We first consider the simpler case when the complexity is essentially independent of the dimension, $d$.  The proof also introduces the line of argument used for the case where there is $d$-dependence.
+
+\begin{theorem}\label{thm_main_strong_tract2}
+Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is strongly $T$-tractable iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ and an integer $L_{\vp} > 0$ such that
+\begin{equation} \label{eq:strong_tractiff3}
+     S_{\vp}:=\sup_{d \in \naturals} \sum_{i = L_{\vp}}^{N(d)} \frac{1}{T(\lambda_{i,d}^{-1},1,\vp)} < \infty.
+\end{equation}
+If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{strct}} : = \{\vp^* : \eqref{eq:strong_tractiff3} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}$.  Then $\cp_{\textup{strct}} = \widetilde{\cp}_{\textup{strct}}$, and the set of optimal strong tractability parameters is
+\[
+	\cp_{\textup{sopt}} =
+	\{\vp^* \in \widetilde{\cp}_{\textup{strct}} :  \vp^* \notin [\widetilde{\vp},\boldsymbol{\infty}) \ \forall \widetilde{\vp}\in  \widetilde{\cp}_{\textup{strct}} \setminus \{\vp^*\} \}.
+\]
+\end{theorem}
+
+
+\begin{proof}
+\textbf{Sufficient condition:}\newline
+We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.
+
+Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d',\vp)$ are non-decreasing in $i$ for any $d'\in\naturals$. In particular, for all $n\in \mathbb{N}$, we have
+\begin{align*}
+    \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},d',\vp)} \le \cdots \le \frac{1}{T(\lambda_{1, d}^{-1},d',\vp)} \\
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp) }
+    \le \frac 1n \sum_{i=1}^n  \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) }
+    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)}.
+\end{align*}
+Thus, we can conclude from the previous line that
+\begin{multline} \label{eq:implicate_a}
+    n \ge T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \\
+   \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le
+   \frac 1n \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) } \le \frac{1}{T(\varepsilon^{-1},d',\vp)} \qquad \forall \varepsilon > 0, \ d,d' \in \naturals.
+\end{multline}
+
+Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity via \eqref{eq:comp_def}:
+    \begin{align} %\label{eq:comp_equiv}
+    \nonumber
+    \comp(\varepsilon, d) & = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
+    \nonumber
+    & = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d',\vp)}\le \frac{1}{T(\varepsilon^{-1},d',\vp) }\biggr\} \qquad \forall d' \in \naturals\\
+    \nonumber
+    & \le  \min \biggl\{n \in \natzero : n \ge T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \biggr\} \quad \forall d' \in \naturals \qquad \text{by \eqref{eq:implicate_a}} \\
+    & \le  T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} + 1 \quad \forall d' \in \naturals. \label{eq:compUP}
+\end{align}
+
+Now we take this upper bound further, specializing to the case of $d'=1$:
+\begin{align*}
+       \comp(\varepsilon,d)
+       & \le T(\varepsilon^{-1},1, \vp) \Biggl [ \sum_{i=1}^{L_{\vp}-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
+       + \underbrace{\sum_{i=L_{\vp}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }
+       + \frac{1}{T(\varepsilon^{-1},1, \vp)} \Biggr] \\
+       & \le T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L_{\vp}-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp} + \frac{1}{T(0,1, \vp)}\right]}_{=:C_{\vp}}\\
+       & =  C_{\vp}T(\varepsilon^{-1},1,\vp).
+%       & \le \underbrace{2 C_{1,\vp}}_{\text{since } T(\varepsilon^{-1},1,\vp) \ge 1} T(\varepsilon^{-1},1,\vp)
+%       = \underbrace{C_{\vp}}_{:=2 C_{1,\vp}}T(\varepsilon^{-1},1,\vp).
+\end{align*}
+This means that we have strong $T$-tractability via \eqref{eq:strong_tract_def}, and verifies the sufficiency of \eqref{eq:strong_tractiff3}.
+
+
+
+\bigskip
+\noindent \textbf{Necessary condition:} \\
+Suppose that we have strong
+$T$-tractability as defined in \eqref{eq:strong_tract_def}. That is, for some $\vp \ge \vzero$ there exists a positive constant $C_{\vp}$ such that
+\[
+\comp(\varepsilon,d)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)
+\qquad \forall \varepsilon > 0, \ d \in \mathbb{N}.
+\]
+Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non-increasing, we have
+\begin{equation}\label{eq:lambda_K_strong3}
+\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1,d}\le \varepsilon.
+\end{equation}
+
+Define
+\[
+i(\varepsilon,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1, \quad
+i(\infty,\vp) = \lim_{\varepsilon \to \infty}  i(\varepsilon,\vp) \ge 1 .
+\]
+Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{i(\varepsilon,\vp),d} \le \varepsilon$.
+Note furthermore that we always have
+\[
+i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1, \qquad \forall \varepsilon > 0,
+\]
+since
+$T(\cdot,1, \vp)$ is non-decreasing.
+
+For $\varepsilon$ taking on all positive values, $i(\varepsilon,\vp)$ takes on all values greater than or equal to $i(\infty,\vp)$, so
+\[
+i\le C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1, \qquad \forall i \ge i(\infty,\vp).
+\]
+This implies via our technical assumption \eqref{eq:ptauassume} that
+\begin{gather*}
+ K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},1,\tau \vp) \ge
+ [T(\lambda_{i,d}^{-1},1, \vp)]^\tau
+ \ge
+  \left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i \ge i(\infty,\vp) \\
+ \frac{1}{T (\lambda_{i,d}^{-1},1,\tau \vp)} \le
+\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \ge \max\{i(\infty,\vp),2\} .
+\end{gather*}
+Summing both sides of this last inequality over $i$ from $i(\infty,\vp) +1 \ge 2$ to $\vinfty$ yields
+\begin{equation*}
+\sup_{d\in\naturals} \sum_{i=i(\infty,\vp) +1 }^\infty \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)}
+ \le  K_{\vp,\tau}\, C_{\vp}^\tau
+\sum_{i=2}^\infty \frac{1}{(i-1)^\tau} \\
+ \le K_{\vp,\tau}\, C_{\vp}^\tau
+\zeta (\tau)  < \infty,
+\end{equation*}
+where $\zeta$ denotes the Riemann zeta function.
+This yields \eqref{eq:strong_tractiff3} with $\vp$ replaced by $\vp' = \tau \vp$ and $L_{\vp'} = i(\infty,\vp) +1$, and so we see the necessity of $\eqref{eq:strong_tractiff3}$.
+
+\bigskip
+\noindent \textbf{Optimality:} \\
+To complete the proof, we must show that $\cp_{\textup{strct}} = \widetilde{\cp}_{\textup{strct}}$.  Then, the expression for  $\cp_{\textup{sopt}}$ automatically follows from its definition in \eqref{eq:Psoptdef}.
+
+First we show  that if $\vp^* \in \cp_{\textup{strct}}$, then $\vp^* \in \widetilde{\cp}_{\textup{strct}}$.  If $\vp^* \in \cp_{\textup{strct}}$, then \eqref{eq:strong_tract_def} must hold for all $\vp' \in (\vp^*,\vinfty)$.  For any $\vp' \in (\vp^*,\vinfty)$, we may choose $\vp$ and $\tau$ such that $\vp^* < \vp < \vp' = \tau \vp$. Since $\vp > \vp^*$, \eqref{eq:strong_tract_def} also holds for $\vp$, and it follows that \eqref{eq:strong_tractiff3} must hold for $\vp'$ by the proof of necessity above.  Thus, $\vp^* \in \widetilde{\cp}_{\textup{strct}}$.
+
+Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \in \cp_{\textup{strct}}$.  If $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then \eqref{eq:strong_tractiff3}  holds for all $\vp \in (\vp^*,\vinfty)$.  By the argument to prove the sufficient condition above, it follows that \eqref{eq:strong_tract_def} must also hold for all $\vp \in (\vp^*,\vinfty)$. Thus, $\vp^* \in \cp_{\textup{strct}}$.
+
+\bigskip
+
+\noindent This concludes the proof of  Theorem \ref{thm_main_strong_tract2}.
+
+\end{proof}
+
+
 
 \section{Discussion and Summary}
 
