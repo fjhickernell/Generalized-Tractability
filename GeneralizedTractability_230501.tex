@@ -62,14 +62,10 @@ TODO: Check in how far our conditions coincide with existing conditions for less
 
 Let $\{\cf_d\}_{d \in \naturals}$ and $\{\cg_d\}_{d \in \naturals}$ be sequences of Hilbert spaces, and $\{\SOL_d : \cf_d \to \cg_d\}_{d \in \naturals}$ be a sequence of linear solution operators  with adjoints $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors
 \begin{equation} \label{eq:eigenvalues}
-\lambda_{\max}^2 \ge \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, \qquad d \in \naturals.
+ \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, \qquad d \in \naturals.
 \end{equation}
-\fred{Are we restricting ourselves by not allowing $\lambda_{1,d} \to \infty$ as $d \to \infty$?}
-\peter{Yes, indeed, I think we do (e.g., think of tensor product spaces where the first eigenvalue is bigger than one). But I am wondering whether we could do without $\lambda_{\max}$ by the assumption that $T$ is bounded away from zero by some absolute value $t$. Then, in all cases we could bound $1/T(\cdot,\cdot,\cdot)$ by $1/t$. Actually, is $T(0,1,\boldsymbol{0})$ our $t$?}
-
 This means that the non-negative $\lambda_{i,d}$ are the singular values of the operator $\SOL_d$. We remark that in the literature on Information-Based Complexity the singular values of $\SOL_d$ are often denoted by $\sqrt{\lambda_{i,d}}$ instead of $\lambda_{i,d}$. However, since we assume non-negativity of the $\lambda_{i,d}$, the notation used here is equivalent. 
-\peter{[PETER: I am wondering whether we should go back to the more common notation once the manuscript is finalized (not right away). It would make the paper easier to read for the IBC community.]}
-
+\peter{[PETER: I am wondering whether we should go back to the more common notation once the manuscript is finalized (not right away). It would make the paper easier to read for the IBC community.]}\fred{Fred: If we do, we introduce a lot of $\sqrt{\lambda}$ or $\varepsilon^{-2}$, which I find harder to translate in my brain.  But I  will submit to the will of the majority.}
 The non-decreasing ordering of the eigenvalues for each $d$ facilitates the proof of conditions for tractability, but our conditions do not depend on the ordering.
 
 We make the technical assumption that $\SOL_d$ is a compact operator. This implies (see, e.g., \cite{NW08}) that $\lambda_{i,d}$ converges to zero as $i$ tends to infinity for every $d$, which in turn implies that the problem is solvable by suitable algorithms. To avoid trivial cases, we assume that there are an infinite number of positive eigenvalues for every $d$.
@@ -77,7 +73,7 @@ We make the technical assumption that $\SOL_d$ is a compact operator. This impli
 The goal is to find a sequence of approximate solution operators, $\{\APP_d:\cb_d \times (0,\infty) \to \cg_d\}_{d \in \naturals}$ satisfying
 \begin{equation}
     \label{eq:errcrit}
-    \norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon \qquad \forall f \in \cb_d, \ \varepsilon \in (0,\infty)
+    \norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon \qquad \forall f \in \cb_d, \ \varepsilon \in (0,\infty),
 \end{equation}
 where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals.  Note that we also allow adaptive information, i.e., the linear functionals may sequentially depend on each other.
 
@@ -150,7 +146,7 @@ Finally, there is a technical assumption required for our analysis.  There exist
 Certain common notions of tractability are covered by the general situation described above.
 {\small
 \begin{equation*}
-	\begin{array}{r@{\qquad}c@{\qquad}cc}
+	\begin{array}{r@{\quad}c@{\quad}cc}
 		\text{Tractability type} & T(\varepsilon^{-1},d,\vp)
 		& T(0,d,\vp)\\
 		\toprule
@@ -208,91 +204,49 @@ If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\tex
 
 \begin{proof}
 \textbf{Sufficient condition:}\newline
-We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.
+We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.  Fix any $\varepsilon > 0$ and any $d \in \naturals$.
 
-Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d',\vp)$ are non-decreasing in $i$ for any $d'\in\naturals$. In particular, for all $n\in \mathbb{N}$, we have
+
+
+Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d',\vp)$ are non-decreasing in $i$ for any $d'\in\naturals$. In particular, for  any $N\in\naturals$ with $n\ge N$, we have
 \begin{align*}
-    \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{1,d}
-    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},d',\vp)} \le \cdots \le \frac{1}{T(\lambda_{1, d}^{-1},d',\vp)} \\
-    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp) }
-    \le \frac 1n \sum_{i=1}^n  \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) }
-    \le \frac 1n \sum_{i=1}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)}.
+    \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{N,d}
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},d',\vp)} \le \cdots \le \frac{1}{T(\lambda_{N, d}^{-1},d',\vp)} \\
+     \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp) }
+    \le &\frac{1}{n-N+1} \sum_{i=N}^n  \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) }
+    \le \frac{1}{n-N+1} \sum_{i=N}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)}.
 \end{align*}
 Thus, we can conclude from the previous line that
 \begin{multline} \label{eq:implicate_a}
-    n \ge T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \\
+    n - N +1 \ge T(\varepsilon^{-1},d',\vp) \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \\
    \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le
-   \frac 1n \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) } \le \frac{1}{T(\varepsilon^{-1},d',\vp)} \qquad \forall \varepsilon > 0, \ d,d' \in \naturals.
+   \frac{1}{n-N+1} \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) } \le \frac{1}{T(\varepsilon^{-1},d',\vp)} \\ \forall d', n, N \in \naturals, \ N \le n.
 \end{multline}
-
-
 
 Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity via \eqref{eq:comp_def}:
-    \begin{align} %\label{eq:comp_equiv}
-    \nonumber
-    \comp(\varepsilon, d) & = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
-    \nonumber
-    & = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d',\vp)}\le \frac{1}{T(\varepsilon^{-1},d',\vp) }\biggr\} \qquad \forall d' \in \naturals\\
-    \nonumber
-    & \le  \min \biggl\{n \in \natzero : n \ge T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \biggr\} \quad \forall d' \in \naturals \qquad \text{by \eqref{eq:implicate_a}} \\
-    & \le  T(\varepsilon^{-1},d',\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} + 1 \quad \forall d' \in \naturals. \label{eq:compUP}
+\begin{align} %\label{eq:comp_equiv}
+	\nonumber
+	\comp(\varepsilon, d) & = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
+	\nonumber
+	& = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d',\vp)}\le \frac{1}{T(\varepsilon^{-1},d',\vp) }\biggr\} \qquad  \forall d'\in \naturals\\
+	\nonumber
+	& \le  \min \biggl\{n \in \natzero : n \ge N - 1 + T(\varepsilon^{-1},d',\vp) \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \biggr\} \;  \forall  d', N \in \naturals, \quad \text{by \eqref{eq:implicate_a}}. 
+	\intertext{Note that in this last expression, $n \ge N$ is enforced since $n$ is an integer strictly greater than  $N-1$ by definition.  This then implies that}
+	\comp(\varepsilon, d) 
+	& \le  T(\varepsilon^{-1},d',\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},d',\vp)}  +  \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \Biggr] \quad \forall  d', N \in \naturals. \label{eq:compUP}
 \end{align}
 
-Now we take this upper bound further, specializing to the case of $d'=1$:
+Now we take this upper bound further, specializing to the case of $d'=1$ and $N=L_{\vp}$:
 \begin{align*}
        \comp(\varepsilon,d)
-       & \le T(\varepsilon^{-1},1, \vp) \Biggl [ \sum_{i=1}^{L_{\vp}-1} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}
-       + \underbrace{\sum_{i=L_{\vp}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }
-       + \frac{1}{T(\varepsilon^{-1},1, \vp)} \Biggr] \\
-       & \le T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{(L_{\vp}-1)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp} + \frac{1}{T(0,1, \vp)}\right]}_{=:C_{\vp}}\\
+       & \le T(\varepsilon^{-1},1, \vp) \Biggl [ \frac{L_{\vp}}{T(\varepsilon^{-1},1, \vp)}  + \underbrace{\sum_{i=L_{\vp}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }
+        \Biggr] \\
+       & \le T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{L_{\vp}}{T(0,1, \vp)} + S_{\vp} \right]}_{=:C_{\vp}}
+       \qquad \text{by \eqref{eq:Tnondecreasing}}\\
        & =  C_{\vp}T(\varepsilon^{-1},1,\vp).
 %       & \le \underbrace{2 C_{1,\vp}}_{\text{since } T(\varepsilon^{-1},1,\vp) \ge 1} T(\varepsilon^{-1},1,\vp)
 %       = \underbrace{C_{\vp}}_{:=2 C_{1,\vp}}T(\varepsilon^{-1},1,\vp).
 \end{align*}
-
-\peter{
-[PETER: This is an alternative part of the proof. If it is correct we could use it instead of the black text. 
-
-\bigskip
-
-Let $\widetilde{J}\in\naturals$. Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d',\vp)$ are non-decreasing in $i$ for any $d'\in\naturals$. In particular, for all $n\ge \widetilde{J}$, we have
-\begin{align*}
-    \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{\widetilde{J},d}
-    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},d',\vp)} \le \cdots \le \frac{1}{T(\lambda_{\widetilde{J}, d}^{-1},d',\vp)} \\
-     \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp) }
-    \le &\frac{1}{n-\widetilde{J}+1} \sum_{i=\widetilde{J}}^n  \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) }
-    \le \frac{1}{n-\widetilde{J}+1} \sum_{i=\widetilde{J}}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)}.
-\end{align*}
-
-
-Thus, we can conclude from the previous line that
-\begin{multline} \label{eq:implicate_a}
-    n - \widetilde{J} +1 \ge T(\varepsilon^{-1},d',\vp) \sum_{i=\widetilde{J}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \\
-   \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},d',\vp)} \le
-   \frac{1}{n-\widetilde{J}+1} \sum_{i=\widetilde{J}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d',\vp) } \le \frac{1}{T(\varepsilon^{-1},d',\vp)} \qquad \forall \varepsilon > 0, \ d,d' \in \naturals.
-\end{multline}
-
-Now we take this upper bound further, specializing to the case of $d'=1$ and $\widetilde{J}=L_{\vp}$:
-\begin{align*}
-       \comp(\varepsilon,d)
-       & \le T(\varepsilon^{-1},1, \vp) \Biggl [ \underbrace{\sum_{i=L_{\vp}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }
-       + \frac{L_{\vp}}{T(\varepsilon^{-1},1, \vp)} \Biggr] \\
-       & \le T(\varepsilon^{-1},1,\vp) \underbrace{\left[S_{\vp} + \frac{L_{\vp}}{T(0,1, \vp)}\right]}_{=:C_{\vp}}\\
-       & =  C_{\vp}T(\varepsilon^{-1},1,\vp).
-%       & \le \underbrace{2 C_{1,\vp}}_{\text{since } T(\varepsilon^{-1},1,\vp) \ge 1} T(\varepsilon^{-1},1,\vp)
-%       = \underbrace{C_{\vp}}_{:=2 C_{1,\vp}}T(\varepsilon^{-1},1,\vp).
-\end{align*}
-
-\bigskip 
-
-END OF THE ALTERNATIVE PROOF.
-
-TODO: Explain that $n\ge \widetilde{J}$ is no restriction due to the upper bound on the complexity.
-]
- 
-
-}
-
 This means that we have strong $T$-tractability via \eqref{eq:strong_tract_def}, and verifies the sufficiency of \eqref{eq:strong_tractiff3}.
 
 
@@ -307,7 +261,7 @@ $T$-tractability as defined in \eqref{eq:strong_tract_def}. That is, for some $\
 \]
 Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non-increasing, we have
 \begin{equation}\label{eq:lambda_K_strong3}
-\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1,d}\le \varepsilon.
+\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1,d}\le \varepsilon \qquad \forall \varepsilon > 0, \ d \in \mathbb{N}.
 \end{equation}
 
 Define
@@ -318,23 +272,23 @@ i(\infty,\vp) = \lim_{\varepsilon \to \infty}  i(\varepsilon,\vp) \ge 1 .
 Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{i(\varepsilon,\vp),d} \le \varepsilon$.
 Note furthermore that we always have
 \[
-i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1, \qquad \forall \varepsilon > 0,
+i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1, \qquad \forall \varepsilon > 0, \ d \in \mathbb{N},
 \]
 since
 $T(\cdot,1, \vp)$ is non-decreasing.
 
 For $\varepsilon$ taking on all positive values, $i(\varepsilon,\vp)$ takes on all values greater than or equal to $i(\infty,\vp)$, so
 \[
-i\le C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1, \qquad \forall i \ge i(\infty,\vp).
+i\le C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1, \qquad \forall i \ge i(\infty,\vp), \ d \in \naturals.
 \]
 This implies via our technical assumption \eqref{eq:ptauassume} that
 \begin{gather*}
  K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},1,\tau \vp) \ge
  [T(\lambda_{i,d}^{-1},1, \vp)]^\tau
  \ge
-  \left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i \ge i(\infty,\vp) \\
+  \left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i \ge i(\infty,\vp)), \ d \in \naturals, \\
  \frac{1}{T (\lambda_{i,d}^{-1},1,\tau \vp)} \le
-\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \ge \max\{i(\infty,\vp),2\} .
+\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \ge \max\{i(\infty,\vp),2\}), \ d \in \naturals .
 \end{gather*}
 Summing both sides of this last inequality over $i$ from $i(\infty,\vp) +1 \ge 2$ to $\vinfty$ yields
 \begin{equation*}
@@ -374,69 +328,38 @@ Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfyi
      S_{\vp}:=\sup_{d \in \naturals}
      \sum_{i = \lceil L_{\vp}\, T(0,d,\vp) \rceil}^\infty \frac{1}{T(\lambda^{-1}_{i,d},d,\vp)}< \infty.
 \end{equation}
-If \eqref{eq:tractiff4} holds for some $\vp$, let
-\[
-\widetilde{\cp}_{\textup{opt}} : = \{\vp^* : \eqref{eq:tractiff4} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty}) \text{ and }  \eqref{eq:tractiff4} \text{ does not hold } \forall \vp \in [\vzero,\vp^*/2)\}.
-\]
-Then $\cp_{\textup{opt}} \subseteq \widetilde{\cp}_{\textup{opt}}$.
 
+If \eqref{eq:tractiff4} holds for some $\vp$, let $\widetilde{\cp}_{\textup{trct}} : = \{\vp^* : \eqref{eq:tractiff4} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty}) \}$.
+Then $\cp_{\textup{trct}} = \widetilde{\cp}_{\textup{trct}}$, and the set of optimal  tractability parameters is
+\[
+\cp_{\textup{opt}} =
+\{\vp^* \in \widetilde{\cp}_{\textup{trct}} :  \vp^* \notin [\widetilde{\vp},\boldsymbol{\infty}) \ \forall \widetilde{\vp}\in  \widetilde{\cp}_{\textup{trct}} \setminus \{\vp^*\} \}.
+\]
 
 \end{theorem}
 
-\fred{Compare the lower summation indices for Theorems 1 and 2}
+Comparing the equivalent conditions for strong tractability in \eqref{eq:strong_tractiff3} and tractability in \eref{eq:tractiff4}, they are seen to be nearly the same.  The difference lies in the lower summation index, which is allowed to depend on $d$ for tractability, and the second argument of $T$ in the sum, which is $1$ for strong tractability, and $d$ in general.  Both of these can allow $S_{\vp}$ to be finite in Theorem \ref{thm_main_tract2}, when it may be infinite in Theorem \ref{thm_main_strong_tract2}.
+
 \begin{proof}
     \textbf{Sufficient Condition:}\\
-Suppose that \eqref{eq:tractiff4} holds for some $\vp \ge 0$. By the argument in the proof of the sufficient condition for Theorem \ref{thm_main_strong_tract2}, it follows from \eqref{eq:compUP} with $d'=d$ that the information complexity has an upper bound of
-\begin{equation*}
-	 \comp(\varepsilon,d) \le  T(\varepsilon^{-1},d,\vp) \sum_{i=1}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)} + 1
-\end{equation*}
-
-Let $J(\vp,d): = \lceil L_{\vp}\, T(0,d,\vp)\rceil$.  Then this upper bound on the complexity can be further bounded above by
-\begin{align*}
-       \comp(\varepsilon,d)
-       & \le T(\varepsilon^{-1},d,\vp) \Biggl [ \sum_{i=1}^{J(\vp,d) -1} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}
-       + \underbrace{\sum_{i=J(\vp,d)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} \text{ by \eqref{eq:tractiff4}}}
-       + \frac{1}{T(\varepsilon^{-1},d, \vp)} \Biggr ] \\
-       & \le T(\varepsilon^{-1},d,\vp)\left[ \frac{J(\vp,d)-1}{T(\lambda_{\max}^{-1},d,\vp)} + S_{\vp} + \frac{1}{T(0,1, \vp)}\right]
-       \qquad \text{by \eqref{eq:Tnondecreasing}}  \\
-       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{L_{\vp}\, T(0,d,\vp)}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp} + \frac{1}{T(0,1, \vp)}\right] \\
-       & =\frac{L_{\vp}}{T(\lambda_{\max}^{-1},1,\vp)} \,T(\varepsilon^{-1},d,\vp) T(0,d,\vp) + \left [  S_{\vp} + \frac{1}{T(0,1, \vp)}\right] T(\varepsilon^{-1},d,\vp)\\
-       & \le\frac{L_{\vp}}{T(\lambda_{\max}^{-1},1,\vp)} \,T(\varepsilon^{-1},d,\vp) T(\varepsilon^{-1},d,\vp) +\left [  S_{\vp} + \frac{1}{T(0,1, \vp)}\right] T(\varepsilon^{-1},d,\vp)\\
-       & \le \frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},1,\vp)}  T(\varepsilon^{-1},d,2\vp)  +\left [  S_{\vp} + \frac{1}{T(0,1, \vp)}\right] T(\varepsilon^{-1},d,\vp)  \qquad \text{by \eqref{eq:ptauassume}}\\
-       & \le \underbrace{\left[\frac{L_{\vp}\,K_{\vp,2}}{T(\lambda_{\max}^{-1},1,\vp)} + S_{\vp} + \frac{1}{T(0,1, \vp)}\right]}_{=:C_{2\vp}} \,T(\varepsilon^{-1},d,2\vp) \qquad \text{by \eqref{eq:Tnondecreasing}}.
-\end{align*}
-
-\peter{
-[PETER: This is an alternative part of the proof. If it is correct we could use it instead of the black text. 
-
-\bigskip
-
-Let $\widetilde{J}:=J(\vp,d): = \lceil L_{\vp}\, T(0,d,\vp)\rceil$. By the argument in the proof of the sufficient condition for Theorem \ref{thm_main_strong_tract2}, it follows from \eqref{eq:compUP} with $d'=d$ that the information complexity has an upper bound of
-\begin{equation*}
-	 \comp(\varepsilon,d) \le  T(\varepsilon^{-1},d,\vp) \sum_{i=J(\vp,d)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)} + J(\vp,d)
-\end{equation*}
- Then this upper bound on the complexity can be further bounded above by
+Suppose that \eqref{eq:tractiff4} holds for some $\vp \ge 0$. 
+By the argument in the proof of the sufficient condition for Theorem \ref{thm_main_strong_tract2}, it follows from \eqref{eq:compUP} with $d'=d$ and $N = \lceil L_{\vp}\, T(0,d,\vp)\rceil$ that 
 \begin{align*}
        \comp(\varepsilon,d)
        & \le T(\varepsilon^{-1},d,\vp) \Biggl [ 
-       \underbrace{\sum_{i=J(\vp,d)}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} \text{ by \eqref{eq:tractiff4}}}
-       + \frac{J(\vp,d)}{T(\varepsilon^{-1},d, \vp)} \Biggr ] \\
-       & \le T(\varepsilon^{-1},d,\vp)\left[ S_{\vp} + \frac{L_{\vp} T(0,d,\vp)+1}{T(\varepsilon^{-1},d, \vp)}\right]\\
-       & \le T(\varepsilon^{-1},d,\vp)\left[S_{\vp} +\frac{L_{\vp} T(0,d,\vp)}{T(\varepsilon^{-1},d, \vp)}
-       + \frac{1}{T(0,1, \vp)}\right]
+       \frac{\lceil L_{\vp}\, T(0,d,\vp)\rceil}{T(\varepsilon^{-1},d,\vp)}  + 
+       \underbrace{\sum_{i=\lceil L_{\vp}\, T(0,d,\vp)\rceil}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} \text{ by \eqref{eq:tractiff4}}}
+       \Biggr ] 
+        \quad \forall \varepsilon > 0, \ d  \in \naturals\\
+       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{L_{\vp} T(0,d,\vp)+1}{T(\varepsilon^{-1},d, \vp)} +  S_{\vp} \right]
+        \qquad \forall \varepsilon > 0, \ d  \in \naturals\\
+       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{L_{\vp} T(0,d,\vp)}{T(\varepsilon^{-1},d, \vp)}
+       + \frac{1}{T(0,1, \vp)} + S_{\vp}\right]
        \qquad \text{by \eqref{eq:Tnondecreasing}}   \\
        & \le T(\varepsilon^{-1},d,\vp) 
-       \underbrace{\left [  S_{\vp} + L_{\vp} + \frac{1}{T(0,1, \vp)}\right]}_{=:C_{\vp}}
+       \underbrace{\left [  L_{\vp} + \frac{1}{T(0,1, \vp)} + S_{\vp} \right]}_{=:C_{\vp}}
        \qquad \text{by \eqref{eq:Tnondecreasing}}  
 \end{align*}
-
-
-\bigskip
-
-END OF THE ALTERNATIVE PROOF.]
-}
-
-
 It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:tractiff4}.
 
 \bigskip
@@ -466,16 +389,16 @@ $T(\cdot,d,\vp)$ is non-decreasing.
 
 For $\varepsilon$ taking on all positive values, $i(\varepsilon,d,\vp)$ takes on all values greater than or equal to $i(\infty,d,\vp)$, so
 \[
-i\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1, \qquad \forall i \ge i(\infty,d,\vp).
+i\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1, \qquad \forall i \ge i(\infty,d,\vp),  \ d \in \naturals.
 \]
 This implies via our technical assumption \eqref{eq:ptauassume} that for any $\tau > 1$,
 \begin{gather*}
 	K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},d,\tau \vp) \ge
 	[T(\lambda_{i,d}^{-1},d, \vp)]^\tau
 	\ge
-	\left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i \ge i(\infty,d,\vp), \\
+	\left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i \ge i(\infty,d,\vp),  \ d \in \naturals, \\
 	 \frac{1}{T (\lambda_{i,d}^{-1},d,\tau \vp)} \le
-	\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \ge \max\{i(\infty,\vp),2\}.
+	\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \ge \max\{i(\infty,\vp),2\},  \ d \in \naturals.
 \end{gather*}
 
 Let $\vp' = \tau \vp$.  Note that $i(\infty,d,\cdot)$ is non-decreasing.  Summing both sides of the latter inequality over $i$ from $i(\infty,d,\vp') + 1 \ge i(\infty,d, \vp) + 1 \ge 2$ to $\infty$ it follows that
@@ -507,15 +430,14 @@ This yields \eqref{eq:tractiff4} with $\vp$ replaced by $\vp'$, so we see the ne
 \bigskip
 
 \noindent \textbf{Optimality:}
-Finally we need to show that $\cp_{\textup{opt}} \subseteq \widetilde{\cp}_{\textup{opt}}$.  Suppose that  $\vp^* \in \cp_{\textup{opt}}$.  We show that $\vp^*$ satisfies the two conditions for membership in $\widetilde{\cp}_{\textup{opt}}$.
+This proof is similar to the proof for the optimality condition for strong tractability in Theorem \ref{thm_main_strong_tract2}. We must show that $\cp_{\textup{trct}} = \widetilde{\cp}_{\textup{trct}}$.  Then, the expression for  $\cp_{\textup{opt}}$ in this theorem automatically follows from its definition in \eqref{eq:Poptdef}.
 
-By the definition of  $\cp_{\textup{opt}}$ \eqref{eq:tract_def}  holds for all $\vp \in (\vp^*,\boldsymbol{\infty})$, which implies by the argument for necessity that  \eqref{eq:tractiff4} holds for all $\vp \in (\vp^*,\boldsymbol{\infty})$.  Indeed, the latter is deduced similarly as in the proof of Theorem \ref{thm_main_strong_tract2.}
-This is the first condition for membership in $\widetilde{\cp}_{\textup{opt}}$.
+First we show  that if $\vp^* \in \cp_{\textup{trct}}$, then $\vp^* \in \widetilde{\cp}_{\textup{trct}}$.  If $\vp^* \in \cp_{\textup{trct}}$, then \eqref{eq:tract_def} must hold for all $\vp' \in (\vp^*,\vinfty)$.  For any $\vp' \in (\vp^*,\vinfty)$, we may choose $\vp$ and $\tau$ such that $\vp^* < \vp < \vp' = \tau \vp$. Since $\vp > \vp^*$, \eqref{eq:tract_def} also holds for $\vp$, and it follows that \eqref{eq:tractiff4} must hold for $\vp'$ by the proof of necessity above.  Thus, $\vp^* \in \widetilde{\cp}_{\textup{trct}}$.
 
-Also, if  $\vp^* \in \cp_{\textup{opt}}$, then \eqref{eq:tract_def} must not hold for all $\vp \in [\vzero, \vp^*)$.  By the sufficiency argument, this implies that \eqref{eq:tractiff4} cannot hold for all $\vp \in [\vzero,\vp^*/2)$.  This is the second condition for membership in $\widetilde{\cp}_{\textup{opt}}$.
+Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{trct}}$, then $\vp^* \in \cp_{\textup{trct}}$.  If $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then \eqref{eq:tractiff4}  holds for all $\vp \in (\vp^*,\vinfty)$.  By the argument to prove the sufficient condition above, it follows that \eqref{eq:strong_tract_def} must also hold for all $\vp \in (\vp^*,\vinfty)$. Thus, $\vp^* \in \cp_{\textup{trct}}$.
 
-Thus,  $\cp_{\textup{opt}} \subseteq \widetilde{\cp}_{\textup{opt}}$.  This concludes the proof of Theorem \ref{thm_main_tract2}.
 
+Thus,  $\cp_{\textup{opt}}= \widetilde{\cp}_{\textup{opt}}$.  This concludes the proof of Theorem \ref{thm_main_tract2}.
 \end{proof}
 
 
