@@ -164,7 +164,7 @@ Certain common notions of tractability are covered by the general situation desc
         \exp\{p(1+\log(\max(1,\varepsilon^{-1}))(1+\log(d))\} &
         \exp\{p(1+\log(d))\}\\
         \text{quasi-polynomial exponential} & 
-        \exp\{p(1+\log(1+\log(\max(1,\varepsilon^{-1})))(1+\log(d))\} &
+        \exp\{p(1+\log(\max\{1,\log(1+\varepsilon^{-1})\}))(1+\log(d))\} &
         \exp\{p(1+\log(d))\}
 	\end{array}
 \end{equation*}}
@@ -472,7 +472,7 @@ be defined by
 \] where in this case $\vp = (p,q)$.
 Then Theorem \ref{thm_main_tract2} yields the  equivalent condition for algebraic polynomial tractability:
 \[
- \sup_{d\in\naturals} \sum_{i=L_{(p,q)} d^{q}}^\infty (\min\{1,\lambda_{i,d}^p\}) d^{-q} < \infty \text{ for some } p,q \ge 0, L_{p,q} \in \naturals.
+ \sup_{d\in\naturals} \sum_{i=L_{(p,q)} d^{q}}^\infty (\min\{1,\lambda_{i,d}^p\}) d^{-q} < \infty \text{ for some } p,q \ge 0, L_{(p,q)} \in \naturals.
 \]
 Furthermore, the set of optimal $(p,q)$ is a subset of
 \begin{multline*}
@@ -490,7 +490,7 @@ be defined by
  T(\varepsilon^{-1},d,\vp)= \left[\max\{1,\log(1+\varepsilon^{-1})\}\right]^p, \quad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
 \]
 where $\vp$ is a scalar. Then Theorem \ref{thm_main_strong_tract2} yields the equivalent condition for strong exponential polynomial tractability \[
- \sup_{d\in\naturals} \sum_{i=L_{p} }^\infty (\min\{1,\log(1+\lambda_{i,d}\})^{p}  < \infty.
+ \sup_{d\in\naturals} \sum_{i=L_{p} }^\infty (\min\{1,\log(1+\lambda_{i,d}\})^{p}  < \infty,\quad  \text{ for some } p \ge 0, L_{p} \in \naturals
 \] In this case the optimal $p$ is the infimum of all $p$ for which the above condition holds.
 \end{example}
 \begin{example}[Exponential polynomial tractability]
@@ -516,7 +516,7 @@ for all $\varepsilon \in (0,1]$ and $d\in\mathbb{N}$.\\
 \noindent Let the tractability function, $T$,
 be defined by
 \[
- T(\varepsilon^{-1},d,\vp)= \exp\{p(1+\log(\max\{1,\varepsilon^{-1}\}))(1+\log d)\}  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
+ T(\varepsilon^{-1},d,\vp)= \exp\{p(1+\log(\max\{1,\varepsilon^{-1}\}))(1+\log (d))\}  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
 \] where in this case $\vp = p$. This can be rewritten as 
 \[
 T(\varepsilon^{-1},d,\vp) = e^p[\max\{1,\varepsilon^{-1}\}]^{p(1+\log d)}d^p
@@ -530,7 +530,7 @@ Observe that the function $T$ is a function of $\max\{1,\varepsilon^{-1}\}$ and 
 
 \noindent Suppose that the tractability function, $T$, is defined by
 \[
- T(\varepsilon^{-1},d,\vp)= \exp\{p(1+\log(\max\{1,\log(1+\varepsilon^{-1})\}))(1+\log d)\}  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
+ T(\varepsilon^{-1},d,\vp)= \exp\{p(1+\log(\max\{1,\log(1+\varepsilon^{-1})\}))(1+\log (d))\}  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
 \] where in this case $\vp = p$. This can be rewritten as 
 \[
 T(\varepsilon^{-1},d,\vp) = e^p[\max\{1,\log(1+\varepsilon^{-1}\})]^{p(1+\log d)}d^p
@@ -547,25 +547,42 @@ Observe that the function $T$ is a function of $\max\{1,\log(1+\varepsilon^{-1})
 Suppose that
 \[
  T(\varepsilon^{-1},d,\vp)= \phi(\varepsilon^{-1},p)\, \psi(d,q)
- \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty).
+ \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty)^2.
 \]
 with non-decreasing functions $\phi : (0,\infty) \times (0,\infty) \to (0,\infty)$ and $\psi : \naturals  \times (0,\infty) \to (0,\infty)$ and where $\vp = (p,q)$.
 
+We say that a problem is defined as $T$-separable tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$ which does not depend on $\varepsilon$ and $d$ such that
+\[
+\comp(\varepsilon,d) \leq  C_{\vp}\,T(\varepsilon^{-1},d,\vp)\qquad \forall \varepsilon >0, \, d\in\naturals,
+\]
+that is
+\[
+\comp(\varepsilon,d) \leq \phi(\varepsilon^{-1},p)\, \psi(d,q) \qquad \forall \varepsilon >0, \, d\in\naturals.
+\]
+A problem is strongly $T$-separable tractable with parameter $\vp$ iff the complexity is independent of $d$, that is, there exists a positive constant $C_{\vp}$ which again does not depend on $\varepsilon$ and $d$ such that
+\[
+\comp(\varepsilon,d) \leq C_{\vp}T(\varepsilon^{-1}, 1,\vp) \qquad \forall \varepsilon >0, \, d\in\naturals,
+\] where $\vp = p$. We have
+\[
+\comp(\varepsilon,d) \leq \phi(\varepsilon^{-1},p)\qquad \forall \varepsilon >0, \, d\in\naturals.
+\]
 %In addition, we assume the following conditions as in (\ref{eq:ptauassume}). That is, there exists a $K_{(p,q),\tau}$ depending on $p,q$ and $\tau$, but independent of $\varepsilon$ and $d$, such that
 %\begin{equation} \label{eq:tractiff}    \sup_{d \in \naturals} \frac{1}{\psi(d,q)} \sum_{i = C(p,q)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p))} < \infty.\end{equation}
-
- %\begin{align*}
-  %   [T(\varepsilon^{-1},d,\vp]^\tau \leq K_{\vp,\tau}T(\varepsilon^{-1},d,\tau\vp) \quad \forall \varepsilon \in (0,\infty),\, d\in \mathbb{N},\, \vp\in[0,\infty)^2, \tau >0\end{align*}
-  
-Observe that for this tractability function $T$, we have strong tractability if the following condition is satisfied
+Furthermore, we assume that
 \[
- T(\varepsilon^{-1},1,\vp)= \phi(\varepsilon^{-1},p)\, \psi(1,0) = \phi(\varepsilon^{-1},p)
- \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, p \ge 0,
-\] where in this case $\vp$ is a scalar. Furthermore, we assume the following technical conditions. There exists a $K_{(p,q),\tau}$ depending on $p,q$ and $\tau$, but independent of $\varepsilon$ and $d$, such that
+\lim_{\varepsilon\rightarrow0}T(\varepsilon^{-1},d,\vp) = \infty \qquad \forall d\in\naturals, \vp \in[0,\infty)^2.
+\]
+Also since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit
+\[
+T(0,d,\vp):= \lim_{\varepsilon \rightarrow \infty}T(\varepsilon^{-1},d,\vp)\geq T(0,1,\textbf{0})>0
+\] 
+%Furthermore, we assume the following technical conditions. There exists a $K_{(p,q),\tau}$ depending on $p,q$ and $\tau$, but independent of $\varepsilon$ and $d$, such that
 \begin{align*}
      [\phi(\varepsilon^{-1},p)]^{\tau} &\le K_{(p,1),\tau} \phi (\varepsilon^{-1},\tau p)\\
       [\psi(d,q)]^{\tau} &\le K_{(1,q),\tau} \psi (d,\tau q) \qquad \forall \, \varepsilon \in (0,\infty),\, d\in \naturals,\, p,q\geq 0,\, \tau >0.
 \end{align*}
+%\begin{align*}
+ %  [T(\varepsilon^{-1},d,\vp]^\tau \leq K_{\vp,\tau}T(\varepsilon^{-1},d,\tau\vp) \quad \forall \varepsilon \in (0,\infty),\, d\in \mathbb{N},\, \vp\in[0,\infty)^2, \tau >0\end{align*}
 Thus, Theorem \ref{thm_main_strong_tract2} yields the following equivalent condition for strongly separable tractability
 \begin{equation*} \label{eq:strong_tractiff}
      \sup_{d \in \naturals} \sum_{i = L_p}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} < \infty.
@@ -577,12 +594,12 @@ separable tractability
 \]
 %As the name implies, the roles of $\varepsilon^{-1}$ and $d$ are separated. 
 \end{example}
-\begin{example}[Non-separable symmetric tractability]
+\begin{example}[Non-separable tractability]
     Let the tractability function $T$, be defined by
 \[
- T(\varepsilon^{-1},d,(p,q))= \exp\{\phi(\varepsilon^{-1},p)\, \psi(d,q)\}
- \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, p\ge 0.
-\]  with non-decreasing functions $\phi : (0,\infty) \times (0,\infty) \to (0,\infty)$ and $\psi : \naturals  \times (0,\infty) \to (0,\infty)$. Furthermore, we assume the following technical conditions. There exists a $K_{(p,q),\tau}$ depending on $p,q$ and $\tau$, but independent of $\varepsilon$ and $d$, such that
+ T(\varepsilon^{-1},d,\vp)= \exp\{p(\phi(\varepsilon^{-1})\, \psi(d))\}
+ \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp\in [0,\infty).
+\]  with non-decreasing functions $\phi : (0,\infty) \to (0,\infty)$ and $\psi : \naturals \to (0,\infty)$ and $\vp = p$. Furthermore, we assume the following technical conditions. There exists a $K_{(p,q),\tau}$ depending on $p,q$ and $\tau$, but independent of $\varepsilon$ and $d$, such that
 \begin{align*}
      [\phi(\varepsilon^{-1},p)]^{\tau} &\le K_{(p,1),\tau} \phi (\varepsilon^{-1},\tau p)\\
       [\psi(d,q)]^{\tau} &\le K_{(1,q),\tau} \psi (d,\tau q) \qquad \forall \, \varepsilon \in (0,\infty),\, d\in \naturals,\, p,q\geq 0,\, \tau >0.
@@ -806,7 +823,7 @@ $T$-tractable with parameter $\vp$ \emph{on the restricted domain $\Omega$} iff 
 Define $M(d) = \max\{n : \lambda_{n+1,d} \ge E(d)\}$, i.e., 
 \[
 \lambda_{1,d}\ge  \cdots \ge \lambda_{M(d)+1,d} \ge E(d) > \lambda_{M(d)+2,d}, \qquad
-(\lambda_{1,d}^{-1},d), \cdots, (\lambda^{-1}_{M(d)+1,d},d) \} \in \Omega.
+(\lambda_{1,d}^{-1},d), \ldots, (\lambda^{-1}_{M(d)+1,d},d)  \in \Omega.
 \]
 
 \begin{theorem}\label{thm_main_rest_tract2}
