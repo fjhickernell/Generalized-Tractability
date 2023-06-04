@@ -21,6 +21,7 @@
 \newcommand{\supp}{\operatorname{supp}}
 
 \newcommand{\tpmod}[1]{{\;(\operatorname{mod}\;#1)}}
+\newcommand{\tI}{\widetilde{I}}
 
 \DeclareMathOperator*{\esssup}{ess\,sup}
 
@@ -90,65 +91,31 @@ and the information complexity of our linear problem is
 \end{equation}
 
 
-The question of tractability is one of determining how fast the complexity increases as $\varepsilon$ tends to zero and/or as $d$ tends to infinity.  We want to bound the complexity in terms of a simple function of $\varepsilon^{-1}$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding. \kachi{In this paper, we investigate such a function that we refer to as the generalized tractability function, denoted by $T$. A proper definition is given in Section \ref{sec:spt}. However, we define a tractability function
-\[
- T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty).
-\]
-which depends on $\varepsilon^{-1}$, $d$ and the parameter $\vp$ respectively.
-} 
+The question of tractability is one of determining how fast the complexity increases as $\varepsilon$ tends to zero and/or as $d$ tends to infinity.  We want to bound the complexity in terms of a simple function of $\varepsilon^{-1}$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding. 
+
+In this article, we investigate such a function that we refer to as the generalized tractability function, denoted by $T$:
+\begin{equation} \label{eq:Tspec}
+    T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty),
+\end{equation}
+The conditions we require $T$ to satisfy are described in  Section \ref{sec:not}, however, the basic idea is that we we define our approximation problem to be tractable if 
+$\comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ for some constant, $C_{\vp}$, depending only on the parameter $\vp$.  In practice, we expect $T(\varepsilon^{-1},d,\vp)$ to increase mildly with increasing $\varepsilon^{-1}$ and/or $d$, however most of our theorems do not require such an assumption.
+
 
 \peter{TODO: Maybe add a short paragraph on the notation used in the paper and on its structure? In particular, we should introduce
 an ordering of the parameters $\vp$.}\\
 %\kachi{Throughout the article, we use the following notation.}\\
 
-\fred{Point out that $T$ could increase quite rapidly, but this does not affect our theorems.}
 
-\kachi{In Section \ref{sec:spt}, we give the definitions of the considered tractability notions, in particular (strong) tractability. We consider the strong tractability when the information complexity is independent of the dimension, $d$. We then turn to tractability  when the information complexity is polynomial in $d$ and $\varepsilon^{-1}$. In Section \ref{sec:examples} we provide examples of strong(tractability) functions for both the algebraic and exponential cases. We also consider other notions of tractability such as quasi-polynomial tractability, and a generalized notion of weak tractability. In the case of the generalized weak tractability, we give the necessary and sufficient conditions on the notion of exponential tractability in Section \ref{sec:subh}. }
+In Section \ref{sec:spt}, we give the definitions of the considered tractability notions, in particular (strong) tractability. We consider the strong tractability when the information complexity is independent of the dimension, $d$. We then turn to tractability  when the information complexity is polynomial in $d$ and $\varepsilon^{-1}$. In Section \ref{sec:examples} we provide examples of strong(tractability) functions for both the algebraic and exponential cases. We also consider other notions of tractability such as quasi-polynomial tractability, and a generalized notion of weak tractability. In the case of the generalized weak tractability, we give the necessary and sufficient conditions on the notion of exponential tractability in Section \ref{sec:subh}. 
 
 \section{(Strong) Tractability}\label{sec:spt}
 
 \subsection{Notation and fundamental definitions} \label{sec:not}
-Let $T$ be a tractability function defined as follows,
-\begin{equation} \label{eq:Tspec}
-    T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty),
-\end{equation}
-A tractability function is a function of simple form that provides an upper bound on the computational complexity of a problem.  Some examples of tractability functions commonly considered are provided in Section \ref{sec:examples}.
+Let $T$ be a function given in \eqref{eq:Tspec}.
+A tractability function, $T$ is a function of simple form that provides an upper bound on the computational complexity of a problem.  Some examples of tractability functions commonly considered are provided in Table \ref{tab:commonT}.
 
-
-A problem is defined as $T$-tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$, which is independent of $\varepsilon$ and $d$, such that
-\begin{equation} \label{eq:tract_def}
-	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall \varepsilon >0, \ d \in \mathbb{N}.
-\end{equation}
-A problem is \emph{strongly}
-$T$-tractable with parameter $\vp$ iff the complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$, again independent of $\varepsilon$ and $d$, such that
-\begin{equation} \label{eq:strong_tract_def}
-	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},1,\vp) \qquad \forall \varepsilon >0 , \ d \in \mathbb{N}.
-\end{equation}
-In this article we allow $\vp$ to be a scalar or vector as the situation dictates.
-
-For this definition of tractability to make sense we assume that
-\begin{subequations} \label{eq:Tconditions}
-\begin{equation} \label{eq:Tnondecreasing}
-	T \text{ is non-decreasing in all variables,}
-\end{equation}
-which implies that the problem does not become easier by decreasing the tolerance, $\varepsilon$, or increasing the dimension, $d$. Furthermore, increasing $\vp$ does not decrease $T(\cdot, \cdot, \vp)$.  Since there are an infinite number of positive eigenvalues, it also makes sense to assume that
-\begin{equation}
-	\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d,\vp) = \infty \qquad \forall d \in \naturals, \ \vp \in [0,\infty)^s.
-\end{equation}
-Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit, which we assume will always be positive:
-\begin{equation}
-	T(0,d,\vp):=\lim_{\varepsilon\to\infty}T(\varepsilon^{-1},d,\vp) \ge T(0,1,\vzero) > 0.
-\end{equation}
-\end{subequations}
-Finally, there is a technical assumption required for our analysis.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
-\begin{equation} \label{eq:ptauassume}
-	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in [1,\infty).
-\end{equation}
-
-
-
-
-Certain common notions of tractability are covered by the general situation described above.
+\begin{table} 
+    \caption{Common forms of the tractability function, $T$}
 {\small
 \begin{equation*}
 	\begin{array}{r@{\quad}c@{\quad}cc}
@@ -168,8 +135,39 @@ Certain common notions of tractability are covered by the general situation desc
         \exp\{p(1+\log(d))\}
 	\end{array}
 \end{equation*}}
+\label{tab:commonT}
+\end{table}
 
-Here above, $\vp = (p,q)$ in some cases and $\vp$ is a scalar in other cases. A general reference
+A problem is defined as $T$-tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$, which is independent of $\varepsilon$ and $d$, such that
+\begin{equation} \label{eq:tract_def}
+	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall \varepsilon >0, \ d \in \mathbb{N}.
+\end{equation}
+A problem is \emph{strongly}
+$T$-tractable with parameter $\vp$ iff the complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$, again independent of $\varepsilon$ and $d$, such that
+\begin{equation} \label{eq:strong_tract_def}
+	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},1,\vp) \qquad \forall \varepsilon >0 , \ d \in \mathbb{N}.
+\end{equation}
+In this article we allow $\vp$ to be a scalar or vector as the situation dictates.
+
+For this definition of tractability to make sense we assume that
+\begin{subequations} \label{eq:Tconditions}
+\begin{equation} \label{eq:Tnondecreasing}
+	T \text{ is non-decreasing in all variables,}
+\end{equation}
+which implies that the problem is expected to be no easier by decreasing the tolerance, $\varepsilon$, or increasing the dimension, $d$. Furthermore, increasing $\vp$ does not decrease $T(\cdot, \cdot, \vp)$.  Since there are an infinite number of positive eigenvalues, it also makes sense to assume that
+\begin{equation}
+	\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d,\vp) = \infty \qquad \forall d \in \naturals, \ \vp \in [0,\infty)^s.
+\end{equation}
+Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit, which we assume will always be positive:
+\begin{equation}\label{eq:T0}	T(0,d,\vp):=\lim_{\varepsilon\to\infty}T(\varepsilon^{-1},d,\vp) \ge T(0,1,\vzero) > 0.
+\end{equation}
+\end{subequations}
+Finally, there is a technical assumption required for our analysis.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
+\begin{equation} \label{eq:ptauassume}
+	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in [1,\infty).
+\end{equation}
+
+Certain common notions of tractability  covered by the general situation described above are provided in Table \ref{tab:commonT}.  Here, $\vp = (p,q)$ in some cases and $\vp$ is a scalar in other cases. A general reference
 for results on algebraic tractability is \cite{NW08}, for exponential tractability we refer to \cite{HKW19} and \cite{KW19}.
 
 If \eqref{eq:tract_def} holds for some $\vp$, it clearly holds for larger $\vp$.  We are often interested in the optimal or smallest $\vp$ for which \eqref{eq:tract_def} holds.  Define the closures of the sets of parameters for which our (strong) tractability conditions hold:
@@ -400,7 +398,7 @@ This implies via our technical assumption \eqref{eq:ptauassume} that for any $\t
 	\ge
 	\left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i \ge i(\infty,d,\vp),  \ d \in \naturals, \\
 	 \frac{1}{T (\lambda_{i,d}^{-1},d,\tau \vp)} \le
-	\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \ge \max\{i(\infty,\vp),2\},  \ d \in \naturals.
+	\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \ge \max\{i(\infty,d,\vp),2\},  \ d \in \naturals.
 \end{gather*}
 
 Let $\vp' = \tau \vp$.  Note that $i(\infty,d,\cdot)$ is non-decreasing.  Summing both sides of the latter inequality over $i$ from $i(\infty,d,\vp') + 1 \ge i(\infty,d, \vp) + 1 \ge 2$ to $\infty$ it follows that
@@ -472,7 +470,7 @@ be defined by
 \] where in this case $\vp = (p,q)$.
 Then Theorem \ref{thm_main_tract2} yields the  equivalent condition for algebraic polynomial tractability:
 \[
- \sup_{d\in\naturals} \sum_{i=L_{(p,q)} d^{q}}^\infty (\min\{1,\lambda_{i,d}^p\}) d^{-q} < \infty \text{ for some } p,q \ge 0, L_{(p,q)} \in \naturals.
+ \sup_{d\in\naturals}\, d^{-q} \sum_{i=\lceil L_{(p,q)} d^{q}\rceil}^\infty (\min\{1,\lambda_{i,d}^p\})  < \infty \text{ for some } p,q \ge 0, L_{(p,q)} \in \naturals.
 \]
 Furthermore, the set of optimal $(p,q)$ is a subset of
 \begin{multline*}
@@ -500,12 +498,65 @@ be defined by
  T(\varepsilon^{-1},d,\vp)=\left[\max\{1,\log(1+\varepsilon^{-1}\})\right]^p\, d^q, \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty)^2, 
 \] where $\vp = (p,q)$. Then Theorem \ref{thm_main_tract2} yields  the equivalent condition for exponential polynomial tractability
 \[
- \sup_{d\in\naturals} \sum_{i=L_{(p,q)} d^{q}}^\infty [\min\{1,\log(1+\lambda_{i,d}\})]^p d^{-q} < \infty  \text{ for some } p,q \ge 0, L_{(p,q)} \in \naturals.
+ \sup_{d\in\naturals}\, d^{-q} \sum_{i=\lceil L_{(p,q)} d^{q}\rceil}^\infty [\min\{1,\log(1+\lambda_{i,d}\})]^p < \infty  \text{ for some } p,q \ge 0, L_{(p,q)} \in \naturals.
 \]
 \end{example}
 
+\begin{example}[(Strong) Separable tractability]
+Suppose that the tractability function is defined by
+\[
+ T(\varepsilon^{-1},d,\vp)= \phi(\varepsilon^{-1},p)\, \psi(d,q)
+ \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty)^2.
+\]
+with non-decreasing functions $\phi : (0,\infty) \times (0,\infty) \to (0,\infty)$ and $\psi : \naturals  \times (0,\infty) \to (0,\infty)$ and where $\vp = (p,q)$, hence $T$ is non-decreasing in all variables.
 
-\begin{example}[Algebraic quasi-polynomial tractability] Here we consider another common notions of tractability. 
+We say that a problem is defined as $T$-separable tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$ which does not depend on $\varepsilon$ and $d$ such that
+\[
+\comp(\varepsilon,d) \leq  C_{\vp}\,\phi(\varepsilon^{-1},p)\, \psi(d,q)\qquad \forall \varepsilon >0, \, d\in\naturals,
+\] where $\vp = (p,q)$.
+A problem is strongly $T$-separable tractable with parameter $\vp$ iff the complexity is independent of $d$, that is, there exists a positive constant $C_{\vp}$ which again does not depend on $\varepsilon$ and $d$ such that
+\[
+\comp(\varepsilon,d) \leq C_{\vp}\phi(\varepsilon^{-1},p)\qquad \forall \varepsilon >0, \, d\in\naturals,
+\] where $\vp = p$ is a scalar. 
+Furthermore, we assume the following as in \eqref{eq:Tconditions} and \eqref{eq:ptauassume}. We assume that
+\[
+\lim_{\varepsilon\rightarrow0}\phi(\varepsilon^{-1},p) = \infty \qquad \forall d\in\naturals, p >0.
+\] since there are an infinite number of positive eigenvalues. Furthermore, we have that $\phi(\cdot,p)$ is non-decreasing hence we define the following limit
+\[ \lim_{\varepsilon \rightarrow \infty}\phi(\varepsilon^{-1},p)\geq 1.
+\] 
+Additionally, we have the following technical assumptions. Suppose that, for any real $\tau_1, \tau_2>0$ and any $p,q>0$, we have that there exists $\hat{K}_{p,\tau_1}$ and $\hat{K}_{q\tau_2}$ such that
+\begin{align*}
+     [\phi(\varepsilon^{-1},p)]^{\tau_1} &\le \hat{K}_{p,\tau_1} \phi (\varepsilon^{-1},\tau_1 p)\\
+      [\psi(d,q)]^{\tau_2} &\le \hat{K}_{q,\tau_2} \psi (d,\tau_2 q) \qquad \forall \, \varepsilon \in (0,\infty),\, d\in \naturals.
+\end{align*} where $\hat{K}_{p,\tau_1}>0$ is a constant that may depend on $p$ and $\tau_1$, but is independent of $\varepsilon$, and where $\hat{K}_{q,\tau_2}>0$ is a constant that may depend on $q$ and $\tau_2$, but is independent of $d$.
+
+Thus, Theorem \ref{thm_main_strong_tract2} yields the following equivalent condition for strongly $T$-separable tractability
+\begin{equation*} \label{eq:strong_tractiff}
+     \sup_{d \in \naturals} \sum_{i = L_p}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} < \infty.
+\end{equation*}
+Theorem \ref{thm_main_tract2} yields the following equivalent condition for 
+separable tractability
+\[
+ \sup_{d \in \naturals} \frac{1}{\psi(d,q)} \sum_{i = \lceil L_{(p,q)\psi(d,q)}\rceil}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} < \infty,
+\] for some $p,q >0$ and $L_{(p,q)}\in\naturals$.
+\end{example}
+
+\begin{example}[Non-separable tractability]
+    Suppose we define the tractability function $T$ by
+\[
+ T(\varepsilon^{-1},d,\vp)= \exp\{p(\phi(\varepsilon^{-1})\, \psi(d))\}
+ \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp\in [0,\infty).
+\]  with non-decreasing functions $\phi : (0,\infty) \to (0,\infty)$ and $\psi : \naturals \to (0,\infty)$ and $\vp = p$. 
+We say that a problem is non-separable tractable with parameter $\vp$ iff there exists a positive $C_{\vp}$ such that
+
+\[\comp(\varepsilon,d) \leq  C_{\vp}\exp\{p(\phi(\varepsilon^{-1})\psi(d))\}.\]
+
+Hence we can apply Theorem \ref{thm_main_tract2} as follows. We have the following equivalent condition for non-separable tractability
+\[
+\sup_{d\in\mathbb{N}}\frac{1}{\psi(d)}\sum_{i=Lp\,\psi(d)} \phi(\lambda_{i,d})\quad \text{for some } p \geq 0, L_p \in \naturals.
+\]
+We have the following special cases of non-separable tractability. \end{example}
+\begin{example}[Algebraic quasi-polynomial tractability] 
 
 As defined in \cite{GW11}, we say that a problem is \emph{quasi-polynomially tractable (QPT)} if there exist two constants $C$, $t > 0$, such that
 \begin{equation}\label{expqpt}
@@ -523,8 +574,7 @@ T(\varepsilon^{-1},d,\vp) = e^p[\max\{1,\varepsilon^{-1}\}]^{p(1+\log d)}d^p
 \]
 Observe that the function $T$ is a function of $\max\{1,\varepsilon^{-1}\}$ and $d$ which are, polynomial or not exponential in powers of $\max\{1,\varepsilon^{-1}\}$ and $d$. Hence we can apply Theorem \ref{thm_main_tract2} as follows. We have the following equivalent condition for quasi-polynomial tractability in the algebraic case
 \[
-\sup_{d\in\mathbb{N}}\sum_{i=Lp\,e^pd^{p}} \left(\min\{1,\lambda_{i,d}\} \right)^{p(1+\ln d)}e^{-p}d^{-p} < \infty \qquad \text{for some} p \geq 0, L_p \in \naturals.
-\]
+\sup_{d\in\mathbb{N}}\,d^{-p}\sum_{i=Lp\,d^{p}} \left(\min\{1,\lambda_{i,d}\} \right)^{p(1+\ln d)} < \infty \qquad \text{for some } p \geq 0, L_p \in \naturals.\]
 \end{example}
 \begin{example}[Exponential quasi-polynomial tractability]
 
@@ -533,79 +583,19 @@ Observe that the function $T$ is a function of $\max\{1,\varepsilon^{-1}\}$ and 
  T(\varepsilon^{-1},d,\vp)= \exp\{p(1+\log(\max\{1,\log(1+\varepsilon^{-1})\}))(1+\log (d))\}  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
 \] where in this case $\vp = p$. This can be rewritten as 
 \[
-T(\varepsilon^{-1},d,\vp) = e^p[\max\{1,\log(1+\varepsilon^{-1}\})]^{p(1+\log d)}d^p
+T(\varepsilon^{-1},d,\vp) = e^p[\max\{1,\log(1+\varepsilon^{-1}\})]^{p(1+\log d)}d^p.
 \]
 Observe that the function $T$ is a function of $\max\{1,\log(1+\varepsilon^{-1})\}$ and $d$. Hence we can apply Theorem \ref{thm_main_tract2} as follows. We have the following equivalent condition for quasi-polynomial tractability in the exponential case
 \[
-\sup_{d\in\mathbb{N}}\sum_{i=Lp\,e^pd^{p}} \left(\min\{1,\log(1+\lambda_{i,d})\} \right)^{p(1+\ln d)}e^{-p}d^{-p} < \infty
+\sup_{d\in\mathbb{N}}\,d^{-p}\sum_{i=Lp\,d^{p}} \left(\min\{1,\log(1+\lambda_{i,d})\} \right)^{p(1+\ln d)}e^{-p} < \infty \quad \text{for some } p \geq 0, L_p \in \naturals.
 \]
 \end{example}
 
 
-\kachi{In the following we introduce two specific cases of tractability which depend on the form of the function $T$.
-\begin{example}[(Strong) Separable tractability]
-Suppose that
-\[
- T(\varepsilon^{-1},d,\vp)= \phi(\varepsilon^{-1},p)\, \psi(d,q)
- \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty)^2.
-\]
-with non-decreasing functions $\phi : (0,\infty) \times (0,\infty) \to (0,\infty)$ and $\psi : \naturals  \times (0,\infty) \to (0,\infty)$ and where $\vp = (p,q)$.
+%In the following we introduce two specific cases of tractability which depend on the form of the function $T$ (see \cite{}).
 
-We say that a problem is defined as $T$-separable tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$ which does not depend on $\varepsilon$ and $d$ such that
-\[
-\comp(\varepsilon,d) \leq  C_{\vp}\,T(\varepsilon^{-1},d,\vp)\qquad \forall \varepsilon >0, \, d\in\naturals,
-\]
-that is
-\[
-\comp(\varepsilon,d) \leq \phi(\varepsilon^{-1},p)\, \psi(d,q) \qquad \forall \varepsilon >0, \, d\in\naturals.
-\]
-A problem is strongly $T$-separable tractable with parameter $\vp$ iff the complexity is independent of $d$, that is, there exists a positive constant $C_{\vp}$ which again does not depend on $\varepsilon$ and $d$ such that
-\[
-\comp(\varepsilon,d) \leq C_{\vp}T(\varepsilon^{-1}, 1,\vp) \qquad \forall \varepsilon >0, \, d\in\naturals,
-\] where $\vp = p$. We have
-\[
-\comp(\varepsilon,d) \leq \phi(\varepsilon^{-1},p)\qquad \forall \varepsilon >0, \, d\in\naturals.
-\]
-%In addition, we assume the following conditions as in (\ref{eq:ptauassume}). That is, there exists a $K_{(p,q),\tau}$ depending on $p,q$ and $\tau$, but independent of $\varepsilon$ and $d$, such that
-%\begin{equation} \label{eq:tractiff}    \sup_{d \in \naturals} \frac{1}{\psi(d,q)} \sum_{i = C(p,q)}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p))} < \infty.\end{equation}
-Furthermore, we assume that
-\[
-\lim_{\varepsilon\rightarrow0}T(\varepsilon^{-1},d,\vp) = \infty \qquad \forall d\in\naturals, \vp \in[0,\infty)^2.
-\]
-Also since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit
-\[
-T(0,d,\vp):= \lim_{\varepsilon \rightarrow \infty}T(\varepsilon^{-1},d,\vp)\geq T(0,1,\textbf{0})>0
-\] 
-%Furthermore, we assume the following technical conditions. There exists a $K_{(p,q),\tau}$ depending on $p,q$ and $\tau$, but independent of $\varepsilon$ and $d$, such that
-\begin{align*}
-     [\phi(\varepsilon^{-1},p)]^{\tau} &\le K_{(p,1),\tau} \phi (\varepsilon^{-1},\tau p)\\
-      [\psi(d,q)]^{\tau} &\le K_{(1,q),\tau} \psi (d,\tau q) \qquad \forall \, \varepsilon \in (0,\infty),\, d\in \naturals,\, p,q\geq 0,\, \tau >0.
-\end{align*}
-%\begin{align*}
- %  [T(\varepsilon^{-1},d,\vp]^\tau \leq K_{\vp,\tau}T(\varepsilon^{-1},d,\tau\vp) \quad \forall \varepsilon \in (0,\infty),\, d\in \mathbb{N},\, \vp\in[0,\infty)^2, \tau >0\end{align*}
-Thus, Theorem \ref{thm_main_strong_tract2} yields the following equivalent condition for strongly separable tractability
-\begin{equation*} \label{eq:strong_tractiff}
-     \sup_{d \in \naturals} \sum_{i = L_p}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} < \infty.
-\end{equation*}
-Theorem \ref{thm_main_tract2} yields the following equivalent condition for 
-separable tractability
-\[
- \sup_{d \in \naturals} \frac{1}{\psi(d,q)} \sum_{i = L_{(p,q)\psi(d,q)}}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} < \infty.
-\]
-%As the name implies, the roles of $\varepsilon^{-1}$ and $d$ are separated. 
-\end{example}
-\begin{example}[Non-separable tractability]
-    Let the tractability function $T$, be defined by
-\[
- T(\varepsilon^{-1},d,\vp)= \exp\{p(\phi(\varepsilon^{-1})\, \psi(d))\}
- \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp\in [0,\infty).
-\]  with non-decreasing functions $\phi : (0,\infty) \to (0,\infty)$ and $\psi : \naturals \to (0,\infty)$ and $\vp = p$. Furthermore, we assume the following technical conditions. There exists a $K_{(p,q),\tau}$ depending on $p,q$ and $\tau$, but independent of $\varepsilon$ and $d$, such that
-\begin{align*}
-     [\phi(\varepsilon^{-1},p)]^{\tau} &\le K_{(p,1),\tau} \phi (\varepsilon^{-1},\tau p)\\
-      [\psi(d,q)]^{\tau} &\le K_{(1,q),\tau} \psi (d,\tau q) \qquad \forall \, \varepsilon \in (0,\infty),\, d\in \naturals,\, p,q\geq 0,\, \tau >0.
-\end{align*}
-\end{example}
-}
+
+
 
 \section{Sub-$h$ Tractability}\label{sec:subh}
 In this section we generalize the concept of weak tractability \cite{}.  Let  $h:[0,\infty) \to [1,\infty)$ satisfy
@@ -811,19 +801,42 @@ This concludes the proof of Theorem \ref{thm:subhT}.
 
 \section{Tractability on a Restricted Domain}
 
-Suppose that the domain of interesting $(\varepsilon^{-1},d)$ is not all of $(0,\infty \times \naturals$ but given by 
+Suppose that the domain of interest $(\varepsilon^{-1},d)$ is not all of $(0,\infty) \times \naturals$ but given by 
 \begin{equation}
-    \Omega  = \{(\varepsilon^{-1},d) : \varepsilon > E(d) \ge 0, \ d \in \naturals \},
+    \Omega  = \{(\varepsilon^{-1},d) : \varepsilon \peter{> E(d) \ge 0}, \ d \in \naturals \},
 \end{equation}
-where $E$ is a non-increasing function.  A problem is
+%where $E$ is a non-increasing \peter{[{is this a necessary assumption?}]} function.  
+A problem is \peter{strongly}
 $T$-tractable with parameter $\vp$ \emph{on the restricted domain $\Omega$} iff the complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$, again independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:rest_strong_tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},1,\vp) \qquad \forall(\varepsilon^{-1},d) \in \Omega.
 \end{equation}
-Define $M(d) = \max\{n : \lambda_{n+1,d} \ge E(d)\}$, i.e., 
+\peter{[I am wondering whether this makes sense if $E$ depends on $d$? Do Gnewuch and Wo\'{z}niakowski allow dependence of $E$ on $d$?]}
+
+\peter{
+A problem is 
+$T$-tractable with parameter $\vp$ \emph{on the restricted domain $\Omega$} iff the complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$, again independent of $\varepsilon$ and $d$, such that
+\begin{equation} \label{eq:rest_tract_def}
+	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall(\varepsilon^{-1},d) \in \Omega.
+\end{equation}
+}
+
+
+Define 
+\begin{equation} \label{eq:Mddef}
+    M(d) := \begin{cases}
+        \max\{n : \lambda_{n+1,d} > E(d)\}, & E(d) > 0, \\
+        \infty, & E(d) = 0.
+    \end{cases}
+\end{equation}
+This means that 
 \[
-\lambda_{1,d}\ge  \cdots \ge \lambda_{M(d)+1,d} \ge E(d) > \lambda_{M(d)+2,d}, \qquad
-(\lambda_{1,d}^{-1},d), \ldots, (\lambda^{-1}_{M(d)+1,d},d)  \in \Omega.
+\begin{cases}
+\lambda_{1,d}\ge  \cdots \ge \lambda_{M(d)+1,d} > E(d) \ge\lambda_{M(d)+2,d}, \quad
+(\lambda_{1,d}^{-1},d), \ldots, (\lambda^{-1}_{M(d)+1,d},d)  \in \Omega, & E(d) > 0, \\
+\lambda_{1,d}\ge \lambda_{2,d}\ge \cdots  > 0, \quad
+(\lambda_{1,d}^{-1},d), (\lambda_{2,d}^{-1},d), \ldots \in \Omega, & E(d) = 0.
+\end{cases}
 \]
 
 \begin{theorem}\label{thm_main_rest_tract2}
@@ -843,9 +856,9 @@ Then $\cp_{\textup{trct}} = \widetilde{\cp}_{\textup{trct}}$, and the set of opt
 
 \begin{proof}
     \textbf{Sufficient Condition:}\\
-We adapt the argument in the proof of the sufficient condition for Theorems \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}.  Suppose that \eqref{eq:rest_tractiff4} holds for some $\vp \ge 0$. Fix any $(\varepsilon^{-1},d) \in \Omega$.  Then 
+We adapt the argument in the proof of the sufficient condition for Theorems \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}.  Suppose that \eqref{eq:rest_tractiff4} holds for some $\vp \ge 0$. Fix any $(\varepsilon^{-1},d) \in \Omega$. 
 
-Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d,\vp)$ are non-decreasing in $i$ for $i \in \{1, \ldots, M(d)+1\}$. In particular, for  any $n \in \{N, \ldots, M(d)\}$
+Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d,\vp)$ are non-decreasing in $i$ for $i \in \{1, \ldots, M(d)+1\}$. In particular, for any \peter{$N\in\{1,\ldots,M(d)\}$ and any} $n \in \{N, \ldots, M(d)\}$
 \begin{align*}
     \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{N,d}
     & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d,\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},d,\vp)} \le \cdots \le \frac{1}{T(\lambda_{N, d}^{-1},d,\vp)} \\
@@ -859,7 +872,7 @@ Thus, we can conclude from the previous line that
    \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},d,\vp)} \le
    \frac{1}{n-N+1} \sum_{i=N}^{M(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp) } \le \frac{1}{T(\varepsilon^{-1},d,\vp)} \\ \forall d, n, N \in \naturals.
 \end{multline}
-We note that the left side of the implication implies $n \ge N$ automatically since $n$ is an integer  $n - N +1$ is assumed to be positive.
+We note that the left side of the implication implies $n \ge N$ automatically since $n$ is an integer and $n - N +1$ is assumed to be positive.
 
 Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity via \eqref{eq:comp_def}:
 \begin{align} %\label{eq:comp_equiv}
@@ -872,7 +885,7 @@ Moreover, given that $T$ is increasing in its arguments, we have the following e
 	& \le  T(\varepsilon^{-1},d,\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},d,\vp)}  +  \sum_{i=N}^{M(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)} \Biggr] \quad \forall N \in \naturals. \label{eq:compUP_rest}
 \end{align}
 
-it follows from \eqref{eq:compUP} with $N = \lceil L_{\vp}\, T(0,d,\vp)\rceil$ that 
+it follows from \eqref{eq:compUP_rest} with $N = \lceil L_{\vp}\, T(0,d,\vp)\rceil$ that 
 \begin{align*}
        \comp(\varepsilon,d)
        & \le T(\varepsilon^{-1},d,\vp) \Biggl [ 
@@ -904,42 +917,136 @@ Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non
 	\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1,d}\le \varepsilon \qquad 
  \forall (\varepsilon^{-1}, d) \in \Omega.
 \end{equation}
-Define the integers \fred{Only got here because we have to be careful with the domain of stuff}
+
+For $(\varepsilon^{-1}, d) \in \Omega$, define the integers 
 \[
 i (\varepsilon,d,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1, \qquad
 i (\infty,d,\vp) := \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1 \ge 1.
 \]
-Thus, it follows by \eqref{eq:lambda_K4} that $\lambda_{i(\varepsilon,d,\vp),d} \le \varepsilon$.
-Note furthermore that we always have
+It follows by \eqref{eq:lambda_K4} that $\lambda_{i(\varepsilon,d,\vp),d} \le \varepsilon$
+for any  $(\varepsilon^{-1}, d) \in \Omega$.
+Note furthermore that since $T(\cdot,d,\vp)$ is non-decreasing, we have
 \[
-i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,d,\vp),d}^{-1},d,\vp)+1, \qquad \forall \varepsilon > 0, \ d \in \naturals,
+i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,d,\vp),d}^{-1},d,\vp)+1, \qquad \forall (\varepsilon^{-1},d)\in\Omega.
 \]
-since
-$T(\cdot,d,\vp)$ is non-decreasing.
+For $\varepsilon$ taking on all values in $(E(d),\infty)$, $i(\varepsilon,d,\vp)$ takes on (at least) all values 
+\[
+I_{d}:=\begin{cases} 
+\{i(\infty,d,\vp),\ldots, i(E(d),d,\vp)-1\}, & E(d) > 0, \\
+\{i(\infty,d,\vp), i(\infty,d,\vp) + 1, \ldots\}, & E(d) = 0.
+\end{cases}
+\]
+So,
+\[
+i\le  C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1, \qquad \forall i\in I_{d},  \ d \in \naturals.
+\]
 
-For $\varepsilon$ taking on all positive values, $i(\varepsilon,d,\vp)$ takes on all values greater than or equal to $i(\infty,d,\vp)$, so
+This upper bound on $i$ in terms of $T(\lambda_{i,d}^{-1},d,\vp)$ implies via our technical assumption \eqref{eq:ptauassume} that for any $\tau > 1$,
 \[
-i\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1, \qquad \forall i \ge i(\infty,d,\vp),  \ d \in \naturals.
-\]
-This implies via our technical assumption \eqref{eq:ptauassume} that for any $\tau > 1$,
-\begin{gather*}
 	K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},d,\tau \vp) \ge
 	[T(\lambda_{i,d}^{-1},d, \vp)]^\tau
 	\ge
-	\left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i \ge i(\infty,d,\vp),  \ d \in \naturals, \\
-	 \frac{1}{T (\lambda_{i,d}^{-1},d,\tau \vp)} \le
-	\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \ge \max\{i(\infty,\vp),2\},  \ d \in \naturals.
-\end{gather*}
+	\left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad  \forall i\in I_{d},  \ d \in \naturals.
+ \]
+To carry the argument further, we need to show that the interval $I_d$ contains the interval
+\[
+\tI_{d}:=\begin{cases} 
+\{i(\infty,d,\vp),\ldots, M(d)\}, & E(d) > 0, \\
+\{i(\infty,d,\vp), i(\infty,d,\vp) + 1, \ldots\}, & E(d) = 0.
+\end{cases}
+\]
 
-Let $\vp' = \tau \vp$.  Note that $i(\infty,d,\cdot)$ is non-decreasing.  Summing both sides of the latter inequality over $i$ from $i(\infty,d,\vp') + 1 \ge i(\infty,d, \vp) + 1 \ge 2$ to $\infty$ it follows that
+Since $I_d = \tI_d$ when $E(d) =0$, we need only consider the case where $E(d) > 0$.  In this case \eqref{eq:Mddef} and \eqref{eq:lambda_K4} imply that
+\[
+\lambda_{i(E(d),d,\vp),d} \le \lambda_{M(d)+2} \le E(d) < \lambda_{M(d)+1,d}.
+\]
+This means that $i(E(d),d,\vp)-1 \ge M(d)+1$, and so $I_d \ge \tI_d$
+
+
+\[
+\lambda_{i(E(d),d,\vp),d} \le \lambda_{M(d)+2} \le E(d) < \lambda_{M(d)+1,d} 
+\]
+
+Choose an $\varepsilon \in (E(d),\infty)$ such that $i(\varepsilon,d,\vp) = i(E(d),d,\vp) - 1$.  It follows from \eqref{eq:lambda_K4} that
+\[
+\lambda_{i(\varepsilon,d,\vp)} \le \varepsilon < E(d) \le \lambda_{i(\varepsilon,d,\vp)} + 1
+\]
+
+
+Note that, for any $\delta>0$,
+\[
+\lambda_{\lfloor C_{\vp}\, T((E(d) + \delta)^{-1},d,\vp)\rfloor +1} \le E(d) + \delta, 
+\]
+\peter{Furthermore, define
+\[
+i (E(d),d,\vp):=\lim_{\delta\to 0}\, i (E(d)+\delta,d,\vp)
+= \lim_{\delta\to 0}\, \lfloor C_{\vp}\, T((E(d) + \delta)^{-1},d,\vp)\rfloor +1. 
+\]
+Note that, for any $\delta>0$,
+\[
+\lambda_{\lfloor C_{\vp}\, T((E(d) + \delta)^{-1},d,\vp)\rfloor +1} \le E(d) + \delta, 
+\]
+and therefore, for $\delta\to 0$, we obtain
+\[
+\lambda_{i (E(d),d,\vp)} \le E(d). 
+\]
+On the other hand, by definition of $M(d)$, $M(d)$ is minimal such that 
+\[
+\lambda_{M(d)+2}\le E(d).
+\]
+This implies that 
+\[
+M(d) < M(d) +2 \le i (E(d),d,\vp).
+\]
+
+}
+
+
+
+
+For $\varepsilon$ taking on all \peter{values in $(E(d),\infty)$}, $i(\varepsilon,d,\vp)$ takes on all values 
+\peter{in 
+\[
+I_{E(d),d}:=\{i(\infty,d,\vp),\ldots, i(E(d),d,\vp)\}
+\]
+} 
+so
+\[
+i\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1, \qquad \peter{\forall i\in I_{E(d),d}},  \ d \in \naturals.
+\]
+
+
+
+
+This implies via our technical assumption \eqref{eq:ptauassume} that for any $\tau > 1$,
+\[
+	K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},d,\tau \vp) \ge
+	[T(\lambda_{i,d}^{-1},d, \vp)]^\tau
+	\ge
+	\left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad  \peter{\forall i\in I_{E(d),d}},  \ d \in \naturals,
+ \]
+ and this implies
+ \[
+	 \frac{1}{T (\lambda_{i,d}^{-1},d,\tau \vp)} \le
+	\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad  \peter{\forall i\in 
+ \{i(\infty,d,\vp)+1,\ldots, M(d)\}},  \ d \in \naturals.
+\]
+
+Let $\vp' = \tau \vp$. \peter{Like in the proof of Theorem \ref{thm_main_tract2}, we note that $i(\infty,d,\vp) 
+\ge i(\infty,d,\vp')$. Furthermore, we also have 
+$M(d)\le i(E(d),d,\vp)\le i(E(d),d,\vp')$. Thus,}
+summing both sides of the latter inequality over \peter{$\{i(\infty,d,\vp')+1,\ldots, M(d)\} $} it follows that
 \begin{equation*}
-	\sup_{d\in\naturals} \, \, \sum_{i=i (\infty,d,\vp')+1}^\infty \frac{1}{T (\lambda_{i,d}^{-1},d,\vp')}
+	\sup_{d\in\naturals} \, \, \sum_{\peter{i=i(\infty,d,\vp')+1}}^{\peter{M(d)}} \frac{1}{T (\lambda_{i,d}^{-1},d,\vp')}
 	 \le  K_{\vp,\tau}\, C_{\vp}^\tau
-	\sum_{i=2}^\infty \frac{1}{(i-1)^\tau} \\
+	\sum_{i=2}^{\infty} \frac{1}{(i-1)^\tau} \\
 	 \le  K_{\vp,\tau}\, C_{\vp}^\tau
 	\zeta (\tau)  < \infty,
 \end{equation*}
 where $\zeta$ denotes the Riemann zeta function.
+
+\peter{[WHAT REMAINS TO BE DONE (HOPEFULLY NOT HARD): check that the summation range above is not empty.]}
+
 
 
 Note now that, for any $d\in\naturals$,
@@ -950,7 +1057,7 @@ Note now that, for any $d\in\naturals$,
 \end{align*}
 For this choice of $L_{\vp'}$ we have
 \[
-\sup_{d\in\naturals}\,\, \sum_{i=\lceil L(\vp') T(0,d,\vp')\rceil}^\infty \frac{1}{T(\lambda_{i,d}^{-1},d, \vp')}
+\sup_{d\in\naturals}\,\, \sum_{i=\lceil L(\vp') T(0,d,\vp')\rceil}^{\peter{M(d)}} \frac{1}{T(\lambda_{i,d}^{-1},d, \vp')}
 \le
 \sup_{d\in\naturals} \, \, \sum_{i=i (\infty,d,\vp')+1}^\infty \frac{1}{T (\lambda_{i,d}^{-1},d,\vp')} <
 \infty.
