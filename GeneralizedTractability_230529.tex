@@ -139,7 +139,8 @@ A tractability function, $T$ is a function of simple form that provides an upper
 \label{tab:commonT}
 \end{table}
 
-A problem is defined as $T$-tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$, which is independent of $\varepsilon$ and $d$, such that
+\begin{definition}
+    A problem is defined as $T$-tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$, which is independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall \varepsilon >0, \ d \in \mathbb{N}.
 \end{equation}
@@ -148,7 +149,9 @@ $T$-tractable with parameter $\vp$ iff the complexity is independent of the dime
 \begin{equation} \label{eq:strong_tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},1,\vp) \qquad \forall \varepsilon >0 , \ d \in \mathbb{N}.
 \end{equation}
-In this article we allow $\vp$ to be a scalar or vector as the situation dictates.
+We allow $\vp$ to be a scalar or vector as the situation dictates.
+\end{definition}
+
 
 For this definition of tractability to make sense we assume that
 \begin{subequations} \label{eq:Tconditions}
@@ -176,13 +179,17 @@ If \eqref{eq:tract_def} holds for some $\vp$, it clearly holds for larger $\vp$.
 	\cp_{\textup{trct}} : = \{\vp^* : \eqref{eq:tract_def} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}, \qquad
 	\cp_{\textup{strct}} : = \{\vp^* : \eqref{eq:strong_tract_def} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}.
 \end{equation*}
-The  set of optimal parameters is defined as all of those parameters satisfying the (strong) tractability conditions that are not greater than or equal to others:
+
+\begin{definition}
+    The  set of optimal parameters is defined as all of those parameters satisfying the (strong) tractability conditions that are not greater than or equal to others:
 \begin{gather}
 	\label{eq:Poptdef}
 	\mathcal{P}_{\textup{opt}} : = \{\vp^* \in \cp_{\textup{trct}} :  \vp^* \notin [\vp,\boldsymbol{\infty}) \ \forall \vp \in  \cp_{\textup{trct}} \setminus \{\vp^*\} \}, \\
 	\label{eq:Psoptdef}
 	\mathcal{P}_{\textup{sopt}} : = \{\vp^* \in \cp_{\textup{strct}} :  \vp^* \notin [\vp,\boldsymbol{\infty}) \ \forall \vp \in  \cp_{\textup{strct}} \setminus \{\vp^*\} \}.
 \end{gather}
+\end{definition}
+
 
 In the sections below we prove necessary and sufficient conditions on tractability as generally defined in \eqref{eq:tract_def} and \eqref{eq:strong_tract_def}.  These conditions involve the boundedness of sums defined in terms of $(T(\lambda_{i,d}^{-1},\cdot, \cdot))_{i=1}^\infty$.  In practice, it may be easier to verify whether or not these conditions hold than to verify \eqref{eq:tract_def} and \eqref{eq:strong_tract_def} directly.
 
@@ -804,10 +811,12 @@ This concludes the proof of Theorem \ref{thm:subhT}.
 
 Suppose that the domain of interest $(\varepsilon^{-1},d)$ is not all of $(0,\infty) \times \naturals$ but some subset
 \begin{equation}
-    \Omega  := \{(\varepsilon^{-1},d) : \varepsilon > E(d) \ge 0, \ d \in \naturals \}, \qquad E : \naturals \to [0,\infty).
+    \Omega  := \{(\varepsilon^{-1},d) : \varepsilon > E(d), \ d \in \naturals \}, \qquad \text{where }E : \naturals \to [0,\infty).
 \end{equation}
-We then expect that the equivalent condition for (strong) tractability will be similar in form, but weaker than, the conditions in Theorems  \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}.
-A problem is \peter{strongly}
+We then expect that the equivalent conditions for (strong) tractability will be similar in form, but weaker than, the conditions in Theorems  \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}.
+
+\begin{definition}
+    A problem is strongly
 $T$-tractable with parameter $\vp$ \emph{on the restricted domain $\Omega$} iff the complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$, again independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:rest_strong_tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},1,\vp) \qquad \forall(\varepsilon^{-1},d) \in \Omega.
@@ -818,40 +827,63 @@ $T$-tractable with parameter $\vp$ \emph{on the restricted domain $\Omega$} iff 
 \begin{equation} \label{eq:rest_tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall(\varepsilon^{-1},d) \in \Omega.
 \end{equation}
+ Define the closures of the sets of parameters for which our (strong) tractability conditions hold:
+\begin{equation*}
+	\cp_{\textup{rtrct}} : = \{\vp^* : \eqref{eq:rest_tract_def} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}, \qquad
+	\cp_{\textup{rstrct}} : = \{\vp^* : \eqref{eq:rest_strong_tract_def} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}.
+\end{equation*}
+    The  set of optimal parameters is defined as all of those parameters satisfying the (strong) tractability conditions that are not greater than or equal to others:
+\begin{gather}
+	\label{eq:Poptdef}
+	\mathcal{P}_{\textup{ropt}} : = \{\vp^* \in \cp_{\textup{rtrct}} :  \vp^* \notin [\vp,\boldsymbol{\infty}) \ \forall \vp \in  \cp_{\textup{rtrct}} \setminus \{\vp^*\} \}, \\
+	\label{eq:Psoptdef}
+	\mathcal{P}_{\textup{rsopt}} : = \{\vp^* \in \cp_{\textup{rstrct}} :  \vp^* \notin [\vp,\boldsymbol{\infty}) \ \forall \vp \in  \cp_{\textup{rstrct}} \setminus \{\vp^*\} \}.
+\end{gather}
+\end{definition}
 
-Define 
+Define $M: \naturals \to \natzero \cup \{\infty\}$
 \begin{equation} \label{eq:Mddef}
     M(d) := \begin{cases}
-        \max\{n : \lambda_{n,d} > E(d)\}, & E(d) > 0, \\
+        \min\{n \in \natzero : \lambda_{n+1,d} \le E(d)\}, & E(d) > 0, \\
         \infty, & E(d) = 0.
     \end{cases}
 \end{equation}
 This means that 
 \[
-\begin{cases}
-\lambda_{1,d}\ge  \cdots \ge \lambda_{M(d),d} > E(d) \ge\lambda_{M(d)+1,d}, \quad
-(\lambda_{1,d}^{-1},d), \ldots, (\lambda^{-1}_{M(d),d},d)  \in \Omega, & E(d) > 0, \\
-\lambda_{1,d}\ge \lambda_{2,d}\ge \cdots  > 0, \quad
-(\lambda_{1,d}^{-1},d), (\lambda_{2,d}^{-1},d), \ldots \in \Omega, & E(d) = 0.
-\end{cases}
+\left \{
+\begin{array}{lll}
+&(\lambda_{1,d}^{-1},d), (\lambda_{2,d}^{-1},d), \ldots \notin \Omega, & M(d) = 0, \\
+\lambda_{1,d}\ge  \cdots \ge \lambda_{M(d),d} > E(d) \ge\lambda_{M(d)+1,d}, &
+(\lambda_{1,d}^{-1},d), \ldots, (\lambda^{-1}_{M(d),d},d)  \in \Omega, & 0 < M(d) < \infty, \\
+&
+(\lambda_{1,d}^{-1},d), (\lambda_{2,d}^{-1},d), \ldots \in \Omega, & M(d) = \infty.
+\end{array}
+\right .
 \]
 Also, for each $d \in \naturals$ define the interval 
 \begin{equation} \label{eq:hIdef}
 \hI_{d}:=\begin{cases} 
-\{1,\ldots, M(d)\}, & M(d) < \infty, \\
+\emptyset, & M(d) = 0, \\
+\{1,\ldots, M(d)\}, & 0 < M(d) < \infty, \\
 \naturals, & M(d) = \infty.
 \end{cases}
 \end{equation}
-From the definition of $M(d)$ it follows that 
+From the definition of $M(d)$ it follows that $(\lambda_{i,d}^{-1},d) \in \Omega  \iff i \in \hI_d$, and
 \[
 \comp(\varepsilon,d) \in \hI_d \qquad \forall (\varepsilon^{-1},d) \in \Omega.
 \]
+
+The equivalent conditions for (strong) $T$-tractability on a restricted domain in Theorems \ref{thm_main_rest_strong_tract} and \ref{thm_main_rest_tract} mimic the conditions given in Theorems \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}, except that the upper limits on the sums now correspond to $M(d)$ rather than $\infty$.  The proofs are a bit more delicate, but similar arguments are used.  
+
+We note that it may be possible to define $\Omega$ such that $\lambda_{1,d} > E(d)$ for all $d \in \naturals$. In this case, $M(d) = 0$ for all $d \in \naturals$, the equivalent conditions for (strong) tractability are trivially satisfied, and the zero algorithm satisfies the error tolerance.
 
 \begin{theorem}\label{thm_main_rest_strong_tract}
 Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is strongly $T$-tractable \emph{on the restricted domain $\Omega$} iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ and an integer $L_{\vp} > 0$ such that
 \begin{equation} \label{eq:strong_rest_tractiff}
      S_{\vp}:=\sup_{d \in \naturals} \sum_{i = L_{\vp}}^{M(d)} \frac{1}{T(\lambda_{i,d}^{-1},1,\vp)} < \infty.
 \end{equation}
+By convention, if $M(d) = 0$, the sum is zero.
+
 If \eqref{eq:strong_rest_tractiff} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{rstrct}} : = \{\vp^* : \eqref{eq:strong_rest_tractiff} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}$.  Then $\cp_{\textup{rstrct}} = \widetilde{\cp}_{\textup{rstrct}}$, and the set of optimal strong tractability parameters on the restricted domain is
 \[
 	\cp_{\textup{rsopt}} =
@@ -862,7 +894,7 @@ If \eqref{eq:strong_rest_tractiff} holds for some $\vp$, let  $\widetilde{\cp}_{
 
 \begin{proof}
 \textbf{Sufficient condition:}\newline
-We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.  Fix any $\varepsilon > 0$ and any $d \in \naturals$.
+Following the argument for the sufficient condition in Theorem \ref{thm_main_strong_tract2} it follows that for all $d' \in \naturals$ and integers $n$ and $N$ with $1 \le N \le n \le M(d)$
 
 Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d',\vp)$ are non-decreasing in $i$ for any $d'\in\naturals$. In particular, for  any $N\in\naturals$ with $n\ge N$, we have
 \begin{align*}
@@ -974,7 +1006,7 @@ Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \
 
 
 
-\begin{theorem}\label{thm_main_rest_tract2}
+\begin{theorem}\label{thm_main_rest_tract}
 Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is $T$-tractable on $\Omega$ iff there exists $\vp\ge \vzero$ and a positive integer $L_{\vp}$ such that
 \begin{equation} \label{eq:rest_tractiff4}
      S_{\vp}:=\sup_{d \in \naturals}
