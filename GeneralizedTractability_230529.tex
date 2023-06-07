@@ -275,7 +275,7 @@ Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non
 Define
 \[
 i(\varepsilon,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1, \quad
-i(\infty,\vp) = \lim_{\varepsilon \to \infty}  i(\varepsilon,\vp) \ge 1 .
+i(\infty,\vp) =\lfloor C_{\vp}\, T(0,1,\vp)\rfloor +1.
 \]
 Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{i(\varepsilon,\vp),d} \le \varepsilon$.
 Note furthermore that we always have
@@ -870,6 +870,8 @@ The equivalent conditions for (strong) $T$-tractability on a restricted domain i
 
 We note that it may be possible to define $\Omega$ such that $\lambda_{1,d} > E(d)$ for all $d \in \naturals$. In this case, $M(d) = 0$ for all $d \in \naturals$, the equivalent conditions for (strong) tractability are trivially satisfied, and the zero algorithm satisfies the error tolerance.
 
+\subsection{Strong Tractability on a Restricted Domain}
+
 \begin{theorem}\label{thm_main_rest_strong_tract}
 Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is strongly $T$-tractable \emph{on the restricted domain $\Omega$} iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ and an integer $L_{\vp} > 0$ such that
 \begin{equation} \label{eq:strong_rest_tractiff}
@@ -917,7 +919,7 @@ Moreover, given that $T$ is increasing in its arguments, we have the following e
  \intertext{
  This last statement holds for all $N \le M(d)$ because $n \ge N$ automatically in the expression above.  Thus,}
  \comp(\varepsilon,d)
-	& \le  T(\varepsilon^{-1},d',\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},d',\vp)}  +  \sum_{i=N}^{M(d)} \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \Biggr] \quad \forall  d',\ 1 \le N \le M(d). \label{eq:compUP}
+	& \le  T(\varepsilon^{-1},d',\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},d',\vp)}  +  \sum_{i=N}^{M(d)} \frac{1}{T(\lambda_{i, d}^{-1},d',\vp)} \Biggr] \quad \forall  d',\ 1 \le N \le M(d). \label{eq:compUP_rest}
 \end{align}
 
 Now we take this upper bound further, specializing to the case of $d'=1$ and $N = \min(L_{\vp},M(d))$:
@@ -946,12 +948,13 @@ Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non
 \lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1,d}\le \varepsilon \qquad \forall \varepsilon > E(d), \ d \in \mathbb{N}.
 \end{equation}
 
-For $(\varepsilon^{-1}, d) \in \Omega$, define
+For $(\varepsilon^{-1}, d) \in \Omega$, define the positve integers
 \[
 i(\varepsilon,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1, \quad
-i(\infty,\vp) = \lim_{\varepsilon \to \infty}  i(\varepsilon,\vp) \ge 1 . 
+i(\infty,\vp) =  \lfloor C_{\vp}\, T(0,1,\vp)\rfloor +1 \ge 1 . 
 \]
-Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{i(\varepsilon,\vp),d} \le \varepsilon$.
+Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{i(\varepsilon,\vp),d} \le \varepsilon$
+for any  $(\varepsilon^{-1}, d) \in \Omega$.
 Note furthermore that we always have
 \[
 i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1, \qquad  \forall \varepsilon > E(d), \ d \in \mathbb{N},
@@ -959,8 +962,7 @@ i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambd
 since
 $T(\cdot,1, \vp)$ is non-decreasing.
 
-
-For $\varepsilon$ taking on all values in $(E(d),\infty)$, $i(\varepsilon,\vp)$ takes on (at least) all values 
+For $\varepsilon$ taking on all values in $(E(d),\infty)$, $i(\varepsilon,\vp)$ takes on (at least) all values in
 \[
 I_{d,\vp}:=\begin{cases} 
 \emptyset, & i(E(d),\vp) = i(\infty,\vp) \\
@@ -1018,7 +1020,7 @@ S_{\tau\vp} & = \sup_{d\in\naturals} \sum_{i = L_{\tau\vp}}^{M(d)} \frac{1}{T (\
 where $\zeta$ denotes the Riemann zeta function.
 
 \end{enumerate}
-Thus, in all cases, the assumption of strong tractability on the restricted domain implies \eqref{eq:strong_rest_tractiff} with $\vp$ replaced by $\vp' = \tau \vp$, and so we see the necessity of $\eqref{eq:strong_rest_tractiff}$.
+Thus, in all three cases, the assumption of strong tractability on the restricted domain implies \eqref{eq:strong_rest_tractiff} with $\vp$ replaced by $\vp' = \tau \vp$, and so we see the necessity of $\eqref{eq:strong_rest_tractiff}$.
 
 \bigskip
 \noindent \textbf{Optimality:} 
@@ -1029,95 +1031,59 @@ The proof of optimality is analogous to that for Theorem \ref{thm_main_strong_tr
 \noindent This concludes the proof of  Theorem \ref{thm_main_rest_strong_tract}.
 \end{proof}
 
+\subsection{Tractability on a Restricted Domain}
+
+
 The equivalent condition for tractability on a restricted domain is analogous to the conditions for tractability on an unrestricted domain and for strong tractability on a restricted domain.  The proof is analogous as well.
 
 \begin{theorem}\label{thm_main_rest_tract}
-Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is $T$-tractable on $\Omega$ iff there exists $\vp\ge \vzero$ and a positive integer $L_{\vp}$ such that
-\begin{equation} \label{eq:rest_tractiff4}
+Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is $T$-tractable on the restricted domain $\Omega$ iff there exists $\vp\ge \vzero$ and a positive integer $L_{\vp}$ such that
+\begin{equation} \label{eq:rest_tractiff}
      S_{\vp}:=\sup_{d \in \naturals}
      \sum_{i = \lceil L_{\vp}\, T(0,d,\vp) \rceil}^{M(d)} \frac{1}{T(\lambda^{-1}_{i,d},d,\vp)}< \infty.
 \end{equation}
 If \eqref{eq:rest_tractiff4} holds for some $\vp$, let $\widetilde{\cp}_{\textup{trct}} : = \{\vp^* : \eqref{eq:tractiff4} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty}) \}$.
-Then $\cp_{\textup{trct}} = \widetilde{\cp}_{\textup{trct}}$, and the set of optimal  tractability parameters is
+Then $\cp_{\textup{rtrct}} = \widetilde{\cp}_{\textup{rtrct}}$, and the set of optimal  tractability parameters is
 \[
-\cp_{\textup{opt}} =
-\{\vp^* \in \widetilde{\cp}_{\textup{trct}} :  \vp^* \notin [\widetilde{\vp},\boldsymbol{\infty}) \ \forall \widetilde{\vp}\in  \widetilde{\cp}_{\textup{trct}} \setminus \{\vp^*\} \}.
+\cp_{\textup{ropt}} =
+\{\vp^* \in \widetilde{\cp}_{\textup{rtrct}} :  \vp^* \notin [\widetilde{\vp},\boldsymbol{\infty}) \ \forall \widetilde{\vp}\in  \widetilde{\cp}_{\textup{rtrct}} \setminus \{\vp^*\} \}.
 \]
 \end{theorem}
 
 
 \begin{proof}
     \textbf{Sufficient Condition:}\\
-We adapt the argument in the proof of the sufficient condition for Theorems \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}.  Suppose that \eqref{eq:rest_tractiff4} holds for some $\vp \ge 0$. Fix any $(\varepsilon^{-1},d) \in \Omega$. 
+Fix $d$.  If $M(d) = 0$, then $\comp(\varepsilon,d) = 0 \le C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ automatically for all $\varepsilon \in [E(d), \infty)$.
 
-Define the interval
-\begin{equation} \label{eq:hIdef}
-\hI_{d}:=\begin{cases} 
-\{1,\ldots, M(d)\}, & M(d) < \infty, \\
-\naturals, & M(d) = \infty.
-\end{cases}
-\end{equation}
-Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{\cdot,d}^{-1},d,\vp)$ is non-decreasing. For any $N\in \hI_d$ and any $n \in \hI_d \setminus \{1, \ldots, N-1\}$,
-\begin{align*}
-    \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{N,d}
-    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d,\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},d,\vp)} \le \cdots \le \frac{1}{T(\lambda_{N, d}^{-1},d,\vp)} \\
-     \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d,\vp) }
-    \le &\frac{1}{n-N+1} \sum_{i=N}^n  \frac{1}{T(\lambda_{i, d}^{-1},d,\vp) }
-    \le \frac{1}{n-N+1} \sum_{i=N}^{M(d)}  \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}.
-\end{align*}
-Thus, we can conclude from the previous line that
-\begin{multline} \label{eq:implicate_a_rest}
-    n - N +1 \ge T(\varepsilon^{-1},d,\vp) \sum_{i=N}^{M(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)} \\
-   \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},d,\vp)} \le
-   \frac{1}{n-N+1} \sum_{i=N}^{M(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp) } \le \frac{1}{T(\varepsilon^{-1},d,\vp)} \\ \forall d \in \naturals, \ N \in \hI_d, \ n \in \hI_d \setminus \{1, \ldots, N-1\}.
-\end{multline}
-We note that the left side of the implication implies $n \ge N$ automatically since $n$ is an integer and $n - N +1$ is assumed to be positive.
-
-Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the information complexity via \eqref{eq:comp_def} for all $(\varepsilon^{-1},d) \in \Omega$:
-\begin{align} %\label{eq:comp_equiv}
-	\nonumber
-	\comp(\varepsilon, d) & = \min \{n \in \hI_d : \lambda_{n+1, d} \le \varepsilon\} \\
-	\nonumber
-	& = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d,\vp)}\le \frac{1}{T(\varepsilon^{-1},d,\vp) }\biggr\}\\
-	\nonumber
-	& \le  \min \biggl\{n \in \natzero : n \ge N - 1 + T(\varepsilon^{-1},d,\vp) \sum_{i=N}^{M(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)} \biggr\} \;  \forall N \in \naturals, \quad \text{by \eqref{eq:implicate_a_rest}} \\ 
-	& \le  T(\varepsilon^{-1},d,\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},d,\vp)}  +  \sum_{i=N}^{M(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)} \Biggr] \quad \forall N \in \naturals. \label{eq:compUP_rest}
-\end{align}
-
-it follows from \eqref{eq:compUP_rest} with $N = \lceil L_{\vp}\, T(0,d,\vp)\rceil$ that 
+For the case $M(d)> 0$, we utilize upper bound \eqref{eq:compUP_rest}, specializing to the case of $d'=d$ and $N = \min\left(\lceil L_{\vp}\, T(0,d,\vp)\rceil,M(d)\right)$:
 \begin{align*}
        \comp(\varepsilon,d)
-       & \le T(\varepsilon^{-1},d,\vp) \Biggl [ 
-       \frac{\lceil L_{\vp}\, T(0,d,\vp)\rceil}{T(\varepsilon^{-1},d,\vp)}  + 
-       \underbrace{\sum_{i=\lceil L_{\vp}\, T(0,d,\vp)\rceil}^{M(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} \text{ by \eqref{eq:rest_tractiff4}}}
-       \Biggr ] 
-        \quad \forall \varepsilon > 0, \ d  \in \naturals\\
-       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{L_{\vp} T(0,d,\vp)+1}{T(\varepsilon^{-1},d, \vp)} +  S_{\vp} \right]
-        \qquad \forall \varepsilon > 0, \ d  \in \naturals\\
-       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{L_{\vp} T(0,d,\vp)}{T(\varepsilon^{-1},d, \vp)}
-       + \frac{1}{T(0,1, \vp)} + S_{\vp}\right]
-       \qquad \text{by \eqref{eq:Tnondecreasing}}   \\
-       & \le T(\varepsilon^{-1},d,\vp) 
-       \underbrace{\left [  L_{\vp} + \frac{1}{T(0,1, \vp)} + S_{\vp} \right]}_{=:C_{\vp}}
-       \qquad \text{by \eqref{eq:Tnondecreasing}}  
+       & \le T(\varepsilon^{-1},d, \vp) \Biggl [ \frac{\min\left(\lceil L_{\vp}\, T(0,d,\vp)\rceil,M(d)\right)}{T(\varepsilon^{-1},d, \vp)}  + \underbrace{\sum_{i = \min\left(\lceil L_{\vp}\, T(0,d,\vp)\rceil,M(d)\right)}^{M(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} + 1/ T(\lambda_{M(d), d}^{-1},d,\vp) \text{ by \eqref{eq:strong_rest_tractiff}} }
+        \Biggr] \\
+       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{ L_{\vp}\, T(0,d,\vp)+1}{T(0,d, \vp)} + S_{\vp} + \frac{1}{T(\lambda_{M(d), d}^{-1},d,\vp)} \right]
+       \qquad \text{by \eqref{eq:Tnondecreasing}}\\
+       & \le T(\varepsilon^{-1},d,\vp) \underbrace{\left[L_{\vp} + \frac{2}{T(0,1, \vp)} + S_{\vp} \right]}_{=:C_{\vp}}
+       \qquad \text{by \eqref{eq:Tnondecreasing}}\\
+       & =  C_{\vp}T(\varepsilon^{-1},d,\vp).
 \end{align*}
-It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:rest_tractiff4}.
+This means that we have strong $T$-tractability on the restricted domain $\Omega$ via \eqref{eq:rest_tract_def}, and verifies the sufficiency of \eqref{eq:rest_tractiff}.
+
 
 \bigskip
 
 \noindent \textbf{Necessary condition:}\\
 Suppose that we have
-$T$-tractability. That is, for some $\vp \ge \vzero$, there exists a positive constant $C_{\vp}$ such that
+$T$-tractability on the restricted domain. That is, for some $\vp \ge \vzero$, there exists a positive constant $C_{\vp}$ such that
 \[
 \comp(\varepsilon,d)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall (\varepsilon^{-1}, d) \in \Omega.
 \]
 Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non-increasing, we have
 \begin{equation}\label{eq:lambda_K4}
 	\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1,d}\le \varepsilon \qquad 
- \forall (\varepsilon^{-1}, d) \in \Omega.
+ \forall \varepsilon > E(d),\ d \in \naturals.
 \end{equation}
 
-For $(\varepsilon^{-1}, d) \in \Omega$, define the integers 
+For $(\varepsilon^{-1}, d) \in \Omega$, define the positive integers 
 \[
 i (\varepsilon,d,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1, \qquad
 i (\infty,d,\vp) := \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1 \ge 1.
@@ -1126,16 +1092,16 @@ It follows by \eqref{eq:lambda_K4} that $\lambda_{i(\varepsilon,d,\vp),d} \le \v
 for any  $(\varepsilon^{-1}, d) \in \Omega$.
 Note furthermore that since $T(\cdot,d,\vp)$ is non-decreasing, we have
 \[
-i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,d,\vp),d}^{-1},d,\vp)+1, \qquad \forall (\varepsilon^{-1},d)\in\Omega.
+i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,d,\vp),d}^{-1},d,\vp)+1, \qquad \forall \varepsilon > E(d),\ d \in \naturals.
 \]
-For $\varepsilon$ taking on all values in $(E(d),\infty)$, $i(\varepsilon,d,\vp)$ takes on (at least) all values 
+For $\varepsilon$ taking on all values in $(E(d),\infty)$, $i(\varepsilon,d,\vp)$ takes on (at least) all values in
 \[
-I_{d}:=\begin{cases} 
-\{i(\infty,d,\vp),\ldots, i(E(d),d,\vp)-1\}, & E(d) > 0, \\
-\{i(\infty,d,\vp), i(\infty,d,\vp) + 1, \ldots\}, & E(d) = 0.
+I_{d,\vp}:=\begin{cases} 
+\emptyset, & i(E(d),\vp) = i(\infty,\vp) \\
+\{i(\infty,\vp),\ldots, i(E(d),\vp)-1\}, & E(d) > 0, \\
+\{i(\infty,\vp), i(\infty,\vp) + 1, \ldots\}, & E(d) = 0.
 \end{cases}
-\]
-So,
+\]So,
 \[
 i\le  C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1, \qquad \forall i\in I_{d},  \ d \in \naturals.
 \]
@@ -1202,6 +1168,70 @@ For this choice of $L_{\vp'}$ we have
 \]
 This yields \eqref{eq:tractiff4} with $\vp$ replaced by $\vp'$, so we see the necessity of $\eqref{eq:tractiff4}$.
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+For $\varepsilon$ taking on all values in $(E(d),\infty)$, $i(\varepsilon,\vp)$ takes on (at least) all values 
+\[
+I_{d,\vp}:=\begin{cases} 
+\emptyset, & i(E(d),\vp) = i(\infty,\vp) \\
+\{i(\infty,\vp),\ldots, i(E(d),\vp)-1\}, & E(d) > 0, \\
+\{i(\infty,\vp), i(\infty,\vp) + 1, \ldots\}, & E(d) = 0.
+\end{cases}
+\]
+So,
+\[
+i\le  C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1, \qquad \forall i\in I_{d,\vp},  \ d \in \naturals.
+\]
+This implies via our technical assumption \eqref{eq:ptauassume} that
+\begin{gather}
+\nonumber
+ K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},1,\tau \vp) \ge
+ [T(\lambda_{i,d}^{-1},1, \vp)]^\tau
+ \ge
+  \left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad i\in I_{d,\vp},  \ d \in \naturals, \\
+  \label{eq:rest_strong_ineq}
+ \frac{1}{T (\lambda_{i,d}^{-1},1,\tau \vp)} \le
+\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \in I_{d,\vp} \setminus\{1\}, \ d \in \naturals .
+\end{gather}
+
+
+To complete the proof, we will sum both sides of \eqref{eq:rest_strong_ineq} over the range of $i$ appearing in \eqref{eq:strong_rest_tractiff}, to establish that $S_{\tau\vp}$ is finite.  To do this we need to show that \eqref{eq:rest_strong_ineq} holds for that range.  Choose Choose $L_{\tau\vp} = i(\infty,\vp) +1 \ge 2$. There are three cases.
+\begin{enumerate}
+\renewcommand{\labelenumi}{\roman{enumi})}
+
+
+\item If $M(d) < L_{\tau\vp}$, then 
+\[
+\sum_{i = L_{\tau\vp}}^{M(d)} \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)} = 0,
+\]
+which does not affect the finiteness of $S_{\tau\vp}$.
+
+\item If $M(d) \ge L_{\tau\vp}$ and $E(d) = 0$, then $\{L_{\tau\vp},  \L_{\tau\vp} + 1, \ldots \} \subseteq I_{d,\vp} \setminus \{1\}$.  
+
+\item If $M(d) \ge L_{\tau\vp}$ and $E(d) >0$, then \eqref{eq:Mddef} and \eqref{eq:lambda_K_strong4} imply that
+\[
+\lambda_{i(E(d),\vp),d} \le \lambda_{M(d)+1,d} \le E(d) < \lambda_{M(d),d}.
+\]
+This means that $M(d) \le i(E(d),\vp)-1$.  So, $\{L_{\tau\vp}, \ldots, M(d)\} \subseteq I_{d,\vp} \setminus \{1\}$. 
+
+In both the second and third cases,
+\begin{align*}
+S_{\tau\vp} & = \sup_{d\in\naturals} \sum_{i = L_{\tau\vp}}^{M(d)} \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)}
+\le 
+\sup_{d\in\naturals} \sum_{i \in I_{d,\vp} \setminus\{1\} } \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)} \\
+&  \le  K_{\vp,\tau}\, C_{\vp}^\tau
+\sum_{i=2}^\infty \frac{1}{(i-1)^\tau}
+ \le K_{\vp,\tau}\, C_{\vp}^\tau
+\zeta (\tau) 
+ < \infty \qquad \text{by \eqref{eq:rest_strong_ineq},}
+\end{align*}
+where $\zeta$ denotes the Riemann zeta function.
+
+\end{enumerate}
+Thus, in all three cases, the assumption of strong tractability on the restricted domain implies \eqref{eq:strong_rest_tractiff} with $\vp$ replaced by $\vp' = \tau \vp$, and so we see the necessity of $\eqref{eq:strong_rest_tractiff}$.
 \bigskip
 
 \noindent \textbf{Optimality:}
