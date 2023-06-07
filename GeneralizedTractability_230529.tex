@@ -545,34 +545,36 @@ Thus, Theorem \ref{thm_main_strong_tract2} yields the following equivalent condi
 Theorem \ref{thm_main_tract2} yields the following equivalent condition for 
 separable tractability
 \[
- \sup_{d \in \naturals} \frac{1}{\psi(d,q)} \sum_{i = \lceil L_{(p,q)\psi(d,q)}\rceil}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} < \infty,
+ \sup_{d \in \naturals} \frac{1}{\psi(d,q)} \sum_{i = \lceil L_{(p,q)}\psi(d,q)\rceil}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} < \infty,
 \] for some $p,q >0$ and $L_{(p,q)}\in\naturals$.
 \end{example}
 
 \begin{example}[Non-separable tractability]
     Suppose we define the tractability function $T$ by
 \[
- T(\varepsilon^{-1},d,\vp)= \exp\{p(\phi(\varepsilon^{-1})\, \psi(d))\}
- \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp\in [0,\infty).
-\]  with non-decreasing functions $\phi : (0,\infty) \to (0,\infty)$ and $\psi : \naturals \to (0,\infty)$ and $\vp = p$. 
+ T(\varepsilon^{-1},d,p)= \exp\{p \, \phi(\varepsilon^{-1})\, \psi(d)\} = [\exp\{ \phi(\varepsilon^{-1})\}]^{p \, \psi(d)}
+ \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, p\in [0,\infty).
+\]  with non-decreasing functions $\phi : (0,\infty) \to (0,\infty)$ and $\psi : \naturals \to (0,\infty)$. 
 We say that a problem is non-separable tractable with parameter $\vp$ iff there exists a positive $C_{\vp}$ such that
 
 \[\comp(\varepsilon,d) \leq  C_{\vp}\exp\{p(\phi(\varepsilon^{-1})\psi(d))\}.\]
 
 Hence we can apply Theorem \ref{thm_main_tract2} as follows. We have the following equivalent condition for non-separable tractability
 \[
-\sup_{d\in\mathbb{N}}\frac{1}{\psi(d)}\sum_{i=Lp\,\psi(d)} \phi(\lambda_{i,d})\quad \text{for some } p \geq 0, L_p \in \naturals.
+%\sup_{d\in\mathbb{N}}\frac{1}{\psi(d)}\sum_{i=Lp\,\psi(d)} \phi(\lambda_{i,d})\quad \text{for some } p \geq 0, L_p \in \naturals.
+\sup_{d\in\mathbb{N}}\sum_{i=L_p\,\phi(0)^{p \, \psi(d)}} [\exp\{ \phi(\lambda_{i,d}^{-1})\}]^{p \, \psi(d)}\quad \text{for some } p \geq 0, L_p \in \naturals.
 \]
-We have the following special cases of non-separable tractability. \end{example}
+\end{example}
+For $\phi$ and $\psi$ of special form, the condition above can be simplified further as in the following two examples of non-separable tractability. 
 \begin{example}[Algebraic quasi-polynomial tractability] 
 
-As defined in \cite{GW11}, we say that a problem is \emph{quasi-polynomially tractable (QPT)} if there exist two constants $C$, $t > 0$, such that
+As adefined in \cite{GW11}, we say that a problem is \emph{quasi-polynomially tractable (QPT)} if there exist two constants $C$, $p > 0$, such that
 \begin{equation}\label{expqpt}
-    \comp(\varepsilon,d) \leq C\exp\{t(1+\log(\varepsilon^{-1}))(1+\log(d))\}
+    \comp(\varepsilon,d) \leq C\exp\{p(1+\log(\varepsilon^{-1}))(1+\log(d))\}
 \end{equation}
-for all $\varepsilon \in (0,1]$ and $d\in\mathbb{N}$.\\
+for all $\varepsilon \in (0,1]$ and $d\in\mathbb{N}$.
 
-\noindent Let the tractability function, $T$,
+Let the tractability function, $T$,
 be defined by
 \[
  T(\varepsilon^{-1},d,\vp)= \exp\{p(1+\log(\max\{1,\varepsilon^{-1}\}))(1+\log (d))\}  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
@@ -811,7 +813,7 @@ This concludes the proof of Theorem \ref{thm:subhT}.
 
 Suppose that the domain of interest $(\varepsilon^{-1},d)$ is not all of $(0,\infty) \times \naturals$ but some subset
 \begin{equation}
-    \Omega  := \{(\varepsilon^{-1},d) : (E(d),\infty), \ d \in \naturals \}, \qquad \text{where }E : \naturals \to [0,\infty).
+    \Omega  := \{(\varepsilon^{-1},d) : \varepsilon \in (E(d),\infty), \ d \in \naturals \}, \qquad \text{where }E : \naturals \to [0,\infty).
 \end{equation}
 We then expect that the equivalent conditions for (strong) tractability will be similar in form, but weaker than, the conditions in Theorems  \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}.
 
@@ -1122,9 +1124,9 @@ To complete the proof, we will sum both sides of \eqref{eq:rest_ineq} over the r
 
 For any $d\in\naturals$, let
 \begin{align*}
-L_{\vp'} & := \left[C_{\vp'} + \frac{2}{T(0,1,\vp')}   \right]
+L_{\vp'} & := C_{\vp'} + \frac{2}{T(0,1,\vp')},
 \intertext{and note that }
- \min(i(\infty,d,\vp'),2) & \le i(\infty,d,\vp') +1  = \lfloor C_{\vp'}\, T(0,d,\vp')\rfloor +2 \le  \left[C_{\vp'} + \frac{2}{T(0,d,\vp')}   \right]\, T(0,d,\vp')\\
+ \max(i(\infty,d,\vp'),2) & \le i(\infty,d,\vp') +1  = \lfloor C_{\vp'}\, T(0,d,\vp')\rfloor +2 \le  \left[C_{\vp'} + \frac{2}{T(0,d,\vp')}   \right]\, T(0,d,\vp')\\
  & \le  L_{\vp'}\, T(0,d,\vp')
  \le \lceil L_{\vp'} T(0,d,\vp')\rceil .
 \end{align*}
@@ -1138,7 +1140,7 @@ There are three cases.
 
 \item If $M(d) <\lceil L_{\vp'} T(0,d,\vp')\rceil$, then 
 \[
-\sum_{i = \lceil L_{\vp'} T(0,d,\vp')\rceil }^{M(d)} \frac{1}{T (\lambda_{i,d}^{-1},1, \vp')} = 0,
+\sum_{i = \lceil L_{\vp'} T(0,d,\vp')\rceil }^{M(d)} \frac{1}{T (\lambda_{i,d}^{-1},d, \vp')} = 0,
 \]
 which does not affect the finiteness of $S_{\vp'}$.
 
@@ -1179,7 +1181,7 @@ The proof of optimality is analogous to that for Theorem \ref{thm_main_tract2} a
 This concludes the proof of Theorem \ref{thm_main_tract2}.
 \end{proof}
 
-\fred{Are there cases that we can discuss where we do not have (strong) tractability, but we do have (strong) tractability on a restricted domain, such as $(0,\infty) \times \{1, \ldots, d_{\max}] \cup (\varepsilon_{\min}^{-1},\infty) \times \naturals$}
+\fred{Are there cases that we can discuss where we do not have (strong) tractability, but we do have (strong) tractability on a restricted domain, such as $(0,\infty) \times \{1, \ldots, d_{\max}] \cup (\varepsilon_{\min}^{-1},\infty) \times \naturals$?}
 
 
 
