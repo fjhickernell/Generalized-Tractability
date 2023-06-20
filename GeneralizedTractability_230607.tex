@@ -127,9 +127,9 @@ $\comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ for some consta
     \iff   \exists L_{\vp} \text{ with }
     \sup_{d \in \naturals}
      \sum_{i = \lceil L_{\vp}\, T(0,\clubsuit,\vp) \rceil}^{\spadesuit(d)} \frac{1}{T(\lambda^{-1}_{i,d},\clubsuit,\vp)}< \infty, \\
-     \clubsuit \in \{1,d\}, \ \varheartsuit(d) = \inf \{\varepsilon : (\varepsilon^{-1},d) \in \Omega \}, \ 
-     \spadesuit(d) = \begin{cases}
-        \min\{n \in \natzero : \lambda_{n+1,d} \le \varheartsuit(d) \}, &   \varheartsuit(d)< 0, \\
+     \clubsuit \in \{1,d\}, \ \varheartsuit(d) := \inf \{\varepsilon : (\varepsilon^{-1},d) \in \Omega \}, \ 
+     \spadesuit(d) := \begin{cases}
+        \min\{n \in \natzero : \lambda_{n+1,d} \le \varheartsuit(d) \}, &   \varheartsuit(d) > 0, \\
         \infty, & \varheartsuit(d) = 0.
         \end{cases}
 \end{multline}
@@ -192,12 +192,12 @@ For this definition of tractability to make sense we assume that
 \begin{equation} \label{eq:Tnondecreasing}
 	T \text{ is non-decreasing in all variables,}
 \end{equation}
-which implies that the problem is expected to be no easier by decreasing the tolerance, $\varepsilon$, or increasing the dimension, $d$. Furthermore, increasing $\vp$ does not decrease $T(\cdot, \cdot, \vp)$.  Since there are an infinite number of positive eigenvalues, it also makes sense to assume that
+which implies that the problem is expected to be no easier by decreasing the tolerance, $\varepsilon$, or increasing the dimension, $d$. (This is why we make $T$ a function of $\varepsilon^{-1}$ rather than of $\varepsilon$.) Furthermore, increasing $\vp$ does not decrease $T(\cdot, \cdot, \vp)$.  Since there are an infinite number of positive eigenvalues, it also makes sense to assume that
 \begin{equation}
 	\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d,\vp) = \infty \qquad \forall d \in \naturals, \ \vp \in [0,\infty)^s.
 \end{equation}
 Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit, which we assume will always be positive:
-\begin{equation}\label{eq:T0}	T(0,d,\vp):=\lim_{\varepsilon\to\infty}T(\varepsilon^{-1},d,\vp) \ge T(0,1,\vzero) > 0.
+\begin{equation}\label{eq:T0}	T(0,d,\vp):=\lim_{\varepsilon\to\infty}T(\varepsilon^{-1},d,\vp) = \inf_\varepsilon T(\varepsilon^{-1},d,\vp) \ge T(0,1,\vzero) > 0.
 \end{equation}
 \end{subequations}
 Finally, there is a technical assumption required for our analysis.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
@@ -485,9 +485,12 @@ Thus,  $\cp_{\textup{opt}}= \widetilde{\cp}_{\textup{opt}}$.  This concludes the
 
 \section{Examples} \label{sec:examples}
 %In this section, we illustrate Theorems \ref{thm_main_strong_tract2} and \ref{thm_main_tract2} for the types of tractability given in the table in Section \ref{sec:not}.
-In this section, we present six examples related to Theorem \ref{thm_main_strong_tract2} and Theorem \ref{thm_main_tract2} introduced in Section \ref{sec:spt}. We will continue to present examples in later sections.
+In this section, we present six examples relating to Theorem \ref{thm_main_strong_tract2} and Theorem \ref{thm_main_tract2}, both of which were introduced in Section \ref{sec:spt}, for the various types of tractability that are listed in Table \ref{tab:commonT}. In subsequent sections, we will continue to present various examples.
 
-In Section 2.2 we considered strong tractability. 
+
+%In this section, we present six examples related to Theorem \ref{thm_main_strong_tract2} and Theorem  introduced in Section \ref{sec:spt} where the types of tractability were given in the table. We will continue to present examples in later sections.
+
+The (strong) polynomial tractability for both the algebraic case and the exponential case will be first considered as follows: 
 \begin{example}[Strong algebraic polynomial tractability]
 
 Let the tractability function, $T$,
@@ -544,7 +547,7 @@ be defined by
  \sup_{d\in\naturals}\, d^{-q} \sum_{i=\lceil L_{(p,q)} d^{q}\rceil}^\infty [\min\{1,\log(1+\lambda_{i,d}\})]^p < \infty  \text{ for some } p,q \ge 0, L_{(p,q)} \in \naturals.
 \]
 \end{example}
-
+We summarize the tractability notions in the previous examples in the following example. The
 \begin{example}[(Strong) Separable tractability]
 Suppose that the tractability function is defined by
 \[
