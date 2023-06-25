@@ -14,6 +14,11 @@
 %\input{common-macros}
 %\input{common-macros2}
 
+%certain important notations for key symbols
+\newcommand{\thed}{\clubsuit}
+\newcommand{\theM}{\varheartsuit}
+\newcommand{theUB}{\spadesuit}
+
 \input{FJHDef.tex}
 
 
@@ -50,11 +55,12 @@
 \begin{document}
 
 
-\title{\fred{A Unified Treatment of Tractabilty of Approximation Problems}\\ \peter{[PETER: In view of the papers of Henryk and Michael, maybe we should think of a better title?]}}
+\title{\fred{A Unified Treatment of Tractabilty of Approximation Problems}}
 
 \author[1]{Fred J. Hickernell}
 \ead{hickernell@iit.edu}
 \author[2]{Peter Kritzer}
+\ead{peter.kritzer@oeaw.ac.at}
 \author[1]{Onyekachi Osisiogu}
 \date{\today}
 \affiliation[1]{organization={Department of Applied Mathematics, Illinois Institute of Technology},
@@ -62,12 +68,21 @@ addressline={10 West 32${}^{\text{nd}}$ Street, Room 220},
 postcode={60616},
 city={Chicago, IL},
 country={United States}}
+\affiliation[2]{organization={Johann Radon Institute for Computational and Applied Mathematics (RICAM), Austrian Academy of Sciences},
+addressline={Altenbergerstr. 69},
+postcode={4040},
+city={Linz},
+country={Austria}}
+
 
 \begin{abstract}
     A large literature specifies conditions under which the information complexity for a sequence of numerical problems defined for dimensions $1, 2, \ldots$ grows at a moderate rate, i.e., the sequence of problems is \emph{tractable}.  Here we focus on the situation where the space of available information consists of all linear functionals and the problems are defined as operator mappings between Hilbert spaces.  We unify the proofs of known tractability results and generalize a number of existing results.  These generalizations are expressed as five theorems that provide equivalent conditions for (strong) tractability in terms of sums of functions of the singular values.  
 \end{abstract}
 
 \maketitle
+
+
+
 
 \section{Introduction}
 
@@ -78,6 +93,8 @@ TODO: We need to check the relation of our work to that of Michael Gnewuch and H
 TODO: Check in how far our conditions coincide with existing conditions for less general tractability notions (polynomial tractability, etc.).
 
 \medskip
+
+TODO: We should check for consistency of the use of the $\forall$ symbol in displayed formulas. Sometimes we use it, sometimes we do not, sometimes it is preceded by a comma, sometimes not, etc. 
 
 The information complexity of a problem is the number of function data required to solve the problem within the desired error tolerance.  A problem is tractable if the information complexity does not grow too large as the dimension of the problem increases or the error threshold decreases.  There are a number of tractability results for numerical problems beginning with \cite{?}, spawning numerous articles, and filling a series of three impressive volumes \cite{NovWoz08a,NovWoz10a,NovWoz12a}.  The purpose of this article is to unify the many of these tractability results for approximation problems where all linear functional data is available.
 
@@ -98,39 +115,42 @@ The goal is to find a sequence of approximate solution operators, $\{\APP_d:\cb_
 \end{equation}
 where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals.  Note that we also allow adaptive information, i.e., the linear functionals may sequentially depend on each other.
 
-The information complexity of the problem $\SOL_d$ is given by the function $\comp:(0,\infty) \times \naturals \to \natzero$, where $\comp(\varepsilon,d)$ is the number of linear functionals required by the best algorithm to satisfy the error criterion \eqref{eq:errcrit}.
+The information complexity of the problem $\SOL_d$ is given by the function $\comp:(0,\infty) \times \naturals \to \natzero$, where $\comp(\varepsilon,d)$ is the number of linear functionals required by the best \peter{admissible} algorithm to satisfy the error criterion \eqref{eq:errcrit}.
 By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity, since $d$ is typically the number of variables for the functions in $\cf_d$.
 
 For this case where arbitrary linear functionals are allowed, the optimal solution operator is
 \[
-\APP_d(f,\varepsilon) = \sum_{i=1}^n \SOL(u_i) \ip[\cf_d]{f}{u_i},
+\APP_d(f,\varepsilon) = \sum_{i=1}^n \peter{\SOL_d(u_{i,d})} \ip[\cf_d]{f}{u_i},
 \]
 and the information complexity of our linear problem is
 \begin{equation}\label{eq:comp_def}
-\comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\}, \qquad \comp:(0,\infty) \times \naturals \to \natzero.
+\comp(\varepsilon, d) = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\}.
 \end{equation}
 
 
-The question of tractability is one of determining how fast the complexity increases as $\varepsilon$ tends to zero and/or as $d$ tends to infinity.  We want to bound the complexity in terms of a simple function, $T$, of $\varepsilon^{-1}$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding. 
+The question of tractability is one of determining how fast the \peter{information} complexity increases as $\varepsilon$ tends to zero and/or as $d$ tends to infinity.  We want to bound the complexity in terms of a simple function, $T$, of $\varepsilon^{-1}$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding. \peter{[PETER: Maybe this would be a good place to refer to the earlier work of Michael and Henryk? I will take care of it... .]}
 
 In this article, we investigate a \emph{generalized tractability function}, denoted by $T$:
 \begin{equation} \label{eq:Tspec}
     T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty).
 \end{equation}
-The conditions we require $T$ to satisfy are described in  Section \ref{sec:not}, however, the basic idea is that we we define our approximation problem to be tractable if 
-$\comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ for some constant, $C_{\vp}$, depending only on the parameter $\vp$.  In practice, we expect $T(\varepsilon^{-1},d,\vp)$ to increase mildly with increasing $\varepsilon^{-1}$ and/or $d$, however most of our theorems do not require such an assumption.
+The conditions we require $T$ to satisfy are described in  Section \ref{sec:not}, however, the basic idea is that we define our approximation problem to be tractable if 
+$\comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ for some constant, $C_{\vp}$, depending only on the parameter $\vp$.  In practice, we expect $T(\varepsilon^{-1},d,\vp)$ to increase sub-exponentially  with increasing $\varepsilon^{-1}$ and/or $d$, however most of our theorems do not require such an assumption.
 
 \Cref{thm_main_strong_tract2,thm_main_tract2,thm_main_rest_strong_tract,thm_main_rest_tract} all take the form
+
+\peter{[PETER: Not meaning to sound too negative, but I am not sure I like the notation with the symbols below. Is it possible to use something different instead?]}
+\fred{Fred: I have now given them names above in lines 18-20, so we can experiment with different symbols or letters.}
 \begin{multline}
   \exists C_{\vp} \text{ with }
-    \comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},\clubsuit,\vp) \quad \forall (\varepsilon^{-1},d) \in \Omega \\
+    \comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},\thed,\vp) \quad \forall (\varepsilon^{-1},d) \in \Omega \\
     \iff   \exists L_{\vp} \text{ with }
     \sup_{d \in \naturals}
-     \sum_{i = \lceil L_{\vp}\, T(0,\clubsuit,\vp) \rceil}^{\spadesuit(d)} \frac{1}{T(\lambda^{-1}_{i,d},\clubsuit,\vp)}< \infty, \\
-     \clubsuit \in \{1,d\}, \ \varheartsuit(d) := \inf \{\varepsilon : (\varepsilon^{-1},d) \in \Omega \}, \ 
-     \spadesuit(d) := \begin{cases}
-        \min\{n \in \natzero : \lambda_{n+1,d} \le \varheartsuit(d) \}, &   \varheartsuit(d) > 0, \\
-        \infty, & \varheartsuit(d) = 0.
+     \sum_{i = \lceil L_{\vp}\, T(0,\thed,\vp) \rceil}^{\theUB(d)} \frac{1}{T(\lambda^{-1}_{i,d},\thed,\vp)}< \infty, \\
+     \thed \in \{1,d\}, \ \theM(d) := \inf \{\varepsilon : (\varepsilon^{-1},d) \in \Omega \}, \ 
+     \theUB(d) := \begin{cases}
+        \min\{n \in \natzero : \lambda_{n+1,d} \le \theM(d) \}, &   \theM(d) > 0, \\
+        \infty, & \theM(d) = 0.
         \end{cases}
 \end{multline}
 \Cref{thm:subhT} is of similar, but not equivalent, form.
@@ -141,31 +161,31 @@ an ordering of the parameters $\vp$.}\\
 %\kachi{Throughout the article, we use the following notation.}\\
 
 
-In Section \ref{sec:spt}, we give the definitions of the considered tractability notions, in particular (strong) tractability. We consider the strong tractability when the information complexity is independent of the dimension, $d$. We then turn to tractability  when the information complexity is polynomial in $d$ and $\varepsilon^{-1}$. In Section \ref{sec:examples} we provide examples of strong(tractability) functions for both the algebraic and exponential cases. We also consider other notions of tractability such as quasi-polynomial tractability, and a generalized notion of weak tractability. In the case of the generalized weak tractability, we give the necessary and sufficient conditions on the notion of exponential tractability in Section \ref{sec:subh}. 
+In Section \ref{sec:spt}, we give the definitions of the considered tractability notions, in particular (strong) tractability. We consider strong tractability when the information complexity is independent of the dimension, $d$. We then turn to tractability  when the information complexity is polynomial in $d$ and $\varepsilon^{-1}$. In Section \ref{sec:examples} we provide examples of strong(tractability) functions for both the algebraic and exponential cases. We also consider other notions of tractability such as quasi-polynomial tractability, and a generalized notion of weak tractability. In the case of the generalized weak tractability, we give the necessary and sufficient conditions on the notion of exponential tractability in Section \ref{sec:subh}. 
 
 \section{(Strong) Tractability}\label{sec:spt}
 
 \subsection{Notation and fundamental definitions} \label{sec:not}
 Let $T$ be a function given in \eqref{eq:Tspec}.
-A tractability function, $T$ is a function of simple form that provides an upper bound on the computational complexity of a problem.  Some examples of tractability functions commonly considered are provided in Table \ref{tab:commonT}.
+A tractability function $T$ is a function of simple form that provides an upper bound on the \peter{information} complexity of a problem.  Some examples of tractability functions commonly considered are provided in Table \ref{tab:commonT}.
 
 \begin{table} 
-    \caption{Common forms of the tractability function, $T$}
+    \caption{Common forms of the tractability function, $T$. \peter{[PETER: I changed the notation below, using ``algebraic" and ``exponential" first, to be in line with the literature.]}}
 {\small
 \begin{equation*}
 	\begin{array}{r@{\quad}c@{\quad}cc}
 		\text{Tractability type} & T(\varepsilon^{-1},d,\vp)
 		& T(0,d,\vp)\\
 		\toprule
-		\text{strong polynomial algebraic} & \max(1,\varepsilon^{-p}) & 1\\
-		\text{polynomial algebraic} & \max(1,\varepsilon^{-p})d^{q} & d^{q}\\
-		\text{strong polynomial exponential} &  [\max(1,\log(1 + \varepsilon^{-1})]^p & 1\\
-		\text{polynomial exponential } &
+		\text{\peter{algebraic strong polynomial}} & \max(1,\varepsilon^{-p}) & 1\\
+		\text{\peter{algebraic polynomial}} & \max(1,\varepsilon^{-p})d^{q} & d^{q}\\
+		\text{\peter{exponential strong polynomial}} &  [\max(1,\log(1 + \varepsilon^{-1})]^p & 1\\
+		\text{\peter{exponential polynomial}} &
 		[\max(1,\log(1 + \varepsilon^{-1}))]^p  d^{q} & d^{q} \\
-        \text{quasi-polynomial algebraic} & 
+        \text{\peter{algebraic quasi-polynomial}} & 
         \exp\{p(1+\log(\max(1,\varepsilon^{-1}))(1+\log(d))\} &
         \exp\{p(1+\log(d))\}\\
-        \text{quasi-polynomial exponential} & 
+        \text{\peter{exponential quasi-polynomial}} & 
         \exp\{p(1+\log(\max\{1,\log(1+\varepsilon^{-1})\}))(1+\log(d))\} &
         \exp\{p(1+\log(d))\}
 	\end{array}
@@ -179,7 +199,7 @@ A tractability function, $T$ is a function of simple form that provides an upper
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall \varepsilon >0, \ d \in \mathbb{N}.
 \end{equation}
 A problem is \emph{strongly}
-$T$-tractable with parameter $\vp$ iff the complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$, again independent of $\varepsilon$ and $d$, such that
+$T$-tractable with parameter $\vp$ iff the \peter{information} complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$, again independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:strong_tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},1,\vp) \qquad \forall \varepsilon >0 , \ d \in \mathbb{N}.
 \end{equation}
@@ -193,7 +213,7 @@ For this definition of tractability to make sense we assume that
 	T \text{ is non-decreasing in all variables,}
 \end{equation}
 which implies that the problem is expected to be no easier by decreasing the tolerance, $\varepsilon$, or increasing the dimension, $d$. (This is why we make $T$ a function of $\varepsilon^{-1}$ rather than of $\varepsilon$.) Furthermore, increasing $\vp$ does not decrease $T(\cdot, \cdot, \vp)$.  Since there are an infinite number of positive eigenvalues, it also makes sense to assume that
-\begin{equation}
+\begin{equation}\label{eq:Tlim}
 	\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d,\vp) = \infty \qquad \forall d \in \naturals, \ \vp \in [0,\infty)^s.
 \end{equation}
 Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit, which we assume will always be positive:
@@ -251,19 +271,19 @@ If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\tex
 \textbf{Sufficient condition:}\newline
 We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.  Fix any $\varepsilon > 0$ and any $d \in \naturals$.
 
-Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},\clubsuit,\vp)$ are non-decreasing in $i$ for any $\clubsuit\in\naturals$. In particular, for  any $N\in\naturals$ with $n\ge N$, we have
+Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},\thed,\vp)$ are non-decreasing in $i$ for any $\thed\in\naturals$. In particular, for  any $N\in\naturals$ with $n\ge N$, we have
 \begin{align*}
     \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{N,d}
-    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},\clubsuit,\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},\clubsuit,\vp)} \le \cdots \le \frac{1}{T(\lambda_{N, d}^{-1},\clubsuit,\vp)} \\
-     \implies \frac{1}{T(\lambda_{n+1, d}^{-1},\clubsuit,\vp) }
-    \le &\frac{1}{n-N+1} \sum_{i=N}^n  \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp) }
-    \le \frac{1}{n-N+1} \sum_{i=N}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp)}.
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},\thed,\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},\thed,\vp)} \le \cdots \le \frac{1}{T(\lambda_{N, d}^{-1},\thed,\vp)} \\
+     \implies \frac{1}{T(\lambda_{n+1, d}^{-1},\thed,\vp) }
+    \le &\frac{1}{n-N+1} \sum_{i=N}^n  \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp) }
+    \le \frac{1}{n-N+1} \sum_{i=N}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)}.
 \end{align*}
 Thus, we can conclude from the previous line that
 \begin{multline} \label{eq:implicate_a}
-    n - N +1 \ge T(\varepsilon^{-1},\clubsuit,\vp) \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp)} \\
-   \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},\clubsuit,\vp)} \le
-   \frac{1}{n-N+1} \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp) } \le \frac{1}{T(\varepsilon^{-1},\clubsuit,\vp)} \\ \forall \clubsuit, n, N \in \naturals.
+    n - N +1 \ge T(\varepsilon^{-1},\thed,\vp) \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)} \\
+   \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},\thed,\vp)} \le
+   \frac{1}{n-N+1} \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp) } \le \frac{1}{T(\varepsilon^{-1},\thed,\vp)} \\ \forall \thed, n, N \in \naturals.
 \end{multline}
 We note that the left side of the implication implies $n \ge N$ automatically since $n$ is an integer  $n - N +1$ is assumed to be positive.
 
@@ -272,13 +292,13 @@ Moreover, given that $T$ is increasing in its arguments, we have the following e
 	\nonumber
 	\comp(\varepsilon, d) & = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
 	\nonumber
-	& = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},\clubsuit,\vp)}\le \frac{1}{T(\varepsilon^{-1},\clubsuit,\vp) }\biggr\} \qquad  \forall \clubsuit\in \naturals\\
+	& = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},\thed,\vp)}\le \frac{1}{T(\varepsilon^{-1},\thed,\vp) }\biggr\} \qquad  \forall \thed\in \naturals\\
 	\nonumber
-	& \le  \min \biggl\{n \in \natzero : n \ge N - 1 + T(\varepsilon^{-1},\clubsuit,\vp) \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp)} \biggr\} \;  \forall  \clubsuit, N \in \naturals, \quad \text{by \eqref{eq:implicate_a}} \\ 
-	& \le  T(\varepsilon^{-1},\clubsuit,\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},\clubsuit,\vp)}  +  \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp)} \Biggr] \quad \forall  \clubsuit, N \in \naturals. \label{eq:compUP}
+	& \le  \min \biggl\{n \in \natzero : n \ge N - 1 + T(\varepsilon^{-1},\thed,\vp) \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)} \biggr\} \;  \forall  \thed, N \in \naturals, \quad \text{by \eqref{eq:implicate_a}} \\ 
+	& \le  T(\varepsilon^{-1},\thed,\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},\thed,\vp)}  +  \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)} \Biggr] \quad \forall  \thed, N \in \naturals. \label{eq:compUP}
 \end{align}
 
-Now we take this upper bound further, specializing to the case of $\clubsuit=1$ and $N=L_{\vp}$:
+Now we take this upper bound further, specializing to the case of $\thed=1$ and $N=L_{\vp}$:
 \begin{align*}
        \comp(\varepsilon,d)
        & \le T(\varepsilon^{-1},1, \vp) \Biggl [ \frac{L_{\vp}}{T(\varepsilon^{-1},1, \vp)}  + \underbrace{\sum_{i=L_{\vp}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }
@@ -319,11 +339,11 @@ i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambd
 since
 $T(\cdot,1, \vp)$ is non-decreasing.
 
-For $\varepsilon$ taking on all positive values, $i(\varepsilon,\vp)$ takes on all values greater than or equal to $i(\infty,\vp)$, so
+For $\varepsilon$ taking on all positive values, $i(\varepsilon,\vp)$ takes on, \peter{by \eqref{eq:Tlim},} all values greater than or equal to $i(\infty,\vp)$, so
 \[
 i\le C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1, \qquad \forall i \ge i(\infty,\vp), \ d \in \naturals.
 \]
-This implies via our technical assumption \eqref{eq:ptauassume} that
+This implies via our technical assumption \eqref{eq:ptauassume} that, \peter{for any $\tau>1$,}
 \begin{gather*}
  K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},1,\tau \vp) \ge
  [T(\lambda_{i,d}^{-1},1, \vp)]^\tau
@@ -383,9 +403,9 @@ Then $\cp_{\textup{trct}} = \widetilde{\cp}_{\textup{trct}}$, and the set of opt
 Comparing the equivalent conditions for strong tractability in \eqref{eq:strong_tractiff3} and tractability in \eqref{eq:tractiff4}, they are seen to be nearly the same.  The difference lies in the lower summation index, which is allowed to depend on $d$ for tractability, and the second argument of $T$ in the sum, which is $1$ for strong tractability, and $d$ in general.  Both of these can allow $S_{\vp}$ to be finite in Theorem \ref{thm_main_tract2}, when it may be infinite in Theorem \ref{thm_main_strong_tract2}.
 
 \begin{proof}
-    \textbf{Sufficient Condition:}\\
+    \textbf{Sufficient condition:}\\
 Suppose that \eqref{eq:tractiff4} holds for some $\vp \ge 0$. 
-By the argument in the proof of the sufficient condition for Theorem \ref{thm_main_strong_tract2}, it follows from \eqref{eq:compUP} with $\clubsuit=d$ and $N = \lceil L_{\vp}\, T(0,d,\vp)\rceil$ that 
+By the argument in the proof of the sufficient condition for Theorem \ref{thm_main_strong_tract2}, it follows from \eqref{eq:compUP} with $\thed=d$ and $N = \lceil L_{\vp}\, T(0,d,\vp)\rceil$ that 
 \begin{align*}
        \comp(\varepsilon,d)
        & \le T(\varepsilon^{-1},d,\vp) \Biggl [ 
@@ -400,7 +420,7 @@ By the argument in the proof of the sufficient condition for Theorem \ref{thm_ma
        \qquad \text{by \eqref{eq:Tnondecreasing}}   \\
        & \le T(\varepsilon^{-1},d,\vp) 
        \underbrace{\left [  L_{\vp} + \frac{1}{T(0,1, \vp)} + S_{\vp} \right]}_{=:C_{\vp}}
-       \qquad \text{by \eqref{eq:Tnondecreasing}}  
+       \qquad \text{by \eqref{eq:Tnondecreasing}} .
 \end{align*}
 It follows that we have $T$-tractability, which shows sufficiency of \eqref{eq:tractiff4}.
 
@@ -429,7 +449,7 @@ i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lam
 since
 $T(\cdot,d,\vp)$ is non-decreasing.
 
-For $\varepsilon$ taking on all positive values, $i(\varepsilon,d,\vp)$ takes on all values greater than or equal to $i(\infty,d,\vp)$, so
+For $\varepsilon$ taking on all positive values, $i(\varepsilon,d,\vp)$ takes on, \peter{by \eqref{eq:Tlim},} all values greater than or equal to $i(\infty,d,\vp)$, so
 \[
 i\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1, \qquad \forall i \ge i(\infty,d,\vp),  \ d \in \naturals.
 \]
@@ -491,17 +511,19 @@ In this section, we present six examples relating to Theorem \ref{thm_main_stron
 %In this section, we present six examples related to Theorem \ref{thm_main_strong_tract2} and Theorem  introduced in Section \ref{sec:spt} where the types of tractability were given in the table. We will continue to present examples in later sections.
 
 The (strong) polynomial tractability for both the algebraic case and the exponential case will be first considered as follows: 
-\begin{example}[Strong algebraic polynomial tractability]
+
+\begin{example}[\peter{Algebraic strong} polynomial tractability]
 
 Let the tractability function, $T$,
 be defined by
 \[
- T(\varepsilon^{-1},d,\vp)= \max\{1,\varepsilon^{-p}\}
+ T(\varepsilon^{-1},d,\vp)= \max\{1,\varepsilon^{-\peter{\vp}}\}
  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
-\]  where in this case $\vp$ is a scalar.
-Then Theorem \ref{thm_main_strong_tract2} yields the  equivalent condition for strong algebraic polynomial tractability:
+\]  
+where in this case \peter{$\vp=p$} is a scalar.
+Then Theorem \ref{thm_main_strong_tract2} yields the  equivalent condition for \peter{algebraic strong polynomial tractability}:
 \[
- \sup_{d\in\naturals} \sum_{i=L_p}^\infty (\min\{1,\lambda_{i,d}^p\}) < \infty \text{ for some } p \ge 0, L_p \in \naturals.
+ \sup_{d\in\naturals} \sum_{i=L_p}^\infty \min\{1,\lambda_{i,d}^p\} < \infty \text{ for some } p \ge 0, L_p \in \naturals.
 \]
 Furthermore, the optimal $p$ is the infimum of all $p$ for which the above condition holds.
 This essentially recovers the result in \cite[Theorem 5.1]{NovWoz08a}.
@@ -511,12 +533,12 @@ This essentially recovers the result in \cite[Theorem 5.1]{NovWoz08a}.
 Let the tractability function, $T$,
 be defined by
 \[
- T(\varepsilon^{-1},d,\vp)= \max\{1,\varepsilon^{-p}\}\, d^q
+ T(\varepsilon^{-1},d,\vp)= \max\{1,\varepsilon^{-\peter{\vp}}\}\, d^q
  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty)^2, 
 \] where in this case $\vp = (p,q)$.
 Then Theorem \ref{thm_main_tract2} yields the  equivalent condition for algebraic polynomial tractability:
 \[
- \sup_{d\in\naturals}\, d^{-q} \sum_{i=\lceil L_{(p,q)} d^{q}\rceil}^\infty (\min\{1,\lambda_{i,d}^p\})  < \infty \text{ for some } p,q \ge 0, L_{(p,q)} \in \naturals.
+ \sup_{d\in\naturals}\, d^{-q} \sum_{i=\lceil L_{(p,q)} d^{q}\rceil}^\infty \min\{1,\lambda_{i,d}^p\}  < \infty \text{ for some } p,q \ge 0, L_{(p,q)} \in \naturals.
 \]
 Furthermore, the set of optimal $(p,q)$ is a subset of
 \begin{multline*}
@@ -527,14 +549,19 @@ This essentially recovers the result on polynomial tractability in \cite[Theorem
 \end{example}
 
 
-\begin{example}[Strong exponential polynomial tractability]
+\begin{example}[\peter{Exponential strong} polynomial tractability]
 Let the tractability function, $T$,
 be defined by
 \[
- T(\varepsilon^{-1},d,\vp)= \left[\max\{1,\log(1+\varepsilon^{-1})\}\right]^p, \quad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
+ T(\varepsilon^{-1},d,\vp)= \left[\max\{1,\log(1+\varepsilon^{-1})\}\right]^{\peter{\vp}}, \quad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
 \]
-where $\vp$ is a scalar. Then Theorem \ref{thm_main_strong_tract2} yields the equivalent condition for strong exponential polynomial tractability \[
- \sup_{d\in\naturals} \sum_{i=L_{p} }^\infty (\min\{1,\log(1+\lambda_{i,d}\})^{p}  < \infty,\quad  \text{ for some } p \ge 0, L_{p} \in \naturals
+%\kachi{Alternatively:
+%\[
+%T(\varepsilon^{-1},d,\vp) = (1+\log\max\{1,\varepsilon^{-1}\})^p
+%\]}
+where \peter{$\vp=p$} is a scalar. Then Theorem \ref{thm_main_strong_tract2} yields the equivalent condition for \peter{exponential strong polynomial tractability:} 
+\[
+ \sup_{d\in\naturals} \sum_{i=L_{p} }^\infty (\min\{1,\log(1+\lambda_{i,d}\})^{p}  < \infty,\quad  \text{ for some } p \ge 0, L_{p} \in \naturals.
 \] In this case the optimal $p$ is the infimum of all $p$ for which the above condition holds.
 \end{example}
 \begin{example}[Exponential polynomial tractability]
@@ -547,7 +574,10 @@ be defined by
  \sup_{d\in\naturals}\, d^{-q} \sum_{i=\lceil L_{(p,q)} d^{q}\rceil}^\infty [\min\{1,\log(1+\lambda_{i,d}\})]^p < \infty  \text{ for some } p,q \ge 0, L_{(p,q)} \in \naturals.
 \]
 \end{example}
-We summarize the tractability notions in the previous examples in the following example. The
+
+\peter{[PETER: Are we sure that the conditions in Examples 3 and 4 are correct? And, moreover, these conditions should recover the corresponding conditions in \cite{KriWoz19a}. The conditions look different at first sight, but probably it can be shown that they are equivalent... .}
+
+In the following example, we provide a brief summary of these notions of tractability. We would like to emphasize that this example was previously known (see \cite{}). 
 \begin{example}[(Strong) Separable tractability]
 Suppose that the tractability function is defined by
 \[
@@ -558,13 +588,14 @@ with non-decreasing functions $\phi : (0,\infty) \times (0,\infty) \to (0,\infty
 
 We say that a problem is defined as $T$-separable tractable with parameter $\vp$ iff there exists a positive constant $C_{\vp}$ which does not depend on $\varepsilon$ and $d$ such that
 \[
-\comp(\varepsilon,d) \leq  C_{\vp}\,\phi(\varepsilon^{-1},p)\, \psi(d,q)\qquad \forall \varepsilon >0, \, d\in\naturals,
-\] where $\vp = (p,q)$.
+\comp(\varepsilon,d) \leq  C_{\vp} \,  \phi(\varepsilon^{-1},p)\, \psi(d,q)\qquad \forall \varepsilon >0, \, d\in\naturals.
+\]
 A problem is strongly $T$-separable tractable with parameter $\vp$ iff the complexity is independent of $d$, that is, there exists a positive constant $C_{\vp}$ which again does not depend on $\varepsilon$ and $d$ such that
 \[
-\comp(\varepsilon,d) \leq C_{\vp}\phi(\varepsilon^{-1},p)\qquad \forall \varepsilon >0, \, d\in\naturals,
-\] where $\vp = p$ is a scalar. 
-Furthermore, we assume the following as in \eqref{eq:Tconditions} and \eqref{eq:ptauassume}. We assume that
+\comp(\varepsilon,d) \leq C_{\vp}\,\phi(\varepsilon^{-1},p)\qquad \forall \varepsilon >0, \, d\in\naturals,
+\] where in this case $\vp = p$ is a scalar. 
+Furthermore, we assume the following as in \eqref{eq:Tlim}, \eqref{eq:T0}, and \eqref{eq:ptauassume}. We assume that
+
 \[
 \lim_{\varepsilon\rightarrow0}\phi(\varepsilon^{-1},p) = \infty \qquad \forall d\in\naturals, p >0.
 \] since there are an infinite number of positive eigenvalues. Furthermore, we have that $\phi(\cdot,p)$ is non-decreasing hence we define the following limit
@@ -578,24 +609,25 @@ Additionally, we have the following technical assumptions. Suppose that, for any
 
 Thus, Theorem \ref{thm_main_strong_tract2} yields the following equivalent condition for strongly $T$-separable tractability
 \begin{equation*} \label{eq:strong_tractiff}
-     \sup_{d \in \naturals} \sum_{i = L_p}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} < \infty.
+     \sup_{d \in \naturals} \sum_{i = L_p}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} < \infty,
 \end{equation*}
+for some $p>0$ and $L_p \in \naturals$. Furthermore, the optimal $p$ is also infimum of all $p$.
 Theorem \ref{thm_main_tract2} yields the following equivalent condition for 
 separable tractability
 \[
  \sup_{d \in \naturals} \frac{1}{\psi(d,q)} \sum_{i = \lceil L_{(p,q)}\psi(d,q)\rceil}^\infty \frac{1}{\phi(\lambda_{i, d}^{-1},p)} < \infty,
 \] for some $p,q >0$ and $L_{(p,q)}\in\naturals$.
 \end{example}
-
+Next, we will introduce another summarized notion of tractability. 
 \begin{example}[Non-separable tractability]
     Suppose we define the tractability function $T$ by
 \[
  T(\varepsilon^{-1},d,p)= \exp\{p \, \phi(\varepsilon^{-1})\, \psi(d)\} = [\exp\{ \phi(\varepsilon^{-1})\}]^{p \, \psi(d)}
  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, p\in [0,\infty).
 \]  with non-decreasing functions $\phi : (0,\infty) \to (0,\infty)$ and $\psi : \naturals \to (0,\infty)$. 
-We say that a problem is non-separable tractable with parameter $\vp$ iff there exists a positive $C_{\vp}$ such that
+We say that a problem is non-separable tractable with parameter $p$ iff there exists a positive $C_{p}$ such that
 
-\[\comp(\varepsilon,d) \leq  C_{\vp}\exp\{p(\phi(\varepsilon^{-1})\psi(d))\}.\]
+\[\comp(\varepsilon,d) \leq  C_{p}\exp\{p(\phi(\varepsilon^{-1})\psi(d))\}.\]
 
 Hence we can apply Theorem \ref{thm_main_tract2} as follows. We have the following equivalent condition for non-separable tractability
 \[
@@ -615,15 +647,16 @@ for all $\varepsilon \in (0,1]$ and $d\in\mathbb{N}$.
 Let the tractability function, $T$,
 be defined by
 \[
- T(\varepsilon^{-1},d,\vp)= \exp\{p(1+\log(\max\{1,\varepsilon^{-1}\}))(1+\log (d))\}  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
-\] where in this case $\vp = p$. This can be rewritten as 
+ T(\varepsilon^{-1},d,p)= \exp\{p(1+\log(\max\{1,\varepsilon^{-1}\}))(1+\log (d))\}  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, p \in [0,\infty).
+\] This can be rewritten as 
 \[
-T(\varepsilon^{-1},d,\vp) = e^p[\max\{1,\varepsilon^{-1}\}]^{p(1+\log d)}d^p
+T(\varepsilon^{-1},d,p) = e^p[\max\{1,\varepsilon^{-1}\}]^{p(1+\log d)}d^p
 \]
 Observe that the function $T$ is a function of $\max\{1,\varepsilon^{-1}\}$ and $d$ which are, polynomial or not exponential in powers of $\max\{1,\varepsilon^{-1}\}$ and $d$. Hence we can apply Theorem \ref{thm_main_tract2} as follows. We have the following equivalent condition for quasi-polynomial tractability in the algebraic case
 \[
 \sup_{d\in\mathbb{N}}\,d^{-p}\sum_{i=Lp\,d^{p}} \left(\min\{1,\lambda_{i,d}\} \right)^{p(1+\ln d)} < \infty \qquad \text{for some } p \geq 0, L_p \in \naturals.\]
 \end{example}
+Next, we will consider the exponential case as follows.
 \begin{example}[Exponential quasi-polynomial tractability]
 
 \noindent Suppose that the tractability function, $T$, is defined by
@@ -851,7 +884,7 @@ This concludes the proof of Theorem \ref{thm:subhT}.  \qed
 
 Suppose that the domain of interest $(\varepsilon^{-1},d)$ is not all of $(0,\infty) \times \naturals$ but some subset
 \begin{equation}
-    \Omega  := \{(\varepsilon^{-1},d) : \varepsilon \in (\varheartsuit(d),\infty), \ d \in \naturals \}, \qquad \text{where }E : \naturals \to [0,\infty).
+    \Omega  := \{(\varepsilon^{-1},d) : \varepsilon \in (\theM(d),\infty), \ d \in \naturals \}, \qquad \text{where }E : \naturals \to [0,\infty).
 \end{equation}
 We then expect that the equivalent conditions for (strong) tractability will be similar in form, but weaker than, the conditions in Theorems  \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}.
 
@@ -883,41 +916,41 @@ $T$-tractable with parameter $\vp$ \emph{on the restricted domain $\Omega$} iff 
 
 Define $M: \naturals \to \natzero \cup \{\infty\}$
 \begin{equation} \label{eq:Mddef}
-    \spadesuit(d) := \begin{cases}
-        \min\{n \in \natzero : \lambda_{n+1,d} \le \varheartsuit(d)\}, & \varheartsuit(d) > 0, \\
-        \infty, & \varheartsuit(d) = 0.
+    \theUB(d) := \begin{cases}
+        \min\{n \in \natzero : \lambda_{n+1,d} \le \theM(d)\}, & \theM(d) > 0, \\
+        \infty, & \theM(d) = 0.
     \end{cases}
 \end{equation}
 Also, for each $d \in \naturals$ define the interval 
 \begin{equation} \label{eq:hIdef}
 \hI_{d}:=\begin{cases} 
-\emptyset, & \spadesuit(d) = 0, \\
-\{1,\ldots, \spadesuit(d)\}, & 0 < \spadesuit(d) < \infty, \\
-\naturals, & \spadesuit(d) = \infty.
+\emptyset, & \theUB(d) = 0, \\
+\{1,\ldots, \theUB(d)\}, & 0 < \theUB(d) < \infty, \\
+\naturals, & \theUB(d) = \infty.
 \end{cases}
 \end{equation}
-From the definition of $\spadesuit(d)$ it follows that $(\lambda_{i,d}^{-1},d) \in \Omega  \iff i \in \hI_d$, and
+From the definition of $\theUB(d)$ it follows that $(\lambda_{i,d}^{-1},d) \in \Omega  \iff i \in \hI_d$, and
 \begin{equation} \label{eq:comprestr}
   \comp(\varepsilon,d) \begin{cases}
-= 0, & \spadesuit(d) = 0, \\
-    \in \hI_d, & \spadesuit(d) > 0, 
+= 0, & \theUB(d) = 0, \\
+    \in \hI_d, & \theUB(d) > 0, 
 \end{cases}
 \qquad \forall (\varepsilon^{-1},d) \in \Omega.
 \end{equation}
 
 
-The equivalent conditions for (strong) $T$-tractability on a restricted domain in Theorems \ref{thm_main_rest_strong_tract} and \ref{thm_main_rest_tract} mimic the conditions given in Theorems \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}, except that the upper limits on the sums now correspond to $\spadesuit(d)$ rather than $\infty$.  The proofs are a bit more delicate, but similar arguments are used.  
+The equivalent conditions for (strong) $T$-tractability on a restricted domain in Theorems \ref{thm_main_rest_strong_tract} and \ref{thm_main_rest_tract} mimic the conditions given in Theorems \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}, except that the upper limits on the sums now correspond to $\theUB(d)$ rather than $\infty$.  The proofs are a bit more delicate, but similar arguments are used.  
 
-We note that it may be possible to define $\Omega$ such that $\lambda_{1,d} > \varheartsuit(d)$ for all $d \in \naturals$. In this case, $\spadesuit(d) = 0$ for all $d \in \naturals$, the equivalent conditions for (strong) tractability are trivially satisfied, and the zero algorithm satisfies the error tolerance.
+We note that it may be possible to define $\Omega$ such that $\lambda_{1,d} > \theM(d)$ for all $d \in \naturals$. In this case, $\theUB(d) = 0$ for all $d \in \naturals$, the equivalent conditions for (strong) tractability are trivially satisfied, and the zero algorithm satisfies the error tolerance.
 
 \subsection{Strong Tractability on a Restricted Domain}
 
 \begin{theorem}\label{thm_main_rest_strong_tract}
 Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is strongly $T$-tractable \emph{on the restricted domain $\Omega$} iff there exists $\vp \in [\vzero, \boldsymbol{\infty})$ and an integer $L_{\vp} > 0$ such that
 \begin{equation} \label{eq:strong_rest_tractiff}
-     S_{\vp}:=\sup_{d \in \naturals} \sum_{i = L_{\vp}}^{\spadesuit(d)} \frac{1}{T(\lambda_{i,d}^{-1},1,\vp)} < \infty.
+     S_{\vp}:=\sup_{d \in \naturals} \sum_{i = L_{\vp}}^{\theUB(d)} \frac{1}{T(\lambda_{i,d}^{-1},1,\vp)} < \infty.
 \end{equation}
-By convention, if $\spadesuit(d) < L_{\vp}$, the sum is zero.
+By convention, if $\theUB(d) < L_{\vp}$, the sum is zero.
 
 If \eqref{eq:strong_rest_tractiff} holds for some $\vp$, let  $\widetilde{\cp}_{\textup{rstrct}} : = \{\vp^* : \eqref{eq:strong_rest_tractiff} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}$.  Then $\cp_{\textup{rstrct}} = \widetilde{\cp}_{\textup{rstrct}}$, and the set of optimal strong tractability parameters on the restricted domain is
 \[
@@ -929,21 +962,21 @@ If \eqref{eq:strong_rest_tractiff} holds for some $\vp$, let  $\widetilde{\cp}_{
 
 \begin{proof}
 \textbf{Sufficient condition:}\newline
-Fix $d$.  If $\spadesuit(d) = 0$, then $\comp(\varepsilon,d) = 0 \le C_{\vp}\, T(\varepsilon^{-1},1,\vp)$ automatically for all $\varepsilon \in [\varheartsuit(d), \infty)$.
+Fix $d$.  If $\theUB(d) = 0$, then $\comp(\varepsilon,d) = 0 \le C_{\vp}\, T(\varepsilon^{-1},1,\vp)$ automatically for all $\varepsilon \in [\theM(d), \infty)$.
 
-For the case $\spadesuit(d)> 0$, following the argument for the sufficient condition in Theorem \ref{thm_main_strong_tract2} it follows that for all $\clubsuit \in \naturals$ and integers $n, N \in \hI_d$  with $N \le n$, we have
+For the case $\theUB(d)> 0$, following the argument for the sufficient condition in Theorem \ref{thm_main_strong_tract2} it follows that for all $\thed \in \naturals$ and integers $n, N \in \hI_d$  with $N \le n$, we have
 \begin{align*}
     \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{N,d}
-    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},\clubsuit,\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},\clubsuit,\vp)} \le \cdots \le \frac{1}{T(\lambda_{N, d}^{-1},\clubsuit,\vp)} \\
-     \implies \frac{1}{T(\lambda_{n+1, d}^{-1},\clubsuit,\vp) }
-    \le &\frac{1}{n-N+1} \sum_{i=N}^n  \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp) }
-    \le \frac{1}{n-N+1} \sum_{i=N}^{\spadesuit(d)}  \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp)}.
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},\thed,\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},\thed,\vp)} \le \cdots \le \frac{1}{T(\lambda_{N, d}^{-1},\thed,\vp)} \\
+     \implies \frac{1}{T(\lambda_{n+1, d}^{-1},\thed,\vp) }
+    \le &\frac{1}{n-N+1} \sum_{i=N}^n  \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp) }
+    \le \frac{1}{n-N+1} \sum_{i=N}^{\theUB(d)}  \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)}.
 \end{align*}
 Thus, we can conclude from the previous line that
 \begin{multline} \label{eq:implicate_a_rest}
-    n - N +1 \ge T(\varepsilon^{-1},\clubsuit,\vp) \sum_{i=N}^{\spadesuit(d)} \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp)} \\
-   \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},\clubsuit,\vp)} \le
-   \frac{1}{n-N+1} \sum_{i=N}^{\spadesuit(d)} \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp) } \le \frac{1}{T(\varepsilon^{-1},\clubsuit,\vp)} \\ \forall \clubsuit \in \naturals,\  n, N \in \hI_d,   \ N \le n.
+    n - N +1 \ge T(\varepsilon^{-1},\thed,\vp) \sum_{i=N}^{\theUB(d)} \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)} \\
+   \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},\thed,\vp)} \le
+   \frac{1}{n-N+1} \sum_{i=N}^{\theUB(d)} \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp) } \le \frac{1}{T(\varepsilon^{-1},\thed,\vp)} \\ \forall \thed \in \naturals,\  n, N \in \hI_d,   \ N \le n.
 \end{multline}
 
 Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity via \eqref{eq:comp_def}:
@@ -951,21 +984,21 @@ Moreover, given that $T$ is increasing in its arguments, we have the following e
 	\nonumber
 	\comp(\varepsilon, d) & = \min \{n \in \hI_d : \lambda_{n+1, d} \le \varepsilon\} \qquad \text{by \eqref{eq:comprestr}} \\
 	\nonumber
-	& = \min \biggl\{n \in \hI_d : \frac{1}{T(\lambda_{n+1,d}^{-1},\clubsuit,\vp)}\le \frac{1}{T(\varepsilon^{-1},\clubsuit,\vp) }\biggr\} \qquad  \forall \clubsuit\in \naturals\\
+	& = \min \biggl\{n \in \hI_d : \frac{1}{T(\lambda_{n+1,d}^{-1},\thed,\vp)}\le \frac{1}{T(\varepsilon^{-1},\thed,\vp) }\biggr\} \qquad  \forall \thed\in \naturals\\
 	\nonumber
-	& \le  \min \biggl\{n \in \hI_d : n \ge N - 1 + T(\varepsilon^{-1},\clubsuit,\vp) \sum_{i=N}^{\spadesuit(d)} \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp)} \biggr\} \;  \forall  \clubsuit, \ 1 \le N \le \spadesuit(d) \\
+	& \le  \min \biggl\{n \in \hI_d : n \ge N - 1 + T(\varepsilon^{-1},\thed,\vp) \sum_{i=N}^{\theUB(d)} \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)} \biggr\} \;  \forall  \thed, \ 1 \le N \le \theUB(d) \\
  \nonumber
  & \hspace{20ex}\text{by \eqref{eq:implicate_a_rest}.} 
  \intertext{
- This last statement holds for all $N \le \spadesuit(d)$ because $n \ge N$ automatically in the expression above.  Thus,}
+ This last statement holds for all $N \le \theUB(d)$ because $n \ge N$ automatically in the expression above.  Thus,}
  \comp(\varepsilon,d)
-	& \le  T(\varepsilon^{-1},\clubsuit,\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},\clubsuit,\vp)}  +  \sum_{i=N}^{\spadesuit(d)} \frac{1}{T(\lambda_{i, d}^{-1},\clubsuit,\vp)} \Biggr] \quad \forall  \clubsuit,\ 1 \le N \le \spadesuit(d). \label{eq:compUP_rest}
+	& \le  T(\varepsilon^{-1},\thed,\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},\thed,\vp)}  +  \sum_{i=N}^{\theUB(d)} \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)} \Biggr] \quad \forall  \thed,\ 1 \le N \le \theUB(d). \label{eq:compUP_rest}
 \end{align}
 
-Now we take this upper bound further, specializing to the case of $\clubsuit=1$ and $N = \min(L_{\vp},\spadesuit(d))$:
+Now we take this upper bound further, specializing to the case of $\thed=1$ and $N = \min(L_{\vp},\theUB(d))$:
 \begin{align*}
        \comp(\varepsilon,d)
-       & \le T(\varepsilon^{-1},1, \vp) \Biggl [ \frac{\min(L_{\vp},\spadesuit(d))}{T(\varepsilon^{-1},1, \vp)}  + \underbrace{\sum_{i = \min(L_{\vp},\spadesuit(d))}^{\spadesuit(d)} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} + 1/ T(\lambda_{\spadesuit(d), d}^{-1},1,\vp) \text{ by \eqref{eq:strong_rest_tractiff}} }
+       & \le T(\varepsilon^{-1},1, \vp) \Biggl [ \frac{\min(L_{\vp},\theUB(d))}{T(\varepsilon^{-1},1, \vp)}  + \underbrace{\sum_{i = \min(L_{\vp},\theUB(d))}^{\theUB(d)} \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} + 1/ T(\lambda_{\theUB(d), d}^{-1},1,\vp) \text{ by \eqref{eq:strong_rest_tractiff}} }
         \Biggr] \\
        & \le T(\varepsilon^{-1},1,\vp) \underbrace{\left[\frac{L_{\vp}+1}{T(0,1, \vp)} + S_{\vp} \right]}_{=:C_{\vp}}
        \qquad \text{by \eqref{eq:Tnondecreasing}}\\
@@ -985,7 +1018,7 @@ $T$-tractability on the restricted domain $\Omega$ as defined in \eqref{eq:rest_
 \]
 Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non-increasing, we have
 \begin{equation}\label{eq:lambda_K_strong4}
-\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1,d}\le \varepsilon \qquad \forall \varepsilon > \varheartsuit(d), \ d \in \mathbb{N}.
+\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1,d}\le \varepsilon \qquad \forall \varepsilon > \theM(d), \ d \in \mathbb{N}.
 \end{equation}
 
 For $(\varepsilon^{-1}, d) \in \Omega$, define the positve integers
@@ -997,17 +1030,17 @@ Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{i(\varepsilon,\vp
 for any  $(\varepsilon^{-1}, d) \in \Omega$.
 Note furthermore that we always have
 \[
-i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1, \qquad  \forall \varepsilon > \varheartsuit(d), \ d \in \mathbb{N},
+i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1, \qquad  \forall \varepsilon > \theM(d), \ d \in \mathbb{N},
 \]
 since
 $T(\cdot,1, \vp)$ is non-decreasing.
 
-For $\varepsilon$ taking on all values in $(\varheartsuit(d),\infty)$, $i(\varepsilon,\vp)$ takes on (at least) all values in
+For $\varepsilon$ taking on all values in $(\theM(d),\infty)$, $i(\varepsilon,\vp)$ takes on (at least) all values in
 \[
 I_{d,\vp}:=\begin{cases} 
-\emptyset, & i(\varheartsuit(d),\vp) = i(\infty,\vp) \\
-\{i(\infty,\vp),\ldots, i(\varheartsuit(d),\vp)-1\}, & \varheartsuit(d) > 0, \\
-\{i(\infty,\vp), i(\infty,\vp) + 1, \ldots\}, & \varheartsuit(d) = 0.
+\emptyset, & i(\theM(d),\vp) = i(\infty,\vp) \\
+\{i(\infty,\vp),\ldots, i(\theM(d),\vp)-1\}, & \theM(d) > 0, \\
+\{i(\infty,\vp), i(\infty,\vp) + 1, \ldots\}, & \theM(d) = 0.
 \end{cases}
 \]
 So,
@@ -1032,23 +1065,23 @@ To complete the proof, we will sum both sides of \eqref{eq:rest_strong_ineq} ove
 \renewcommand{\labelenumi}{\roman{enumi})}
 
 
-\item If $\spadesuit(d) < L_{\tau\vp}$, then 
+\item If $\theUB(d) < L_{\tau\vp}$, then 
 \[
-\sum_{i = L_{\tau\vp}}^{\spadesuit(d)} \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)} = 0,
+\sum_{i = L_{\tau\vp}}^{\theUB(d)} \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)} = 0,
 \]
 which does not affect the finiteness of $S_{\tau\vp}$.
 
-\item If $\spadesuit(d) \ge L_{\tau\vp}$ and $\varheartsuit(d) = 0$, then $\{L_{\tau\vp},  L_{\tau\vp} + 1, \ldots \} \subseteq I_{d,\vp} \setminus \{1\}$.  
+\item If $\theUB(d) \ge L_{\tau\vp}$ and $\theM(d) = 0$, then $\{L_{\tau\vp},  L_{\tau\vp} + 1, \ldots \} \subseteq I_{d,\vp} \setminus \{1\}$.  
 
-\item If $\spadesuit(d) \ge L_{\tau\vp}$ and $\varheartsuit(d) >0$, then \eqref{eq:Mddef} and \eqref{eq:lambda_K_strong4} imply that
+\item If $\theUB(d) \ge L_{\tau\vp}$ and $\theM(d) >0$, then \eqref{eq:Mddef} and \eqref{eq:lambda_K_strong4} imply that
 \[
-\lambda_{i(\varheartsuit(d),\vp),d} \le \lambda_{\spadesuit(d)+1,d} \le \varheartsuit(d) < \lambda_{\spadesuit(d),d}.
+\lambda_{i(\theM(d),\vp),d} \le \lambda_{\theUB(d)+1,d} \le \theM(d) < \lambda_{\theUB(d),d}.
 \]
-This means that $\spadesuit(d) \le i(\varheartsuit(d),\vp)-1$.  So, $\{L_{\tau\vp}, \ldots, \spadesuit(d)\} \subseteq I_{d,\vp} \setminus \{1\}$. 
+This means that $\theUB(d) \le i(\theM(d),\vp)-1$.  So, $\{L_{\tau\vp}, \ldots, \theUB(d)\} \subseteq I_{d,\vp} \setminus \{1\}$. 
 
 In both the second and third cases,
 \begin{align*}
-S_{\tau\vp} & = \sup_{d\in\naturals} \sum_{i = L_{\tau\vp}}^{\spadesuit(d)} \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)}
+S_{\tau\vp} & = \sup_{d\in\naturals} \sum_{i = L_{\tau\vp}}^{\theUB(d)} \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)}
 \le 
 \sup_{d\in\naturals} \sum_{i \in I_{d,\vp} \setminus\{1\} } \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)} \\
 &  \le  K_{\vp,\tau}\, C_{\vp}^\tau
@@ -1080,7 +1113,7 @@ The equivalent condition for tractability on a restricted domain is analogous to
 Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is $T$-tractable on the restricted domain $\Omega$ iff there exists $\vp\ge \vzero$ and a positive constant $L_{\vp}$ such that
 \begin{equation} \label{eq:rest_tractiff}
      S_{\vp}:=\sup_{d \in \naturals}
-     \sum_{i = \lceil L_{\vp}\, T(0,d,\vp) \rceil}^{\spadesuit(d)} \frac{1}{T(\lambda^{-1}_{i,d},d,\vp)}< \infty.
+     \sum_{i = \lceil L_{\vp}\, T(0,d,\vp) \rceil}^{\theUB(d)} \frac{1}{T(\lambda^{-1}_{i,d},d,\vp)}< \infty.
 \end{equation}
 If \eqref{eq:rest_tractiff} holds for some $\vp$, let $\widetilde{\cp}_{\textup{trct}} : = \{\vp^* : \eqref{eq:tractiff4} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty}) \}$.
 Then $\cp_{\textup{rtrct}} = \widetilde{\cp}_{\textup{rtrct}}$, and the set of optimal  tractability parameters is
@@ -1093,14 +1126,14 @@ Then $\cp_{\textup{rtrct}} = \widetilde{\cp}_{\textup{rtrct}}$, and the set of o
 
 \begin{proof}
     \textbf{Sufficient Condition:}\\
-Fix $d$.  If $\spadesuit(d) = 0$, then $\comp(\varepsilon,d) = 0 \le C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ automatically for all $\varepsilon \in [\varheartsuit(d), \infty)$.
+Fix $d$.  If $\theUB(d) = 0$, then $\comp(\varepsilon,d) = 0 \le C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ automatically for all $\varepsilon \in [\theM(d), \infty)$.
 
-For the case $\spadesuit(d)> 0$, we utilize upper bound \eqref{eq:compUP_rest}, specializing to the case of $\clubsuit=d$ and $N = \min\left(\lceil L_{\vp}\, T(0,d,\vp)\rceil,\spadesuit(d)\right)$:
+For the case $\theUB(d)> 0$, we utilize upper bound \eqref{eq:compUP_rest}, specializing to the case of $\thed=d$ and $N = \min\left(\lceil L_{\vp}\, T(0,d,\vp)\rceil,\theUB(d)\right)$:
 \begin{align*}
        \comp(\varepsilon,d)
-       & \le T(\varepsilon^{-1},d, \vp) \Biggl [ \frac{\min\left(\lceil L_{\vp}\, T(0,d,\vp)\rceil,\spadesuit(d)\right)}{T(\varepsilon^{-1},d, \vp)}  + \underbrace{\sum_{i = \min\left(\lceil L_{\vp}\, T(0,d,\vp)\rceil,\spadesuit(d)\right)}^{\spadesuit(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} + 1/ T(\lambda_{\spadesuit(d), d}^{-1},d,\vp) \text{ by \eqref{eq:strong_rest_tractiff}} }
+       & \le T(\varepsilon^{-1},d, \vp) \Biggl [ \frac{\min\left(\lceil L_{\vp}\, T(0,d,\vp)\rceil,\theUB(d)\right)}{T(\varepsilon^{-1},d, \vp)}  + \underbrace{\sum_{i = \min\left(\lceil L_{\vp}\, T(0,d,\vp)\rceil,\theUB(d)\right)}^{\theUB(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} + 1/ T(\lambda_{\theUB(d), d}^{-1},d,\vp) \text{ by \eqref{eq:strong_rest_tractiff}} }
         \Biggr] \\
-       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{ L_{\vp}\, T(0,d,\vp)+1}{T(0,d, \vp)} + S_{\vp} + \frac{1}{T(\lambda_{\spadesuit(d), d}^{-1},d,\vp)} \right]
+       & \le T(\varepsilon^{-1},d,\vp)\left[\frac{ L_{\vp}\, T(0,d,\vp)+1}{T(0,d, \vp)} + S_{\vp} + \frac{1}{T(\lambda_{\theUB(d), d}^{-1},d,\vp)} \right]
        \qquad \text{by \eqref{eq:Tnondecreasing}}\\
        & \le T(\varepsilon^{-1},d,\vp) \underbrace{\left[L_{\vp} + \frac{2}{T(0,1, \vp)} + S_{\vp} \right]}_{=:C_{\vp}}
        \qquad \text{by \eqref{eq:Tnondecreasing}}\\
@@ -1120,7 +1153,7 @@ $T$-tractability on the restricted domain. That is, for some $\vp \ge \vzero$, t
 Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non-increasing, we have
 \begin{equation}\label{eq:rest_lambda_K4}
 	\lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},d,\vp)\rfloor +1,d}\le \varepsilon \qquad 
- \forall \varepsilon > \varheartsuit(d),\ d \in \naturals.
+ \forall \varepsilon > \theM(d),\ d \in \naturals.
 \end{equation}
 
 For $(\varepsilon^{-1}, d) \in \Omega$, define the positive integers 
@@ -1132,14 +1165,14 @@ It follows by \eqref{eq:rest_lambda_K4} that $\lambda_{i(\varepsilon,d,\vp),d} \
 for any  $(\varepsilon^{-1}, d) \in \Omega$.
 Note furthermore that since $T(\cdot,d,\vp)$ is non-decreasing, we have
 \[
-i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,d,\vp),d}^{-1},d,\vp)+1, \qquad \forall \varepsilon > \varheartsuit(d),\ d \in \naturals.
+i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,d,\vp),d}^{-1},d,\vp)+1, \qquad \forall \varepsilon > \theM(d),\ d \in \naturals.
 \]
-For $\varepsilon$ taking on all values in $(\varheartsuit(d),\infty)$, $i(\varepsilon,d,\vp)$ takes on (at least) all values in
+For $\varepsilon$ taking on all values in $(\theM(d),\infty)$, $i(\varepsilon,d,\vp)$ takes on (at least) all values in
 \[
 I_{d,\vp}:=\begin{cases} 
-\emptyset, & i(\varheartsuit(d),d,\vp) = i(\infty,d,\vp), \\
-\{i(\infty,d,\vp),\ldots, i(\varheartsuit(d),d,\vp)-1\}, & \varheartsuit(d) > 0, \\
-\{i(\infty,d,\vp), i(\infty,d,\vp) + 1, \ldots\}, & \varheartsuit(d) = 0.
+\emptyset, & i(\theM(d),d,\vp) = i(\infty,d,\vp), \\
+\{i(\infty,d,\vp),\ldots, i(\theM(d),d,\vp)-1\}, & \theM(d) > 0, \\
+\{i(\infty,d,\vp), i(\infty,d,\vp) + 1, \ldots\}, & \theM(d) = 0.
 \end{cases}
 \]
 So,
@@ -1176,23 +1209,23 @@ There are three cases.
 \renewcommand{\labelenumi}{\roman{enumi})}
 
 
-\item If $\spadesuit(d) <\lceil L_{\vp'} T(0,d,\vp')\rceil$, then 
+\item If $\theUB(d) <\lceil L_{\vp'} T(0,d,\vp')\rceil$, then 
 \[
-\sum_{i = \lceil L_{\vp'} T(0,d,\vp')\rceil }^{\spadesuit(d)} \frac{1}{T (\lambda_{i,d}^{-1},d, \vp')} = 0,
+\sum_{i = \lceil L_{\vp'} T(0,d,\vp')\rceil }^{\theUB(d)} \frac{1}{T (\lambda_{i,d}^{-1},d, \vp')} = 0,
 \]
 which does not affect the finiteness of $S_{\vp'}$.
 
-\item If $\spadesuit(d) \ge \lceil L_{\vp'} T(0,d,\vp')\rceil$ and $\varheartsuit(d) = 0$, then $\{\lceil L_{\vp'} T(0,d,\vp')\rceil,  \lceil L_{\vp'} T(0,d,\vp')\rceil + 1, \ldots \} \subseteq I_{d,\vp} \setminus \{1\}$.  
+\item If $\theUB(d) \ge \lceil L_{\vp'} T(0,d,\vp')\rceil$ and $\theM(d) = 0$, then $\{\lceil L_{\vp'} T(0,d,\vp')\rceil,  \lceil L_{\vp'} T(0,d,\vp')\rceil + 1, \ldots \} \subseteq I_{d,\vp} \setminus \{1\}$.  
 
-\item If $\spadesuit(d) \ge \lceil L_{\vp'} T(0,d,\vp')\rceil$ and $\varheartsuit(d) >0$, then \eqref{eq:Mddef} and \eqref{eq:rest_lambda_K4} imply that
+\item If $\theUB(d) \ge \lceil L_{\vp'} T(0,d,\vp')\rceil$ and $\theM(d) >0$, then \eqref{eq:Mddef} and \eqref{eq:rest_lambda_K4} imply that
 \[
-\lambda_{i(\varheartsuit(d),d,\vp),d} \le \lambda_{\spadesuit(d)+1,d} \le \varheartsuit(d) < \lambda_{\spadesuit(d),d}.
+\lambda_{i(\theM(d),d,\vp),d} \le \lambda_{\theUB(d)+1,d} \le \theM(d) < \lambda_{\theUB(d),d}.
 \]
-This means that $\spadesuit(d) \le i(\varheartsuit(d),d,\vp)-1$.  So, $\{ \lceil L_{\vp'} T(0,d,\vp')\rceil, \ldots, \spadesuit(d)\} \subseteq I_{d,\vp} \setminus \{1\}$. 
+This means that $\theUB(d) \le i(\theM(d),d,\vp)-1$.  So, $\{ \lceil L_{\vp'} T(0,d,\vp')\rceil, \ldots, \theUB(d)\} \subseteq I_{d,\vp} \setminus \{1\}$. 
 
 In both the second and third cases,
 \begin{align*}
-S_{\vp'} & = \sup_{d\in\naturals} \sum_{i =  \lceil L_{\vp'} T(0,d,\vp')\rceil}^{\spadesuit(d)} \frac{1}{T (\lambda_{i,d}^{-1},d, \tau \vp)}
+S_{\vp'} & = \sup_{d\in\naturals} \sum_{i =  \lceil L_{\vp'} T(0,d,\vp')\rceil}^{\theUB(d)} \frac{1}{T (\lambda_{i,d}^{-1},d, \tau \vp)}
 \le 
 \sup_{d\in\naturals} \sum_{i \in I_{d,\vp} \setminus\{1\} } \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)} \\
 &  \le  K_{\vp,\tau}\, C_{\vp}^\tau
