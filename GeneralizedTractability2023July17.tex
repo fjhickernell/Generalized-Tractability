@@ -1258,10 +1258,10 @@ Then $\cp_{\textup{rtrct}} = \widetilde{\cp}_{\textup{rtrct}}$, and the set of o
     \textbf{Sufficient condition:}\\
 Fix $d$.  If $\theUB(d) = 0$, then $\comp(\varepsilon,d) = 0 \le C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ automatically for all $\varepsilon \in [\theM(d), \infty)$.
 
-For the case $\theUB(d)> 0$, we utilize the upper bound \eqref{eq:compUP_rest}, specializing to the case of $\thed=d$ and $N = \min\left\{\right\}\lceil L_{\vp}\, T(0,d,\vp)\rceil,\theUB(d)\right\}$:
+For the case $\theUB(d)> 0$, we utilize the upper bound \eqref{eq:compUP_rest}, specializing to the case of $\thed=d$ and $N = \min\left\{\lceil L_{\vp}\, T(0,d,\vp)\rceil,\theUB(d)\right\}$:
 \begin{align*}
        \comp(\varepsilon,d)
-       & \le T(\varepsilon^{-1},d, \vp) \Biggl [ \frac{\min\left{}\lceil L_{\vp}\, T(0,d,\vp)\rceil,\theUB(d)\right\}}{T(\varepsilon^{-1},d, \vp)}  + \underbrace{\sum_{i = \min\left\{\lceil L_{\vp}\, T(0,d,\vp)\rceil,\theUB(d)\right\}}^{\theUB(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} + 1/ T(\lambda_{\theUB(d), d}^{-1},d,\vp) \text{ by \eqref{eq:strong_rest_tractiff}} }
+       & \le T(\varepsilon^{-1},d, \vp) \Biggl [ \frac{\min\left\{\lceil L_{\vp}\, T(0,d,\vp)\rceil,\theUB(d)\right\}}{T(\varepsilon^{-1},d, \vp)}  + \underbrace{\sum_{i = \min\left\{\lceil L_{\vp}\, T(0,d,\vp)\rceil,\theUB(d)\right\}}^{\theUB(d)} \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} + 1/ T(\lambda_{\theUB(d), d}^{-1},d,\vp) \text{ by \eqref{eq:strong_rest_tractiff}} }
         \Biggr] \\
        & \le T(\varepsilon^{-1},d,\vp)\left[\frac{ L_{\vp}\, T(0,d,\vp)+1}{T(0,d, \vp)} + S_{\vp} + \frac{1}{T(\lambda_{\theUB(d), d}^{-1},d,\vp)} \right]
        \qquad \text{by \eqref{eq:Tnondecreasing}}\\
