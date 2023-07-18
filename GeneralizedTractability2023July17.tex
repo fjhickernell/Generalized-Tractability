@@ -59,7 +59,7 @@
 \begin{document}
 
 
-\title{A Unified Treatment of Tractability of Approximation Problems Defined on Hilbert Spaces}
+\title{A Unified Treatment of Tractability for Approximation Problems Defined on Hilbert Spaces}
 
 \author[1]{Fred J. Hickernell}
 \ead{hickernell@iit.edu}
@@ -334,11 +334,11 @@ Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non
 \lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1,d}\le \varepsilon \qquad \forall \varepsilon > 0, \ d \in \mathbb{N}.
 \end{equation}
 
-Define
-\[
+For all positive $\varepsilon$, define
+\begin{equation}\label{eq:iepsp}
 i(\varepsilon,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1, \quad
 i(\infty,\vp) =\lfloor C_{\vp}\, T(0,1,\vp)\rfloor +1.
-\]
+\end{equation}
 Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{i(\varepsilon,\vp),d} \le \varepsilon$.
 Note furthermore that we always have
 \[
@@ -909,83 +909,7 @@ Since $h(cT(\cdot,d))$ is non-decreasing, it follows that
 		n(\varepsilon,d,c)\le  h(cT(\varepsilon^{-1},d)) +1\le  h(cT(\lambda^{-1}_{n(\varepsilon,d,c),d},d)) +1\qquad  \quad \forall \varepsilon^{-1} + d \ge V_c. \label{eq:nedcbound}
 \end{equation}
 
-For a fixed $c$ and $d$, define
-\begin{equation} \label{eq:nstardef}
-	\varepsilon^{-1}_{\max}(d,c) := \max(V_c - d,\lambda_{\max}^{-1}), \qquad n^*(d,c) : = n(\varepsilon^{-1}_{\max}(d,c),d,c) \le h(cT(\varepsilon^{-1}_{\max}(d,c),d)) +1.
-\end{equation}
-\peter{[PETER: We do not have $\lambda_{\max}$ anymore, and it could be unbounded, right? But I think this can be fixed: I keep the black (current) version, and provide a purple (new) version below, with only few changes. Please check carefully whether we can use the purple one.]}
-By varying $\varepsilon^{-1}$ in the interval $[\varepsilon^{-1}_{\max}(d,c),\infty)$,  the integer $n(\varepsilon,d,c)$ attains, \peter{by Assumption \eqref{eq:Tlim},} all values greater than or equal to $n^*(d,c)$.  Thus, by \eqref{eq:nedcbound},
-\begin{align}
-		n &\le h(cT(\lambda^{-1}_{n,d},d)) \qquad  \forall n \ge n^*(d,c), \label{eq:subhTneq}\\
-		\nonumber
-		\frac{1}{h(2 cT(\lambda^{-1}_{n,d},d)) } & \le \frac{1}{[h(cT(\lambda^{-1}_{n,d},d))]^{2}}  \le \frac 1{n^2}   \qquad  \forall n \ge n^*(d,c) \qquad \text{by \eqref{eq:h_cond}}. \\
-		\intertext{Combining this inequality with the upper bound on $n^*(d,c)$ yields}
-		\nonumber
-		S_{2c} & =\sup_{d\in\naturals}  \, \sum_{i=1}^\infty \frac1{h(2cT(\lambda_{i,d}^{-1},d))} \\
-		\nonumber
-		&  = \sup_{d\in\naturals} \left [
-		\sum_{i=1}^{n^*(d,c)-1} \frac1{h(2cT(\lambda_{i,d}^{-1},d))}
-		+ \sum_{i=n^*(d,c)}^\infty \frac1{h(2cT(\lambda_{i,d}^{-1},d))}
-		\right]\\
-		 \nonumber
-		 & \le \sup_{d\in\naturals} \left [
-\frac{n^*(d,c)-1}{h(2cT(\lambda_{\max}^{-1},d))}
-+ \sum_{i=1}^\infty \frac1{n^2}
-\right]
- \qquad \text{by \eqref{eq:subhTneq}}\\
- \label{eq:lastone}
-		 & \le \sup_{d\in\naturals} \left [
-		 \frac{ h(cT(\varepsilon^{-1}_{\max}(d,c),d))}{h(2cT(\lambda_{\max}^{-1},d))}
-		\right] + \frac{\pi^2}{6}
-		\qquad \text{by \eqref{eq:nstardef}.}
-\end{align}
 
-Note that
-\[
-\varepsilon^{-1}_{\max}(d,c) = \max(V_c - d,\lambda_{\max}^{-1})
-= \begin{cases} V_c - d \le V_c, & d \in \{1, \ldots, d^*_c : = \lfloor V_c - \lambda_{\max}^{-1} \rfloor\}, \\
-\lambda_{\max}^{-1}, & d \in \{d^*_c+1, \ldots\}.
-\end{cases}
-\]
-Recalling that $T$ is non-decreasing in its arguments, this implies that
-\begin{align*}
-    \MoveEqLeft{\sup_{d\in\naturals} \,
-		 \frac{ h(cT(\varepsilon^{-1}_{\max}(d,c),d))}{h(2cT(\lambda_{\max}^{-1},d))}}\\
-  &\le \max \left \{
-  \sup_{d \in \{1, \ldots, d^*_c\}} \,
-		 \frac{ h(cT(\varepsilon^{-1}_{\max}(d,c),d))}{h(2cT(\lambda_{\max}^{-1},d))},
-  \sup_{d\in \{d^*_c+1, \ldots \}} \,
-		 \frac{ h(cT(\varepsilon^{-1}_{\max}(d,c),d))}{h(2cT(\lambda_{\max}^{-1},d))}
-  \right \} \\
-  & \le \max \left \{
-  \sup_{d \in \{1, \ldots, d^*_c\}}  \,
-		 \frac{ h(cT(V_c,d))}{h(2cT(\lambda_{\max}^{-1},d))}
-  ,
-  \sup_{d\in \{d^*_c+1, \ldots \}}  \,
-		 \frac{ h(cT(\lambda_{\max}^{-1},d))}{h(2cT(\lambda_{\max}^{-1},d))}
-  \right \}
-  \\
-  & \le \max \left \{
-		 \frac{ h(cT(V_c,d^*_c))}{h(2cT(\lambda_{\max}^{-1},1))},
-  \sup_{d\in \{d^*_c+1, \ldots \}}  \,
-		 \frac{ h(cT(\lambda_{\max}^{-1},d))}{[h(cT(\lambda_{\max}^{-1},d))]^2}
-  \right \} \\
-  & = \max \left \{
-		 \frac{ h(cT(V_c,d^*_c))}{h(2cT(\lambda_{\max}^{-1},1))},
-		 \frac{1}{h(cT(\lambda_{\max}^{-1},d_c^*+1))}
-  \right \} \\
-  & < \infty.
-\end{align*}
-Combining this bound with the upper bound on $S_c$ in \eqref{eq:lastone} establishes the finiteness of $S_{2c}$ and completes the proof of the necessary condition.
-This concludes the proof of Theorem \ref{thm:subhT}.
-
-\bigskip
-
-\peter{***ALTERNATIVE VERSION OF THE LAST PART OF THE PROOF - PLEASE CHECK (essentially just by replacing $\lambda_{\max}$ by something different***}
-
-\bigskip
-
-\peter{
 For a fixed $c$ and $d$, define
 \begin{equation} \label{eq:nstardef}
 	\varepsilon^{-1}_{\max}(d,c) := \max(V_c - d,\lambda_{1,d}^{-1}), \qquad n^*(d,c) : = n(\varepsilon^{-1}_{\max}(d,c),d,c) \le h(cT(\varepsilon^{-1}_{\max}(d,c),d)) +1.
@@ -1020,11 +944,10 @@ Note that
 \[
 \varepsilon^{-1}_{\max}(d,c) = \max(V_c - d,\lambda_{1,d}^{-1})
 = \begin{cases} V_c - d \le V_c, & d \in \{1, \ldots, d^*_c : = \lfloor V_c - \lambda_{1,d}^{-1} \rfloor\}, \\
-\lambda_{1,d}^{-1}, & d \in \{d^*_c+1, \ldots\}.
+\lambda_{1,d}^{-1}, & d \in \{d^*_c+1, \ldots\},
 \end{cases}
 \]
-Note that it follows from above that we always have $d^*_c\le \lfloor V_c \rfloor$
-
+and furthermore, it follows from above that we always have $d^*_c\le \lfloor V_c \rfloor$.
 Recalling that $T$ is non-decreasing in its arguments, this implies that
 \begin{align*}
     \MoveEqLeft{\sup_{d\in\naturals} \,
@@ -1062,8 +985,6 @@ Recalling that $T$ is non-decreasing in its arguments, this implies that
 \end{align*}
 where we used that $h(\cdot)$ is always at least 1. Combining this bound with the upper bound on $S_c$ in \eqref{eq:lastone} establishes the finiteness of $S_{2c}$ and completes the proof of the necessary condition.
 This concludes the proof of Theorem \ref{thm:subhT}.
-}
-
 \qed
 \end{proof}
 
@@ -1080,7 +1001,7 @@ This concludes the proof of Theorem \ref{thm:subhT}.
 	\iff
 	 \sup_{d\in\naturals}  \, \sum_{i=1}^\infty \exp(-c\, (\min\{1,\lambda_{i,d}\}^{s} + d^t )) <\infty \qquad \forall c > 0.
 	\]
-	The expression on the left is the notion of $(s,t)$-weak tractability \peter{introduced in \cite{SW15}}, and the condition on the right was derived in \peter{\cite[Theorem 3.1]{WW17}}.  Weak tractability corresponds to $(s,t)=(1,1)$, and uniform weak tractability corresponds to the case when a problem is weakly tractable for all positive $s$ and $t$.
+	The expression on the left is the notion of $(s,t)$-weak tractability introduced in \cite{SW15}, and the condition on the right was derived in \cite[Theorem 3.1]{WW17}.  Weak tractability corresponds to $(s,t)=(1,1)$, and uniform weak tractability corresponds to the case when a problem is weakly tractable for all positive $s$ and $t$.
 \end{example}
 
 \section{(Strong) Tractability on a Restricted Domain}
@@ -1126,13 +1047,13 @@ Define $\theUB: \naturals \to \natzero \cup \{\infty\}$
 \end{equation}
 Also, for each $d \in \naturals$ define the set
 \begin{equation} \label{eq:hIdef}
-\hI = \mathcal{I}_d :=\begin{cases}
+\mathcal{I}_d :=\begin{cases}
 \emptyset, & \theUB(d) = 0, \\
 \{1,\ldots, \theUB(d)\}, & 0 < \theUB(d) < \infty, \\
 \naturals, & \theUB(d) = \infty.
 \end{cases}
 \end{equation}
-\peter{[I have no idea why the $\mathcal{I}_d$ is not displayed correctly above.]}
+%\peter{[I have no idea why the $\mathcal{I}_d$ is not displayed correctly above.]}
 From the definition of $\theUB(d)$ it follows that $(\lambda_{i,d}^{-1},d) \in \Omega  \iff i \in \hI_d$, and
 \begin{equation} \label{eq:comprestr}
   \comp(\varepsilon,d) \begin{cases}
@@ -1145,8 +1066,7 @@ From the definition of $\theUB(d)$ it follows that $(\lambda_{i,d}^{-1},d) \in \
 
 The equivalent conditions for (strong) $T$-tractability on a restricted domain in Theorems \ref{thm_main_rest_strong_tract} and \ref{thm_main_rest_tract} mimic the conditions given in Theorems \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}, except that the upper limits on the sums now correspond to $\theUB(d)$ rather than $\infty$.  The proofs are a bit more delicate, but similar arguments are used.
 
-We note that it may be possible to define $\Omega$ such that $\lambda_{1,d} > \theM(d)$
-\peter{[should it not be $\lambda_{1,d} \le \theM(d)$ ?]}
+We note that it may be possible to define $\Omega$ such that  $\lambda_{1,d} \le \theM(d)$
 for all $d \in \naturals$. In this case, $\theUB(d) = 0$ for all $d \in \naturals$, the equivalent conditions for (strong) tractability are trivially satisfied, and the zero algorithm satisfies the error tolerance.
 
 \subsection{Strong Tractability on a Restricted Domain}
@@ -1186,7 +1106,7 @@ Thus, we can conclude from the previous line that
 \end{multline}
 
 Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity via
-\eqref{eq:comp_def} \peter{[Again, no clue why the $\mathcal{I}_d$ is not displayed correctly below]}:
+\eqref{eq:comp_def}:
 \begin{align} %\label{eq:comp_equiv}
 	\nonumber
 	\comp(\varepsilon, d) & = \min \{n \in \hI_d : \lambda_{n+1, d} \le \varepsilon\} \qquad \text{by \eqref{eq:comprestr}} \\
@@ -1228,13 +1148,17 @@ Since the sequence of eigenvalues $\lambda_{1,d}, \lambda_{2,d}, \ldots $ is non
 \lambda_{\lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1,d}\le \varepsilon \qquad \forall \varepsilon > \theM(d), \ d \in \mathbb{N}.
 \end{equation}
 
-For $(\varepsilon^{-1}, d) \in \Omega$, define the positive integers
+For  all $\varepsilon > 0$, define the positive integers
 \[
 i(\varepsilon,\vp):= \lfloor C_{\vp}\, T(\varepsilon^{-1},1,\vp)\rfloor +1, \quad
-i(\infty,\vp) =  \lfloor C_{\vp}\, T(0,1,\vp)\rfloor +1 \ge 1 .
+i(\infty,\vp) =  \lfloor C_{\vp}\, T(0,1,\vp)\rfloor +1 \ge 1,
 \]
-Thus, it follows by \eqref{eq:lambda_K_strong4} that $\lambda_{i(\varepsilon,\vp),d} \le \varepsilon$
-for any  $(\varepsilon^{-1}, d) \in \Omega$.
+just as in \eqref{eq:iepsp}.
+Thus, it follows by \eqref{eq:lambda_K_strong4} that
+\begin{equation} \label{eq:lambdaiep}
+\lambda_{i(\varepsilon,\vp),d} \le \varepsilon \qquad
+ \forall (\varepsilon^{-1}, d) \in \Omega.
+\end{equation}
 Note furthermore that we always have
 \[
 i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1, \qquad  \forall \varepsilon > \theM(d), \ d \in \mathbb{N},
@@ -1244,15 +1168,15 @@ $T(\cdot,1, \vp)$ is non-decreasing.
 
 For $\varepsilon$ taking on all values in $(\theM(d),\infty)$, $i(\varepsilon,\vp)$ takes on (at least) all values in
 \[
-I_{d,\vp}:=\begin{cases}
-\emptyset, & i(\theM(d),\vp) = i(\infty,\vp) \\
+\mathscr{I}_{d,\vp}:=\begin{cases}
+\emptyset, & i(\theM(d),\vp) = i(\infty,\vp), \\
 \{i(\infty,\vp),\ldots, i(\theM(d),\vp)-1\}, & \theM(d) > 0, \\
 \{i(\infty,\vp), i(\infty,\vp) + 1, \ldots\}, & \theM(d) = 0.
 \end{cases}
 \]
 So,
 \[
-i\le  C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1, \qquad \forall i\in I_{d,\vp},  \ d \in \naturals.
+i\le  C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1, \qquad \forall i\in \mathscr{I}_{d,\vp},  \ d \in \naturals.
 \]
 This implies via our technical assumption \eqref{eq:ptauassume} that
 \begin{gather}
@@ -1260,10 +1184,10 @@ This implies via our technical assumption \eqref{eq:ptauassume} that
  K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},1,\tau \vp) \ge
  [T(\lambda_{i,d}^{-1},1, \vp)]^\tau
  \ge
-  \left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i\in I_{d,\vp},  \ d \in \naturals, \\
+  \left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i\in \mathscr{I}_{d,\vp},  \ d \in \naturals, \\
   \label{eq:rest_strong_ineq}
  \frac{1}{T (\lambda_{i,d}^{-1},1,\tau \vp)} \le
-\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \in I_{d,\vp} \setminus\{1\}, \ d \in \naturals .
+\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \in \mathscr{I}_{d,\vp} \setminus\{1\}, \ d \in \naturals .
 \end{gather}
 
 
@@ -1278,27 +1202,18 @@ To complete the proof, we will sum both sides of \eqref{eq:rest_strong_ineq} ove
 \]
 which does not affect the finiteness of $S_{\tau\vp}$.
 
-\item If $\theUB(d) \ge L_{\tau\vp}$ and $\theM(d) = 0$, then $\{L_{\tau\vp},  L_{\tau\vp} + 1, \ldots \} \subseteq I_{d,\vp} \setminus \{1\}$.
+\item If $\theUB(d) \ge L_{\tau\vp}$ and $\theM(d) = 0$, then $\{L_{\tau\vp},  L_{\tau\vp} + 1, \ldots \} \subseteq \mathscr{I}_{d,\vp} \setminus \{1\}$.
 
-\item If $\theUB(d) \ge L_{\tau\vp}$ and $\theM(d) >0$, then \eqref{eq:Mddef} and \eqref{eq:lambda_K_strong4} imply that
-\[
-\lambda_{i(\theM(d),\vp),d} \le \lambda_{\theUB(d)+1,d} \le \theM(d) < \lambda_{\theUB(d),d}.
-\]
-\peter{
-[PETER. In the above chain of inequalities, I am not quite sure that I understand the first one. Is it because...
-\begin{itemize}
-    \item $\lambda_{i(\varepsilon,\vp),d)} \le \varepsilon$ for all $\varepsilon>\theM(d)$, and so it must also hold in the limit for $\varepsilon$ tending to $\theM(d)$, and
-    \item $\theUB (d) +1$ is the smallest index such that $\lambda_{\theUB (d) +1} \le \theM(d)$ ?
-\end{itemize}]
+\item If $\theUB(d) \ge L_{\tau\vp}$ and $\theM(d) >0$, then \eqref{eq:Mddef} implies that $\lambda_{\theUB(d)+1,d} \le \theM(d) < \lambda_{\theUB(d),d}$.  Moreover, there must be some $\varepsilon^*$ satisfying $\theM(d) < \varepsilon^* < \lambda_{\theUB(d),d}$, such for which $\lambda_{i(\varepsilon^*,\vp)} \le \varepsilon^* < \lambda_{\theUB(d),d}$ by \eqref{eq:lambdaiep}.  Because of the ordering of the singular values, this implies that  $i(\varepsilon^*,\vp) \ge \theUB(d)+1$.  Since $i(\cdot,\vp)$ is nonincreasing, $i(\theM(b),\vp) \ge \theUB(d)+1$.
+This means that $\theUB(d) \le i(\theM(d),\vp)-1$.  So, $\{L_{\tau\vp}, \ldots, \theUB(d)\} \subseteq \mathscr{I}_{d,\vp} \setminus \{1\}$.
 
-}
-This means that $\theUB(d) \le i(\theM(d),\vp)-1$.  So, $\{L_{\tau\vp}, \ldots, \theUB(d)\} \subseteq I_{d,\vp} \setminus \{1\}$.
+\bigskip
 
 In both the second and third cases,
 \begin{align*}
 S_{\tau\vp} & = \sup_{d\in\naturals} \sum_{i = L_{\tau\vp}}^{\theUB(d)} \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)}
 \le
-\sup_{d\in\naturals} \sum_{i \in I_{d,\vp} \setminus\{1\} } \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)} \\
+\sup_{d\in\naturals} \sum_{i \in \mathscr{I}_{d,\vp} \setminus\{1\} } \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)} \\
 &  \le  K_{\vp,\tau}\, C_{\vp}^\tau
 \sum_{i=2}^\infty \frac{1}{(i-1)^\tau}
  \le K_{\vp,\tau}\, C_{\vp}^\tau
@@ -1384,7 +1299,7 @@ i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lam
 \]
 For $\varepsilon$ taking on all values in $(\theM(d),\infty)$, $i(\varepsilon,d,\vp)$ takes on (at least) all values in
 \[
-I_{d,\vp}:=\begin{cases}
+\mathscr{I}_{d,\vp}:=\begin{cases}
 \emptyset, & i(\theM(d),d,\vp) = i(\infty,d,\vp), \\
 \{i(\infty,d,\vp),\ldots, i(\theM(d),d,\vp)-1\}, & \theM(d) > 0, \\
 \{i(\infty,d,\vp), i(\infty,d,\vp) + 1, \ldots\}, & \theM(d) = 0.
@@ -1392,7 +1307,7 @@ I_{d,\vp}:=\begin{cases}
 \]
 So,
 \[
-i\le  C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1, \qquad \forall i\in I_{d},  \ d \in \naturals.
+i\le  C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1, \qquad \forall i\in \mathscr{I}_{d},  \ d \in \naturals.
 \]
 This implies via our technical assumption \eqref{eq:ptauassume} that
 \begin{gather}
@@ -1400,10 +1315,10 @@ This implies via our technical assumption \eqref{eq:ptauassume} that
  K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},d,\tau \vp) \ge
  [T(\lambda_{i,d}^{-1},d, \vp)]^\tau
  \ge
-  \left[\frac{(i-1)}{C_{\vp}}\right]^\tau, \qquad \forall i\in I_{d,\vp},  \ d \in \naturals, \\
+  \left[\frac{(i-1)}{C_{\vp}}\right]^\tau, \qquad \forall i\in \mathscr{I}_{d,\vp},  \ d \in \naturals, \\
   \label{eq:rest_ineq}
  \frac{1}{T (\lambda_{i,d}^{-1},d,\tau \vp)} \le
-\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau},\qquad \forall i \in I_{d,\vp} \setminus\{1\}, \ d \in \naturals .
+\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau},\qquad \forall i \in \mathscr{I}_{d,\vp} \setminus\{1\}, \ d \in \naturals .
 \end{gather}
 
 To complete the proof, we will sum both sides of \eqref{eq:rest_ineq} over the range of $i$ appearing in \eqref{eq:rest_tractiff}, to establish that $S_{\vp'}$ is finite, where  $\vp' = \tau \vp$.  To do this we need to show that \eqref{eq:rest_ineq} holds for that range.
@@ -1430,21 +1345,21 @@ There are three cases.
 \]
 which does not affect the finiteness of $S_{\vp'}$.
 
-\item If $\theUB(d) \ge \lceil L_{\vp'} T(0,d,\vp')\rceil$ and $\theM(d) = 0$, then $\{\lceil L_{\vp'} T(0,d,\vp')\rceil,  \lceil L_{\vp'} T(0,d,\vp')\rceil + 1, \ldots \} \subseteq I_{d,\vp} \setminus \{1\}$.
+\item If $\theUB(d) \ge \lceil L_{\vp'} T(0,d,\vp')\rceil$ and $\theM(d) = 0$, then $\{\lceil L_{\vp'} T(0,d,\vp')\rceil,  \lceil L_{\vp'} T(0,d,\vp')\rceil + 1, \ldots \} \subseteq \mathscr{I}_{d,\vp} \setminus \{1\}$.
 
 \item If $\theUB(d) \ge \lceil L_{\vp'} T(0,d,\vp')\rceil$ and $\theM(d) >0$, then \eqref{eq:Mddef} and \eqref{eq:rest_lambda_K4} imply that
 \[
 \lambda_{i(\theM(d),d,\vp),d} \le \lambda_{\theUB(d)+1,d} \le \theM(d) < \lambda_{\theUB(d),d}.
 \]
-\peter{[PETER: Here, I have the same question as in the previous proof.]}
+By the same argument as in the proof of strong tractability, $\theUB(d) \le i(\theM(d),d,\vp)-1$.  So, $\{ \lceil L_{\vp'} T(0,d,\vp')\rceil, \ldots, \theUB(d)\} \subseteq \mathscr{I}_{d,\vp} \setminus \{1\}$.
 
-This means that $\theUB(d) \le i(\theM(d),d,\vp)-1$.  So, $\{ \lceil L_{\vp'} T(0,d,\vp')\rceil, \ldots, \theUB(d)\} \subseteq I_{d,\vp} \setminus \{1\}$.
+\bigskip
 
 In both the second and third cases,
 \begin{align*}
 S_{\vp'} & = \sup_{d\in\naturals} \sum_{i =  \lceil L_{\vp'} T(0,d,\vp')\rceil}^{\theUB(d)} \frac{1}{T (\lambda_{i,d}^{-1},d, \tau \vp)}
 \le
-\sup_{d\in\naturals} \sum_{i \in I_{d,\vp} \setminus\{1\} } \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)} \\
+\sup_{d\in\naturals} \sum_{i \in \mathscr{I}_{d,\vp} \setminus\{1\} } \frac{1}{T (\lambda_{i,d}^{-1},1, \tau \vp)} \\
 &  \le  K_{\vp,\tau}\, C_{\vp}^\tau
 \sum_{i=2}^\infty \frac{1}{(i-1)^\tau}
  \le K_{\vp,\tau}\, C_{\vp}^\tau
