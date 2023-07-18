@@ -3,7 +3,7 @@
 \usepackage{epsfig}
 \usepackage[notref,notcite]{showkeys}
 %\usepackage[active]{srcltx}
-\usepackage{fdsymbol}
+%\usepackage{fdsymbol} %removing this package solves the problem with \mathcal{I} not showing up properly.
 \usepackage{enumitem}
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage[normalem]{ulem}
@@ -97,8 +97,6 @@ country={Austria}}
 
 TODO: We should check for consistency of the use of the $\forall$ symbol in displayed formulas. Sometimes we use it, sometimes we do not, sometimes it is preceded by a comma, sometimes not, etc.
 
-%TODO: We should check consistency of notation when using $\max$ or $\min$. Sometimes we use ``$(\ldots)$'' for the argument, sometimes we use ``$\{\ldots\}$''  \fred{Fred will do this.}
-
 \bigskip
 
 The information complexity of a problem is the number of function data required to solve the problem within the desired error tolerance.  A problem is tractable if the information complexity does not grow too large as the dimension of the problem increases or the error threshold decreases.  There are a number of tractability results for numerical problems beginning with \cite{W94a,W94b}, spawning numerous articles, and filling a series of three impressive volumes \cite{NovWoz08a,NovWoz10a,NovWoz12a}.  The purpose of this article is to unify the many of these tractability results for approximation problems where all linear functional data is available.
@@ -170,7 +168,7 @@ an ordering of the parameters $\vp$.}[\kachi{KACHI: I will take care of this}]
 
 \kachi{[KACHI: I will write about notations used in this paper. Is there are need to change notations like $[1,\infty)$ to $\naturals$ and $[0,\infty)$ to $\naturals_0$]}
 
-\kachi{We denote the set of positive integers by $\naturals$ and and the set of non-negative integers by $\naturals_0$.}
+We denote the set of positive integers by $\naturals$ and and the set of non-negative integers by $\naturals_0$.
 In Section \ref{sec:spt}, we give the definitions of the considered tractability notions, in particular (strong) tractability. We consider strong tractability when the information complexity is independent of the dimension, $d$. We then turn to tractability  when the information complexity may depend on both $d$ and $\varepsilon^{-1}$. In Section \ref{sec:examples} we provide examples of tractability functions for both the algebraic and exponential cases. We also consider other notions of tractability such as quasi-polynomial tractability, and a generalized notion of weak tractability. In the case of generalized weak tractability, we give the necessary and sufficient conditions on the notion of exponential tractability in Section \ref{sec:subh} \peter{[I think I do not quite understand what we mean by the last sentence.]}.
 
 \section{(Strong) Tractability}\label{sec:spt}
@@ -186,7 +184,7 @@ A tractability function $T$ is a function of a simple form that provides an uppe
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},d,\vp) \qquad \forall \varepsilon >0, \ d \in \mathbb{N}.
 \end{equation}
 A problem is \emph{strongly}
-$T$-tractable with parameter $\vp$ iff the \peter{information} complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$, again independent of $\varepsilon$ and $d$, such that
+$T$-tractable with parameter $\vp$ iff the information complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$, again independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:strong_tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},1,\vp) \qquad \forall \varepsilon >0 , \ d \in \mathbb{N}.
 \end{equation}
@@ -199,7 +197,7 @@ For this definition of tractability to make sense we assume that
 \begin{equation} \label{eq:Tnondecreasing}
 	T \text{ is non-decreasing in all variables,}
 \end{equation}
-which implies that the problem is expected to be no easier by decreasing the tolerance, $\varepsilon$, or increasing the dimension, $d$. (This is why we make $T$ a function of $\varepsilon^{-1}$ rather than of $\varepsilon$.) Furthermore, increasing $\vp$ does not decrease $T(\cdot, \cdot, \vp)$.  Since there are an infinite number of positive eigenvalues, it also makes sense to assume that
+which implies that the problem is expected to be no easier by decreasing the tolerance, $\varepsilon$, or increasing the dimension, $d$. (This is why we make $T$ a function of $\varepsilon^{-1}$ rather than of $\varepsilon$.) Furthermore, increasing $\vp$ allows for a possibly looser bound on the information complexity.  Since there are an infinite number of positive eigenvalues, it also makes sense to assume that
 \begin{equation}\label{eq:Tlim}
 	\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d,\vp) = \infty \qquad \forall d \in \naturals, \ \vp \in [0,\infty)^s.
 \end{equation}
@@ -212,8 +210,8 @@ Finally, there is a technical assumption required for our analysis.  There exist
 	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in [1,\infty).
 \end{equation}
 
-Certain common notions of tractability  covered by the general situation described above are provided in Table \ref{tab:commonT}.  Here, $\vp = (p,q)$ in some cases and $\vp$ is a scalar in other cases. A general reference
-for results on algebraic tractability is \cite{NovWoz08a}, for exponential tractability we refer to \cite{HicKriWoz19a} and \cite{KriWoz19a}.
+Certain common notions of tractability  covered by the general situation described above are provided in Table \ref{tab:commonT}.  Here, $\vp = (p,q)$ in some cases, and $\vp$ is a scalar in other cases. A general reference
+for results on algebraic tractability is \cite{NovWoz08a}.  For exponential tractability we refer to \cite{HicKriWoz19a} and \cite{KriWoz19a}.
 
 \begin{table}
     \caption{Common forms of the tractability function, $T$.}
@@ -223,15 +221,15 @@ for results on algebraic tractability is \cite{NovWoz08a}, for exponential tract
 		\text{Tractability type} & T(\varepsilon^{-1},d,\vp)
 		& T(0,d,\vp)\\
 		\toprule
-		\text{\peter{algebraic strong polynomial}} & \max\{1,\varepsilon^{-p}\} & 1\\
-		\text{\peter{algebraic polynomial}} & \max\{1,\varepsilon^{-p}\}d^{q} & d^{q}\\
-		\text{\peter{exponential strong polynomial}} &  [\max\{1,\log(1 + \varepsilon^{-1}\}]^p & 1\\
-		\text{\peter{exponential polynomial}} &
+		\text{algebraic strong polynomial} & \max\{1,\varepsilon^{-p}\} & 1\\
+		\text{algebraic polynomial} & \max\{1,\varepsilon^{-p}\}d^{q} & d^{q}\\
+		\text{exponential strong polynomial} &  [\max\{1,\log(1 + \varepsilon^{-1}\}]^p & 1\\
+		\text{exponential polynomial} &
 		[\max\{1,\log(1 + \varepsilon^{-1})\}]^p  d^{q} & d^{q} \\
-        \text{\peter{algebraic quasi-polynomial}} &
+        \text{algebraic quasi-polynomial} &
         \exp\{p(1+\log(\max\{1,\log(1 + \varepsilon^{-1})\})(1+\log(d))\} &
         \exp\{p(1+\log(d))\}\\
-        \text{\peter{exponential quasi-polynomial}} &
+        \text{exponential quasi-polynomial} &
         \exp\{p(1+\log(\max\{1,\log(1+\varepsilon^{-1})\}))(1+\log(d))\} &
         \exp\{p(1+\log(d))\}
 	\end{array}
@@ -280,9 +278,8 @@ If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\tex
 
 \begin{proof}
 \textbf{Sufficient condition:}\newline
-We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.  Fix any $\varepsilon > 0$ and any $d \in \naturals$.
-\kachi{[KACHI: It seems the notation of the dimension has change from $d$ to $\delta$. I will work on this.]}
-Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},\thed,\vp)$ are non-decreasing in $i$ for any $\thed\in\naturals$. In particular, for  any $N\in\naturals$ with $n\ge N$, we have
+We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.  Fix any $\varepsilon > 0$ and any $d \in \naturals$, and let $\thed \in \naturals$ be arbitrary. %\delta replaced d'
+Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},\thed,\vp)$ are non-decreasing in $i$. In particular, for  any $N\in\naturals$ with $n\ge N$, we have
 \begin{align*}
     \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{N,d}
     & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},\thed,\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},\thed,\vp)} \le \cdots \le \frac{1}{T(\lambda_{N, d}^{-1},\thed,\vp)} \\
@@ -393,7 +390,7 @@ Next we show that if $\vp^* \in \widetilde{\cp}_{\textup{strct}}$, then $\vp^* \
 \subsection{Tractability} \label{sec:tractability}
 
 
-The argument proving equivalent conditions for tractability is similar to, but somewhat more involved than the proof of Theorem \ref{thm_main_strong_tract2}.  Moreover, the specification of the set of optimal parameters is not as precise as in Theorem \ref{thm_main_strong_tract2} \peter{[Is the latter sentence still true?]}.
+The argument proving equivalent conditions for tractability is similar to, but somewhat more involved than the proof of Theorem \ref{thm_main_strong_tract2}.  The lower limit on the sum is somewhat more complicated as well.
 
 \begin{theorem}\label{thm_main_tract2}
 Let $T$ be a tractability function as specified in \eqref{eq:Tspec} and satisfying \eqref{eq:Tconditions} and \eqref{eq:ptauassume}.  A problem is $T$-tractable iff there exists $\vp\ge \vzero$ and a positive constant $L_{\vp}$ such that
@@ -613,15 +610,15 @@ B_d:=\left\{i\in\naturals \colon i\ge \left\lceil Cd^{\tau_3}\right\rceil\quad\m
 \lambda_{i,d}^{i^{-\tau_2}}>\frac{1}{e}\right\}.
 \]
 Due to our assumption, we see that $\abs{B_d} < e\,M\,d^{\tau_1}$ and $\abs{B_d}\le \lfloor e\,M\,d^{\tau_1} \rfloor$. Suppose now that $i\ge \lceil C d^{\tau_3}\rceil$ but $i\not\in B_d$, which means that
-\[\lambda_{i,d}^{i^{-\tau_2}} \le \frac{1}{e} \Leftrightarrow \log (\lambda_{i,d}^{-1})\ge i^{\tau_2}.\]
+\[\lambda_{i,d}^{i^{-\tau_2}} \le \frac{1}{e} \iff \log (\lambda_{i,d}^{-1})\ge i^{\tau_2}.\]
 Now, choose $p> 1/\tau_2$, $q=\max\{\tau_1,\tau_3\}$, and $L_{(p,q)}=\max\{C, e\, M\}$, which implies that $\lceil L_{(p,q)} d^{q}\rceil \ge e\, M\, d^{\tau_1}$. Then, for any $d\in\naturals$,
-\begin{eqnarray*}
-d^{-q} \sum_{i=\lceil L_{(p,q)} d^{q}\rceil}^\infty \frac{1}{[\max\{1,\log(1+\lambda_{i,d}^{-1})\}]^p}&=&d^{-q} \sum_{\substack{i=\lceil L_{(p,q)} d^{q}\rceil\\ i\in B_d}}^\infty \frac{1}{[\max\{1,\log(1+\lambda_{i,d}^{-1})\}]^p}\\
-&& + d^{-q} \sum_{\substack{i=\lceil L_{(p,q)} d^{q}\rceil\\ i\not\in B_d}}^\infty \frac{1}{[\max\{1,\log(1+\lambda_{i,d}^{-1})\}]^p}\\
-&\le& d^{-q} e\, M\, d^{\tau_1} + d^{-q}\sum_{\substack{i=\lceil L_{(p,q)} d^{q}\rceil\\ i\not\in B_d}}^\infty \frac{1}{[\log (\lambda_{i,d}^{-1})]^p}\\
-&\le& e\, M + d^{-q}\sum_{\substack{i=\lceil L_{(p,q)} d^{q}\rceil\\ i\not\in B_d}}^\infty \frac{1}{i^{\tau_2 p}}\\
-&\le & e\, M + \zeta (\tau_2 p).
-\end{eqnarray*}
+\begin{align*}
+d^{-q} \sum_{i=\lceil L_{(p,q)} d^{q}\rceil}^\infty \frac{1}{[\max\{1,\log(1+\lambda_{i,d}^{-1})\}]^p}&=d^{-q} \sum_{\substack{i=\lceil L_{(p,q)} d^{q}\rceil\\ i\in B_d}}^\infty \frac{1}{[\max\{1,\log(1+\lambda_{i,d}^{-1})\}]^p}\\
+&\qquad  + d^{-q} \sum_{\substack{i=\lceil L_{(p,q)} d^{q}\rceil\\ i\not\in B_d}}^\infty \frac{1}{[\max\{1,\log(1+\lambda_{i,d}^{-1})\}]^p}\\
+&\le d^{-q} e\, M\, d^{\tau_1} + d^{-q}\sum_{\substack{i=\lceil L_{(p,q)} d^{q}\rceil\\ i\not\in B_d}}^\infty \frac{1}{[\log (\lambda_{i,d}^{-1})]^p}\\
+&\le e\, M + d^{-q}\sum_{\substack{i=\lceil L_{(p,q)} d^{q}\rceil\\ i\not\in B_d}}^\infty \frac{1}{i^{\tau_2 p}}\\
+&\le  e\, M + \zeta (\tau_2 p).
+\end{align*}
 Since $p$ was chosen to be strictly larger than $1/\tau_2$, it follows that the latter expression is finite and its value is independent of $d$. Therefore, Condition \eqref{eq:exp_pt} holds.
 
 Conversely, let us now assume that Condition \eqref{eq:exp_pt} holds. We will show next that this implies Condition \eqref{eq:KW_exp_pt}. Indeed, due to \eqref{eq:exp_pt}, there exists a positive constant $M$ (w.l.o.g., we can assume that $M\ge 1$), and $p\ge 0$ (again, w.l.o.g., let us assume $p>0$), $q\ge 0$, and $L_{(p,q)}>0$ such that for all $d\in\naturals$,
@@ -726,14 +723,14 @@ Theorem \ref{thm_main_tract2} yields the following equivalent condition for sepa
  T(\varepsilon^{-1},d,p)= \exp (p \, \hat{\phi}(\varepsilon^{-1})\, \hat{\psi}(d)) = [\exp( \hat{\phi}(\varepsilon^{-1}))]^{p \, \hat{\psi}(d)}
  \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, p\in [0,\infty),
 \]  with non-decreasing functions $\hat{\phi} : (0,\infty) \to (0,\infty)$ and $\hat{\psi} : \naturals \to (0,\infty)$.
-We say that a problem is non-separable tractable with \peter{scalar} parameter $p$ iff there exists a positive $C_{p}$ such that
+We say that a problem is non-separable tractable with scalar parameter $p$ iff there exists a positive $C_{p}$ such that
 
 \[\comp(\varepsilon,d)
 \leq  C_{p}\exp (p(\hat{\phi}(\varepsilon^{-1})\hat{\psi}(d))).\]
 
 Hence we can apply Theorem \ref{thm_main_tract2} as follows. We have the following equivalent condition for non-separable tractability:
 \[
-\sup_{d\in\mathbb{N}}\sum_{\peter{i=\lceil L_p\,\hat{\phi}(0)^{p \, \hat{\psi}(d)}\rceil}} [\exp ( \hat{\phi}(\lambda_{i,d}^{-1}))]^{-p \, \hat{\psi}(d)}\quad \text{for some } p \geq 0, \peter{L_p >0}.
+\sup_{d\in\mathbb{N}}\sum_{i=\lceil L_p\,\hat{\phi}(0)^{p \, \hat{\psi}(d)}\rceil} [\exp ( \hat{\phi}(\lambda_{i,d}^{-1}))]^{-p \, \hat{\psi}(d)}\quad \text{for some } p \geq 0, L_p >0.
 \]
 
 \end{example}
@@ -769,10 +766,10 @@ T(\varepsilon^{-1},d,p) = e^p[\max\{1,\varepsilon^{-1}\}]^{p(1+\log d)}d^p.
 %Observe that the function $T$ is a function of $\max\{1,\varepsilon^{-1}\}$ and $d$ which are, polynomial or not exponential in powers of $\max\{1,\varepsilon^{-1}\}$ and $d$ \peter{[This sentence sounds a bit confusing to me---what exactly is meant by it?]}.
 Then Theorem \ref{thm_main_tract2} yields the following equivalent condition for quasi-polynomial tractability in the algebraic case:
 \[
-\sup_{d\in\mathbb{N}}\,d^{-p}\sum_{\peter{i=\lceil L_p\,d^{p}}\rceil} \left(\min\{1,\lambda_{i,d}\} \right)^{p(1+\log d)} < \infty \qquad \text{for some } p \geq 0, \peter{L_p >0}.\]
+\sup_{d\in\mathbb{N}}\,d^{-p}\sum_{i=\lceil L_p\,d^{p}\rceil} \left(\min\{1,\lambda_{i,d}\} \right)^{p(1+\log d)} < \infty \qquad \text{for some } p \geq 0, L_p >0.\]
 \end{example}
-\peter{This essentially recovers \cite[Theorem 23.1]{NovWoz12a}.
-}
+This essentially recovers \cite[Theorem 23.1]{NovWoz12a}.
+
 Next, we will consider the exponential case as follows.
 \begin{example}[Exponential quasi-polynomial tractability]
 
@@ -786,10 +783,9 @@ T(\varepsilon^{-1},d,\vp) = e^p[\max\{1,\log(1+\varepsilon^{-1}\})]^{p(1+\log d)
 %Observe that the function $T$ is a function of $\max\{1,\log(1+\varepsilon^{-1})\}$ and $d$.
 Hence we can apply Theorem \ref{thm_main_tract2} as follows. We have the following equivalent condition for quasi-polynomial tractability in the exponential case:
 \[
-\sup_{d\in\mathbb{N}}\,d^{-p}\sum_{\peter{i=\lceil L_p\,d^{p}\rceil}} \frac{1}{\left(\max\{1,\log(1+\lambda_{i,d}^{-1})\} \right)^{p(1+\log d)}}< \infty \quad \text{for some } p \geq 0, \peter{L_p >0}.
+\sup_{d\in\mathbb{N}}\,d^{-p}\sum_{i=\lceil L_p\,d^{p}\rceil} \frac{1}{\left(\max\{1,\log(1+\lambda_{i,d}^{-1})\} \right)^{p(1+\log d)}}< \infty \quad \text{for some } p \geq 0, L_p >0.
 \]
-\peter{This essentially recovers \cite[Theorem 2]{KriWoz19a}.
-}
+This essentially recovers \cite[Theorem 2]{KriWoz19a}.
 \end{example}
 
 
@@ -799,7 +795,7 @@ Hence we can apply Theorem \ref{thm_main_tract2} as follows. We have the followi
 
 
 \section{Sub-$h$ Tractability}\label{sec:subh}
-In this section we generalize the concept of weak tractability \peter{(see again \cite{NovWoz08a}--\cite{NovWoz12a})}.  Let  $h:[0,\infty) \to [1,\infty)$ satisfy
+In this section we generalize the concept of weak tractability (see again \cite{NovWoz08a}--\cite{NovWoz12a}).  Let  $h:[0,\infty) \to [1,\infty)$ satisfy
 \begin{equation} \label{eq:h_cond}
 	h \text{ is strictly increasing}, \qquad
 	h(0)=1, \qquad
@@ -808,7 +804,7 @@ In this section we generalize the concept of weak tractability \peter{(see again
 This means that $\log(h)$ is a superadditive function.  An example of the function $h$ is the exponential function, from which we can recover weak tractability.
 
 Furthermore, let us denote the inverse function of $h$ by $h^{-1}$.
-Then, for arbitrary $z,w \in [1,\infty)$ we choose $x=h^{-1}(z)$ and $y=h^{-1}(w)$, to obtain \peter{from \eqref{eq:h_cond}}
+Then, for arbitrary $z,w \in [1,\infty)$ we choose $x=h^{-1}(z)$ and $y=h^{-1}(w)$, to obtain from \eqref{eq:h_cond}
 \[
 z w \le h (h^{-1}(z)+h^{-1}(w)),
 \]
@@ -848,9 +844,9 @@ Suppose that $S_c <\infty$ for all $c>0$.  Since the terms of the series in the 
 		\frac{n}{h(cT(\lambda_{n,d}^{-1},d))}\le S_c \qquad \forall n,d \in \naturals,
 	\]
 or equivalently
-\[
+\begin{equation} \label{eq:Sclb}
 	n\le S_c \, h(cT(\lambda_{n,d}^{-1},d))   \qquad \forall n,d \in \naturals.
-\]
+\end{equation}
 This implies that for the special choice
 \[
 	n = \left\lceil
@@ -865,32 +861,30 @@ Since $T(\cdot,d)$ is non-decreasing, it follows that $\lambda_{n,d} \le \vareps
 \[
 \comp(\varepsilon,d) \le  \left\lceil
 S_c \, h(cT(\varepsilon^{-1},d))
-\right\rceil \le   \lceil \underbrace{
-S_c \, h(cT(0,1))}_{=: \widetilde{S}_c/2} \, h(cT(\varepsilon^{-1},d))
+\right\rceil \le   \lceil
+S_c \, h(cT(\lambda_{1,1}^{-1},1)) \, h(cT(\varepsilon^{-1},d))
 \rceil\qquad \forall c, \varepsilon > 0, \, d \in \naturals.
 \]
+because $h$ is no smaller than $1$.
 
-Since $S_c \ge 1/h(cT(0,1))$ by definition \peter{[PETER: why do we know this? Could it be that we need to replace $T(0,1)$ by $T(\lambda_{1,1}^{-1},1)$?]}, it follows that $S_c \, h(cT(0,1)) \, h(cT(\varepsilon^{-1},d))  \ge 1$ and so
-\begin{align*}
+Since $S_c \ge 1/h(cT(\lambda_{1,1}^{-1},1))$ by \eqref{eq:Sclb}, it follows that $S_c \, h(cT(0,1)) \, h(cT(\varepsilon^{-1},d))  \ge 1$.  Define $\widetilde{S} : = 2 S_c \, h(cT(\lambda_{1,1}^{-1},1))$, and note that $\widetilde{S}_c$ must also be finite for all $c > 0$.  It follows that
+\begin{equation*}
 \max(1,\comp(\varepsilon,d))
-& \le  \lceil  S_c \, h(cT(0,1)) \, h(cT(\varepsilon^{-1},d))   \rceil
- =  \lceil
+ \le \lceil
 (\widetilde{S}_c/2) \, h(cT(\varepsilon^{-1},d))
-\rceil \\
-& \le   \widetilde{S}_c \, h(cT(\varepsilon^{-1},d))
+\rceil  \le   \widetilde{S}_c \, h(cT(\varepsilon^{-1},d))
 \qquad\forall c, \varepsilon > 0, \, d \in \naturals.
-\end{align*}
+\end{equation*}
 Since $h$ is strictly increasing, so is $h^{-1}$, and thus by \eqref{eq:submult_h_inverse},
 \begin{align*}
 h^{-1}(\max(1,\comp(\varepsilon,d)) ) & \le  h^{-1} \left(
 \widetilde{S}_c \, h(cT(\varepsilon^{-1},d))  \right)
 \\
-&  \le  h^{-1} (2 S_c) + cT (\varepsilon^{-1},d),
+&  \le  h^{-1}  (\widetilde{S}_c) + cT (\varepsilon^{-1},d),
 \quad \forall c, \varepsilon > 0, \, d \in \naturals.
 \end{align*}
 
-The finiteness of $S_c$ implies that $\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d) = \infty$ for all $d \in \naturals$.  Together with  the hypothesis on $\lim_{d \to \infty} T(\varepsilon^{-1},d)$ in \eqref{eq:h_cond}
-\peter{[PETER: Is the reference to \eqref{eq:h_cond} correct?]}, it follows that $\lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty$.  Therefore
+Since $\lim_{\varepsilon \to 0} T(\varepsilon^{-1},d) = \infty$ for all $d \in \naturals$ by \eqref{eq:Tlim}, and  $\lim_{d \to \infty} T(\varepsilon^{-1},d) = \infty$ by the hypothesis of this theorem, it follows that $\lim_{\varepsilon^{-1} + d \to \infty} T(\varepsilon^{-1},d) = \infty$.  Therefore
 \begin{equation*}
 	\lim_{\varepsilon^{-1} + d \to \infty} \frac{h^{-1}(\max(1,\comp(\varepsilon,d)))}{T(\varepsilon^{-1},d)}
 	\le \lim_{\varepsilon^{-1} + d \to \infty} \frac{h^{-1} (2 S_c)}{T(\varepsilon^{-1},d)}  + c = c \qquad\forall c >  0.
@@ -1132,7 +1126,7 @@ Define $\theUB: \naturals \to \natzero \cup \{\infty\}$
 \end{equation}
 Also, for each $d \in \naturals$ define the set
 \begin{equation} \label{eq:hIdef}
-\mathcal{I}_d :=\begin{cases}
+\hI = \mathcal{I}_d :=\begin{cases}
 \emptyset, & \theUB(d) = 0, \\
 \{1,\ldots, \theUB(d)\}, & 0 < \theUB(d) < \infty, \\
 \naturals, & \theUB(d) = \infty.
