@@ -121,7 +121,7 @@ The goal is to find a sequence of approximate solution operators, $\{\APP_d:\cb_
 where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals.  Note that we also allow adaptive information, i.e., the linear functionals may sequentially depend on each other.
 
 The information complexity of the problem $\SOL_d$ is given by the function $\comp:(0,\infty) \times \naturals \to \natzero$, where $\comp(\varepsilon,d)$ is the number of linear functionals required by the best \peter{admissible} algorithm to satisfy the error criterion \eqref{eq:errcrit}.
-By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity, since $d$ is typically the number of variables for the functions in $\cf_d$.
+By definition, the \kachi{information} complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity, since $d$ is typically the number of variables for the functions in $\cf_d$.
 
 For this case where arbitrary linear functionals are allowed, the optimal solution operator is
 \[
@@ -147,7 +147,7 @@ In this article, we investigate a \emph{generalized tractability function}, deno
 \begin{equation} \label{eq:Tspec}
     T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty).
 \end{equation}
-The conditions we require $T$ to satisfy are described in  Section \ref{sec:not}, however, the basic idea is that we define our approximation problem to be tractable if $\comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ for some constant, $C_{\vp}$, depending only on the parameter $\vp$. \kachi{The parameter $\vp$ is a $s$-dimensional vector, where $\vp \geq 0$ implies that each component of $\vp$ is nonnegative.} In practice, we expect $T(\varepsilon^{-1},d,\vp)$ to increase sub-exponentially  with increasing $\varepsilon^{-1}$ and/or $d$, however, most of our theorems do not require such an assumption.
+The conditions we require $T$ to satisfy are described in  Section \ref{sec:not}, however, the basic idea is that we define our approximation problem to be tractable if $\comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ for some constant, $C_{\vp}$, depending only on the parameter $\vp$. \kachi{The parameter $\vp$ is a $s$-dimensional vector, for $s \geq 1$, where $\vp \geq 0$ implies that each component of $\vp$ is non-negative.} In practice, we expect $T(\varepsilon^{-1},d,\vp)$ to increase sub-exponentially  with increasing $\varepsilon^{-1}$ and/or $d$, however, most of our theorems do not require such an assumption.
 
 \Cref{thm_main_strong_tract2,thm_main_tract2,thm_main_rest_strong_tract,thm_main_rest_tract} all take the form
 \begin{multline}
@@ -164,13 +164,13 @@ The conditions we require $T$ to satisfy are described in  Section \ref{sec:not}
 \end{multline}
 \Cref{thm:subhT} is of similar, but not equivalent, form.
 
+\kachi{In Table \ref{tab:commonT} below we give common forms of the tractability function, $T$ considered in this paper.}
 
-\peter{TODO: Maybe add a short paragraph on the notation used in the paper and on its structure? In particular, we should introduce
-an ordering of the parameters $\vp$.}[\kachi{KACHI: I will take care of this}] 
+%\peter{TODO: Maybe add a short paragraph on the notation used in the paper and on its structure? In particular, we should introducean ordering of the parameters $\vp$.}[\kachi{KACHI: I will take care of this}] 
 
-\kachi{[KACHI: I will write about notations used in this paper. Is there are need to change notations like $[1,\infty)$ to $\naturals$ and $[0,\infty)$ to $\naturals_0$]}
+%\kachi{[KACHI: I will write about notations used in this paper. Is there are need to change notations like $[1,\infty)$ to $\naturals$ and $[0,\infty)$ to $\naturals_0$]}
 
-\kachi{We denote the set of positive integers by $\naturals$ and and the set of non-negative integers by $\naturals_0$.}
+\kachi{We denote the set of positive integers by $\naturals$ and and the set of non-negative integers by $\naturals_0$. The remainder of this paper is organized as follows.}
 In Section \ref{sec:spt}, we give the definitions of the considered tractability notions, in particular (strong) tractability. We consider strong tractability when the information complexity is independent of the dimension, $d$. We then turn to tractability  when the information complexity \peter{may depend on both} $d$ and $\varepsilon^{-1}$. In Section \ref{sec:examples} we provide examples of \peter{tractability functions} for both the algebraic and exponential cases. We also consider other notions of tractability such as quasi-polynomial tractability, and a generalized notion of weak tractability. In the case of generalized weak tractability, we give the necessary and sufficient conditions on the notion of exponential tractability in Section \ref{sec:subh} \peter{[I think I do not quite understand what we mean by the last sentence.]}. 
 
 \section{(Strong) Tractability}\label{sec:spt}
@@ -281,19 +281,19 @@ If \eqref{eq:strong_tractiff3} holds for some $\vp$, let  $\widetilde{\cp}_{\tex
 \textbf{Sufficient condition:}\newline
 We make the first part of the argument in some generality so that it can be reused in the proof of Theorem \ref{thm_main_tract2} for tractability.  Fix any $\varepsilon > 0$ and any $d \in \naturals$.
 \kachi{[KACHI: It seems the notation of the dimension has change from $d$ to $\delta$. I will work on this.]}
-Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d,\vp)$ are non-decreasing in $i$ for any $\thed\in\naturals$. In particular, for  any $N\in\naturals$ with $n\ge N$, we have
+Since the $\lambda_{i,d}$ are non-increasing in $i$, it follows that the $T(\lambda_{i,d}^{-1},d,\vp)$ are non-decreasing in $i$ for any $d\in\naturals$. In particular, for  any $N\in\naturals$ with $n\ge N$, we have
 \begin{align*}
     \lambda_{n+1,d} \le \lambda_{n,d} \le \cdots \le \lambda_{N,d}
-    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},\thed,\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},\thed,\vp)} \le \cdots \le \frac{1}{T(\lambda_{N, d}^{-1},\thed,\vp)} \\
-     \implies \frac{1}{T(\lambda_{n+1, d}^{-1},\thed,\vp) }
-    \le &\frac{1}{n-N+1} \sum_{i=N}^n  \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp) }
-    \le \frac{1}{n-N+1} \sum_{i=N}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)}.
+    & \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d,\vp)} \le \frac{1}{T(\lambda_{n, d}^{-1},d,\vp)} \le \cdots \le \frac{1}{T(\lambda_{N, d}^{-1},d,\vp)} \\
+     \implies \frac{1}{T(\lambda_{n+1, d}^{-1},d,\vp) }
+    \le &\frac{1}{n-N+1} \sum_{i=N}^n  \frac{1}{T(\lambda_{i, d}^{-1},d,\vp) }
+    \le \frac{1}{n-N+1} \sum_{i=N}^\infty  \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}.
 \end{align*}
 Thus, we can conclude from the previous line that
 \begin{multline} \label{eq:implicate_a}
-    n - N +1 \ge T(\varepsilon^{-1},\thed,\vp) \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)} \\
-   \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},\thed,\vp)} \le
-   \frac{1}{n-N+1} \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp) } \le \frac{1}{T(\varepsilon^{-1},\thed,\vp)} \\ \forall \thed, n, N \in \naturals.
+    n - N +1 \ge T(\varepsilon^{-1},d,\vp) \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)} \\
+   \implies   \frac{1}{T(\lambda_{n+1, d}^{-1},d,\vp)} \le
+   \frac{1}{n-N+1} \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp) } \le \frac{1}{T(\varepsilon^{-1},d,\vp)} \\ \forall d, n, N \in \naturals.
 \end{multline}
 We note that the left side of the implication implies $n \ge N$ automatically since $n$ is an integer  $n - N +1$ is assumed to be positive.
 
@@ -302,13 +302,13 @@ Moreover, given that $T$ is increasing in its arguments, we have the following e
 	\nonumber
 	\comp(\varepsilon, d) & = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
 	\nonumber
-	& = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},\thed,\vp)}\le \frac{1}{T(\varepsilon^{-1},\thed,\vp) }\biggr\} \qquad  \forall \thed\in \naturals\\
+	& = \min \biggl\{n \in \natzero : \frac{1}{T(\lambda_{n+1,d}^{-1},d,\vp)}\le \frac{1}{T(\varepsilon^{-1},d,\vp) }\biggr\} \qquad  \forall d\in \naturals\\
 	\nonumber
-	& \le  \min \biggl\{n \in \natzero : n \ge N - 1 + T(\varepsilon^{-1},\thed,\vp) \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)} \biggr\} \;  \forall  \thed, N \in \naturals, \quad \text{by \eqref{eq:implicate_a}} \\ 
-	& \le  T(\varepsilon^{-1},\thed,\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},\thed,\vp)}  +  \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)} \Biggr] \quad \forall  \thed, N \in \naturals. \label{eq:compUP}
+	& \le  \min \biggl\{n \in \natzero : n \ge N - 1 + T(\varepsilon^{-1},d,\vp) \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)} \biggr\} \;  \forall  d, N \in \naturals, \quad \text{by \eqref{eq:implicate_a}} \\ 
+	& \le  T(\varepsilon^{-1},d,\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},d,\vp)}  +  \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)} \Biggr] \quad \forall  d, N \in \naturals. \label{eq:compUP}
 \end{align}
 
-Now we take this upper bound further, specializing to the case of $\thed=1$ and $N=L_{\vp}$:
+Now we take this upper bound further, specializing to the case of $d=1$ and $N=L_{\vp}$:
 \begin{align*}
        \comp(\varepsilon,d)
        & \le T(\varepsilon^{-1},1, \vp) \Biggl [ \frac{L_{\vp}}{T(\varepsilon^{-1},1, \vp)}  + \underbrace{\sum_{i=L_{\vp}}^\infty \frac{1}{T(\lambda_{i, d}^{-1},1,\vp)}}_{\le S_{\vp} <\infty\ \text{by \eqref{eq:strong_tractiff3}} }
@@ -1078,7 +1078,7 @@ This concludes the proof of Theorem \ref{thm:subhT}.
 \begin{example}[Weak Tractability]
 	Suppose that
 	\[
-	T(\varepsilon^{-1},d,s,t) = \max(1,\varepsilon^{-1})^s + d^t, \quad \forall \varepsilon,s,t > 0, \, d \in \naturals, \qquad h(x) = \exp(x) \quad \forall x \ge 0.
+	T(\varepsilon^{-1},d,\kachi{(s,t)}) = \max(1,\varepsilon^{-1})^s + d^t, \quad \forall \varepsilon,s,t > 0, \, d \in \naturals, \qquad h(x) = \exp(x) \quad \forall x \ge 0.
 	\]
 	Then Theorem \ref{thm:subhT} implies that
 	\[\lim_{\varepsilon^{-1}+d\rightarrow \infty} \frac{\log( \comp(\varepsilon,d))}{\varepsilon^{-s}+d^t} = 0

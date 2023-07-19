@@ -36,6 +36,7 @@
 \newcommand{\tI}{\widetilde{I}}
 
 \DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator{\card}{card}
 
 %\DeclareMathOperator{\comp}{comp}
 \DeclareMathOperator{\SOL}{SOL}
@@ -80,7 +81,7 @@ country={Austria}}
 
 
 \begin{abstract}
-    A large literature specifies conditions under which the information complexity for a sequence of numerical problems defined for dimensions $1, 2, \ldots$ grows at a moderate rate, i.e., the sequence of problems is \emph{tractable}.  Here we focus on the situation where the space of available information consists of all linear functionals and the problems are defined as operator mappings between Hilbert spaces.  We unify the proofs of known tractability results and generalize a number of existing results.  These generalizations are expressed as five theorems that provide equivalent conditions for (strong) tractability in terms of sums of functions of the singular values.
+    A large literature specifies conditions under which the information complexity for a sequence of numerical problems defined for dimensions $1, 2, \ldots$ grows at a moderate rate, i.e., the sequence of problems is \emph{tractable}.  Here, we focus on the situation where the space of available information consists of all linear functionals and the problems are defined as operator mappings between Hilbert spaces.  We unify the proofs of known tractability results and generalize a number of existing results.  These generalizations are expressed as five theorems that provide equivalent conditions for (strong) tractability in terms of sums of functions of the singular values.
 \end{abstract}
 
 \maketitle
@@ -99,9 +100,9 @@ TODO: We should check for consistency of the use of the $\forall$ symbol in disp
 
 \bigskip
 
-The information complexity of a problem is the number of function data required to solve the problem within the desired error tolerance.  A problem is tractable if the information complexity does not grow too large as the dimension of the problem increases or the error threshold decreases.  There are a number of tractability results for numerical problems beginning with \cite{W94a,W94b}, spawning numerous articles, and filling a series of three impressive volumes \cite{NovWoz08a,NovWoz10a,NovWoz12a}.  The purpose of this article is to unify the many of these tractability results for approximation problems where all linear functional data is available.
+The information complexity of a problem is the number of function data required to solve the problem within the desired error tolerance.  A problem is tractable if the information complexity does not grow too large as the dimension of the problem increases or the error threshold decreases.  There are a number of tractability results for numerical problems, beginning in the 1990s with \cite{W94a,W94b}, spawning numerous articles since then, and filling a series of three impressive volumes \cite{NovWoz08a,NovWoz10a,NovWoz12a}.  Research on tractability continues at a vigorous pace.  This article aims to unify and generalize many existing tractability results for approximation problems where all linear functional data is available.
 
-Let $\{\cf_d\}_{d \in \naturals}$ and $\{\cg_d\}_{d \in \naturals}$ be sequences of Hilbert spaces, and $\{\SOL_d : \cf_d \to \cg_d\}_{d \in \naturals}$ be a sequence of linear solution operators  with adjoints $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors
+Let $\{\cf_d\}_{d \in \naturals}$ and $\{\cg_d\}_{d \in \naturals}$ be sequences of Hilbert spaces, and let $\{\SOL_d : \cf_d \to \cg_d\}_{d \in \naturals}$ be a sequence of linear solution operators  with adjoints $\SOL_d^*$ such that $\SOL_d^*\SOL_d : \cf_d \to \cf_d$ has eigenvalues and orthonormal eigenvectors
 \begin{equation} \label{eq:eigenvalues}
  \lambda_{1,d}^2 \ge \lambda_{2,d}^2 \ge \cdots, \qquad u_{1,d}, u_{2,d}, \ldots, \qquad d \in \naturals.
 \end{equation}
@@ -111,17 +112,21 @@ This means that the non-negative $\lambda_{i,d}$ are the singular values of the 
 
 We make the technical assumption that $\SOL_d$ is a compact operator. This implies (see, e.g., \cite{NovWoz08a}) that $\lambda_{i,d}$ converges to zero as $i$ tends to infinity for every $d$, which in turn implies that the problem is solvable by suitable algorithms. To avoid trivial cases, we assume that there are an infinite number of positive eigenvalues for every $d$.
 
-The goal is to find a sequence of approximate solution operators, $\{\APP_d:\cb_d \times (0,\infty) \to \cg_d\}_{d \in \naturals}$ satisfying
+The goal is to find a sequence of approximate solution operators, $\{\APP_d:\cb_d \times (0,\infty) \to \cg_d\}_{d \in \naturals}$, defined on the unit ball of functions in $\cf_d$, denoted $\cb_d$, which  satisfy an absolute error criterion:
 \begin{equation}
     \label{eq:errcrit}
-    \norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon \qquad \forall f \in \cb_d, \ \varepsilon \in (0,\infty),
+    \norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon \qquad \forall f \in \cb_d, \ \varepsilon \in (0,\infty).
 \end{equation}
-where $\cb_d$ is the unit ball in $\cf_d$ and $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals.  Note that we also allow adaptive information, i.e., the linear functionals may sequentially depend on each other.
+Here, $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals.  Note that we also allow adaptive information, i.e., the linear functionals may sequentially depend on each other.
 
-The information complexity of the problem $\SOL_d$ is given by the function $\comp:(0,\infty) \times \naturals \to \natzero$, where $\comp(\varepsilon,d)$ is the number of linear functionals required by the best admissible algorithm to satisfy the error criterion \eqref{eq:errcrit}.
-By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity, since $d$ is typically the number of variables for the functions in $\cf_d$.
+The information complexity of the problem $\SOL_d$ is given by the function 
+\[
+\comp:(0,\infty) \times \naturals \to \natzero, 
+\]
+where $\comp(\varepsilon,d)$ is the number of linear functionals required by the best admissible algorithm to satisfy the error criterion \eqref{eq:errcrit}.
+By definition, the complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity since $d$ is typically the number of variables for the functions in $\cf_d$.
 
-For this case where arbitrary linear functionals are allowed, the optimal solution operator is
+For this case where arbitrary linear functionals are allowed, the optimal solution operator is known to be
 \[
 \APP_d(f,\varepsilon) = \sum_{i=1}^n \SOL_d(u_{i,d}) \ip[\cf_d]{f}{u_i},
 \]
@@ -138,16 +143,17 @@ Alternatively, one could also consider the \textit{normalized} error criterion, 
 \]
 This means that, essentially, in the tractability analysis below, all criteria would be normalized by the first eigenvalue $\lambda_{1,d}$. For the sake of brevity and clarity of notation, we restrict ourselves to the absolute error criterion here, but presumably analogous results hold for the normalized setting.
 
+The question of tractability is one of determining how fast the information complexity increases as $\varepsilon$ tends to zero and/or as $d$ tends to infinity.  Although \eqref{eq:comp_def} has a relatively simple in form, its dependence on the ordering of the singular values means that it is not obvious what the behavior of $\comp(\varepsilon, d)$ is as $\varepsilon^{-1}$ and/or $d$ tend to infinity.
 
-The question of tractability is one of determining how fast the information complexity increases as $\varepsilon$ tends to zero and/or as $d$ tends to infinity.  We want to bound the complexity in terms of a simple function, $T$, of $\varepsilon^{-1}$ and $d$ and identify simple conditions on the singular values that are equivalent to this bound holding. We would like to point out that generalized tractability specified by a function $T$ has been considered before in the literature. In particular, there are several papers by Gnewuch and Wo\'{z}niakowski (see \cite{GW06,GW08,GW09,GneWoz11a} ), and also \cite[Chapter 8]{NovWoz08a} is devoted to this topic. To our best knowledge, however, these references mainly focus on the special case of tensor product problems, which we do not do here, and the conditions for tractability derived there are mostly in terms of properties of the function $T$, and not in terms of sums of (functions of) the eigenvalues of a problem. Hence, we consider the present paper an addition to what is presently known on this subject.
+We want to bound the information complexity in terms of a simple function, $T$, of $\varepsilon^{-1}$ and $d$ and identify conditions on the singular values that are easier to verify that are equivalent to this bound on the information complexity holding. We note that generalized tractability specified by a function $T$ has been considered before in the literature. In particular, there are several papers by Gnewuch and Wo\'{z}niakowski (see \cite{GW06,GW08,GW09,GneWoz11a}), and also \cite[Chapter 8]{NovWoz08a} is devoted to this topic. To our understanding, however, these references mainly focus on the special case of tensor product problems, a restriction we do not make.  Moreover, the conditions for tractability derived there are mostly in terms of properties of the function $T$, and not in terms of sums of (functions of) the eigenvalues of a problem. Hence, the present paper an adds to what is presently known on this subject.
 
 In this article, we investigate a \emph{generalized tractability function}, denoted by $T$:
 \begin{equation} \label{eq:Tspec}
     T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty).
 \end{equation}
-The conditions we require $T$ to satisfy are described in  Section \ref{sec:not}, however, the basic idea is that we define our approximation problem to be tractable if $\comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ for some constant, $C_{\vp}$, depending only on the parameter $\vp$. \kachi{The parameter $\vp$ is a $s$-dimensional vector, where $\vp \geq 0$ implies that each component of $\vp$ is nonnegative.} In practice, we expect $T(\varepsilon^{-1},d,\vp)$ to increase sub-exponentially  with increasing $\varepsilon^{-1}$ and/or $d$, however, most of our theorems do not require such an assumption.
+The conditions we require $T$ to satisfy are described in  Section \ref{sec:not}, however, the basic idea is that we define our approximation problem to be tractable if $\comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ for some constant, $C_{\vp}$, depending only on the parameter $\vp$. The parameter $\vp$ is an $s$-dimensional vector, where $\vp \geq 0$ implies that each component of $\vp$ is nonnegative. In practice, we expect $T(\varepsilon^{-1},d,\vp)$ to increase sub-exponentially  with increasing $\varepsilon^{-1}$ and/or $d$, however, most of our theorems do not require such an assumption.
 
-\Cref{thm_main_strong_tract2,thm_main_tract2,thm_main_rest_strong_tract,thm_main_rest_tract} all take the form
+\Cref{thm_main_strong_tract2,thm_main_tract2,thm_main_rest_strong_tract,thm_main_rest_tract} below all take the form
 \begin{multline}
   \exists \,C_{\vp} > 0 \text{ with }
     \comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},\thed,\vp) \quad \forall (\varepsilon^{-1},d) \in \Omega \\
@@ -160,7 +166,8 @@ The conditions we require $T$ to satisfy are described in  Section \ref{sec:not}
         \infty, & \theM(d) = 0.
         \end{cases}
 \end{multline}
-\Cref{thm:subhT} is of similar, but not equivalent, form.
+The differences in these theorems of are in the choices of $\thed$, $\Omega$, $\theM$, and $\theUB$.  Although some of these theorems are special cases of others, we prove each separately to allow the reader to become familiar with the arguments used as additional layers of complexity are added.
+\Cref{thm:subhT} has a somewhat different form than above.  
 
 
 \peter{TODO: Maybe add a short paragraph on the notation used in the paper and on its structure? In particular, we should introduce
@@ -205,7 +212,7 @@ Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit, whi
 \begin{equation}\label{eq:T0}	T(0,d,\vp):=\lim_{\varepsilon\to\infty}T(\varepsilon^{-1},d,\vp) = \inf_\varepsilon T(\varepsilon^{-1},d,\vp) \ge T(0,1,\vzero) > 0.
 \end{equation}
 \end{subequations}
-Finally, there is a technical assumption required for our analysis.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
+Finally, there is a technical assumption required for our analysis in \Cref{sec:spt,sec:restricted}.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:ptauassume}
 	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in [1,\infty).
 \end{equation}
@@ -242,6 +249,7 @@ If \eqref{eq:tract_def} holds for some $\vp$, it clearly holds for larger $\vp$.
 	\cp_{\textup{trct}} : = \{\vp^* : \eqref{eq:tract_def} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}, \qquad
 	\cp_{\textup{strct}} : = \{\vp^* : \eqref{eq:strong_tract_def} \text{ holds }\forall \vp \in (\vp^*,\boldsymbol{\infty})\}.
 \end{equation*}
+If $\vp^* \in \cp_{\textup{(s)trct}}$, (strong) tractability may not hold for $\vp = \vp^*$, but it must hold for any $\vp$ whose components are all greater than the corresonding components of $\vp^*$.
 
 \begin{definition}
     The  set of optimal parameters is defined as all of those parameters satisfying the (strong) tractability conditions that are not greater than or equal to others:
@@ -295,7 +303,7 @@ Thus, we can conclude from the previous line that
 \end{multline}
 We note that the left side of the implication implies $n \ge N$ automatically since $n$ is an integer  $n - N +1$ is assumed to be positive.
 
-Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity via \eqref{eq:comp_def}:
+Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the information complexity via \eqref{eq:comp_def}:
 \begin{align} %\label{eq:comp_equiv}
 	\nonumber
 	\comp(\varepsilon, d) & = \min \{n \in \natzero : \lambda_{n+1, d} \le \varepsilon\} \\
@@ -594,7 +602,10 @@ In the paper \cite{KriWoz19a}, the authors derived conditions equivalent to expo
         \sup_{d\in\naturals} d^{-\tau_1} \sum_{i=\lceil C d^{\tau_3} \rceil}^{\infty} \lambda_{i,d}^{i^{-\tau_2}} < \infty.
     \end{equation}
 \end{itemize}
-Firstly, it should be noted that the condition \eqref{eq:exp_spt} is easier to check in practice than the condition \eqref{eq:KW_exp_spt}. Indeed, since in \eqref{eq:KW_exp_spt} the summation indices $i$ show up in the exponents of the summands, we need the exact ordering of the eigenvalues $\lambda_{i,d}$, whereas in \eqref{eq:exp_spt} we only have a summation of the values of $1/T(\lambda_{i,d}^{-1},d,\vp)$, and the exact order of the eigenvalues can be neglected. A similar
+
+\fred{Fred: Where does $p$ and/or $q$ come in conditions \eqref{eq:KW_exp_spt} and \eqref{eq:KW_exp_pt}?}
+
+Firstly, it should be noted that our condition \eqref{eq:exp_spt} is easier to check in practice than condition \eqref{eq:KW_exp_spt}. Since in \eqref{eq:KW_exp_spt} the summation indices $i$ show up in the exponents of the summands, we need the exact ordering of the eigenvalues $\lambda_{i,d}$, whereas in \eqref{eq:exp_spt} we only have a summation of the values of $1/T(\lambda_{i,d}^{-1},d,\vp)$, and the exact order of the eigenvalues can be neglected. A similar
 observation holds for \eqref{eq:exp_pt} and \eqref{eq:KW_exp_pt}.
 
 Secondly, we would like to show that the conditions \eqref{eq:exp_spt} and \eqref{eq:KW_exp_spt}, as well as the conditions \eqref{eq:exp_pt} and \eqref{eq:KW_exp_pt} are indeed equivalent. We do this for the latter two conditions, i.e., for the conditions on exponential polynomial tractability. The case of exponential strong polynomial tractability is simpler and can be treated analogously. We thus show equivalence of \eqref{eq:exp_pt} and \eqref{eq:KW_exp_pt} in the following.
@@ -609,7 +620,7 @@ Define
 B_d:=\left\{i\in\naturals \colon i\ge \left\lceil Cd^{\tau_3}\right\rceil\quad\mbox{and}\quad
 \lambda_{i,d}^{i^{-\tau_2}}>\frac{1}{e}\right\}.
 \]
-Due to our assumption, we see that $\abs{B_d} < e\,M\,d^{\tau_1}$ and $\abs{B_d}\le \lfloor e\,M\,d^{\tau_1} \rfloor$. Suppose now that $i\ge \lceil C d^{\tau_3}\rceil$ but $i\not\in B_d$, which means that
+Due to our assumption, we see that $\card(B_d) < e\,M\,d^{\tau_1}$ and $\card(B_d)\le \lfloor e\,M\,d^{\tau_1} \rfloor$. Suppose now that $i\ge \lceil C d^{\tau_3}\rceil$ but $i\not\in B_d$, which means that
 \[\lambda_{i,d}^{i^{-\tau_2}} \le \frac{1}{e} \iff \log (\lambda_{i,d}^{-1})\ge i^{\tau_2}.\]
 Now, choose $p> 1/\tau_2$, $q=\max\{\tau_1,\tau_3\}$, and $L_{(p,q)}=\max\{C, e\, M\}$, which implies that $\lceil L_{(p,q)} d^{q}\rceil \ge e\, M\, d^{\tau_1}$. Then, for any $d\in\naturals$,
 \begin{align*}
@@ -686,7 +697,7 @@ We say that a problem is $T$-separable tractable \peter{[PETER: I am wondering i
 \[
 \comp(\varepsilon,d) \leq  C_{\vp} \,  \phi(\varepsilon^{-1},p)\, \psi(d,q)\qquad \forall \varepsilon >0, \, d\in\naturals.
 \]
-A problem is strongly $T$-separable tractable with parameter $\vp$ iff the complexity is independent of $d$, that is, there exists a positive constant $C_{\vp}$ which again does not depend on $\varepsilon$ and $d$ such that
+A problem is strongly $T$-separable tractable with parameter $\vp$ iff the information complexity is independent of $d$, that is, there exists a positive constant $C_{\vp}$ which again does not depend on $\varepsilon$ and $d$ such that
 \[
 \comp(\varepsilon,d) \leq C_{\vp}\,\phi(\varepsilon^{-1},p)\qquad \forall \varepsilon >0, \, d\in\naturals,
 \] where in this case $\vp = p$ is a scalar.
@@ -1004,7 +1015,7 @@ This concludes the proof of Theorem \ref{thm:subhT}.
 	The expression on the left is the notion of $(s,t)$-weak tractability introduced in \cite{SW15}, and the condition on the right was derived in \cite[Theorem 3.1]{WW17}.  Weak tractability corresponds to $(s,t)=(1,1)$, and uniform weak tractability corresponds to the case when a problem is weakly tractable for all positive $s$ and $t$.
 \end{example}
 
-\section{(Strong) Tractability on a Restricted Domain}
+\section{(Strong) Tractability on a Restricted Domain} \label{sec:restricted}
 
 Suppose that the domain of interest $(\varepsilon^{-1},d)$ is not all of $(0,\infty) \times \naturals$ but some subset
 \begin{equation}
@@ -1014,7 +1025,7 @@ We then expect that the equivalent conditions for (strong) tractability will be 
 
 \begin{definition}
     A problem is strongly
-$T$-tractable with parameter $\vp$ \emph{on the restricted domain $\Omega$} iff the complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$, again independent of $\varepsilon$ and $d$, such that
+$T$-tractable with parameter $\vp$ \emph{on the restricted domain $\Omega$} iff the information complexity is independent of the dimension of the problem, that is, there exists a positive constant $C_{\vp}$, again independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:rest_strong_tract_def}
 	\comp(\varepsilon,d) \le C_{\vp}\, T(\varepsilon^{-1},1,\vp) \qquad \forall(\varepsilon^{-1},d) \in \Omega.
 \end{equation}
@@ -1105,7 +1116,7 @@ Thus, we can conclude from the previous line that
    \frac{1}{n-N+1} \sum_{i=N}^{\theUB(d)} \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp) } \le \frac{1}{T(\varepsilon^{-1},\thed,\vp)} \\ \forall \thed \in \naturals,\  n, N \in \hI_d,   \ N \le n.
 \end{multline}
 
-Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the complexity via
+Moreover, given that $T$ is increasing in its arguments, we have the following equivalent expression for the information complexity via
 \eqref{eq:comp_def}:
 \begin{align} %\label{eq:comp_equiv}
 	\nonumber
