@@ -151,7 +151,7 @@ In this article, we investigate a \emph{generalized tractability function}, deno
 \begin{equation} \label{eq:Tspec}
     T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty).
 \end{equation}
-The conditions we require $T$ to satisfy are described in  Section \ref{sec:not}, however, the basic idea is that we define our approximation problem to be tractable if $\comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ for some constant, $C_{\vp}$, depending only on the parameter $\vp$. The parameter $\vp$ is an $s$-dimensional vector, where $\vp \geq 0$ implies that each component of $\vp$ is nonnegative. In practice, we expect $T(\varepsilon^{-1},d,\vp)$ to increase sub-exponentially  with increasing $\varepsilon^{-1}$ and/or $d$, however, most of our theorems do not require such an assumption.
+The conditions we require $T$ to satisfy are described in  Section \ref{sec:not}, however, the basic idea is that we define our approximation problem to be tractable if $\comp(\varepsilon, d) \le  C_{\vp}\, T(\varepsilon^{-1},d,\vp)$ for some constant, $C_{\vp}$, depending only on the parameter $\vp$. The parameter $\vp$ is an $s$-dimensional vector with $s \geq 1$, where $\vp \geq \vzero$ implies that each component of $\vp$ is nonnegative. In practice, we expect $T(\varepsilon^{-1},d,\vp)$ to increase sub-exponentially  with increasing $\varepsilon^{-1}$ and/or $d$, however, most of our theorems do not require such an assumption.
 
 \Cref{thm_main_strong_tract2,thm_main_tract2,thm_main_rest_strong_tract,thm_main_rest_tract} below all take the form
 \begin{multline}
