@@ -124,7 +124,7 @@ The information complexity of the problem $\SOL_d$ is given by the function
 \comp:(0,\infty) \times \naturals \to \natzero, 
 \]
 where $\comp(\varepsilon,d)$ is the number of linear functionals required by the best admissible algorithm to satisfy the error criterion \eqref{eq:errcrit}.
-By definition, the \kachi{information }complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity since $d$ is typically the number of variables for the functions in $\cf_d$.
+By definition, the information complexity is non-decreasing  as $\varepsilon$ tends to zero.  We also expect it to be non-decreasing as $d$ tends to infinity since $d$ is typically the number of variables for the functions in $\cf_d$.
 
 For this case where arbitrary linear functionals are allowed, the optimal solution operator is known to be
 \[
@@ -213,7 +213,7 @@ Since $T(\cdot,d,\vp)$ is non-decreasing, we may define the following limit, whi
 \end{subequations}
 Finally, there is a technical assumption required for our analysis in \Cref{sec:spt,sec:restricted}.  There exists a $K_{\vp,\tau}$ depending on $\vp$ and $\tau$, but  independent of $\varepsilon$ and $d$, such that
 \begin{equation} \label{eq:ptauassume}
-	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp),   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in [1,\infty).
+	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp)   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in [1,\infty).
 \end{equation}
 
 Certain common notions of tractability  covered by the general situation described above are provided in Table \ref{tab:commonT}.  Here, $\vp = (p,q)$ in some cases, and $\vp$ is a scalar in other cases. A general reference
@@ -349,14 +349,14 @@ i(\infty,\vp) =\lfloor C_{\vp}\, T(0,1,\vp)\rfloor +1.
 Thus, it follows by \eqref{eq:lambda_K_strong3} that $\lambda_{i(\varepsilon,\vp),d} \le \varepsilon$.
 Note furthermore that we always have
 \[
-i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1, \qquad \forall \varepsilon > 0, \ d \in \mathbb{N},
+i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1 \qquad \forall \varepsilon > 0, \ d \in \mathbb{N},
 \]
 since
 $T(\cdot,1, \vp)$ is non-decreasing.
 
 For $\varepsilon$ taking on all positive values, $i(\varepsilon,\vp)$ takes on, by \eqref{eq:Tlim}, all values greater than or equal to $i(\infty,\vp)$, so
 \[
-i\le C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1, \qquad \forall i \ge i(\infty,\vp), \ d \in \naturals.
+i\le C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1 \qquad \forall i \ge i(\infty,\vp), \ d \in \naturals.
 \]
 This implies via our technical assumption \eqref{eq:ptauassume} that, for any $\tau>1$,
 \begin{gather*}
@@ -459,14 +459,14 @@ i (\infty,d,\vp) := \lfloor C_{\vp}\, T(0,d,\vp)\rfloor +1 \ge 1.
 Thus, it follows by \eqref{eq:lambda_K4} that $\lambda_{i(\varepsilon,d,\vp),d} \le \varepsilon$.
 Note furthermore that we always have
 \[
-i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,d,\vp),d}^{-1},d,\vp)+1, \qquad \forall \varepsilon > 0, \ d \in \naturals,
+i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,d,\vp),d}^{-1},d,\vp)+1 \qquad \forall \varepsilon > 0, \ d \in \naturals,
 \]
 since
 $T(\cdot,d,\vp)$ is non-decreasing.
 
 For $\varepsilon$ taking on all positive values, $i(\varepsilon,d,\vp)$ takes on, by \eqref{eq:Tlim}, all values greater than or equal to $i(\infty,d,\vp)$, so
 \[
-i\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1, \qquad \forall i \ge i(\infty,d,\vp),  \ d \in \naturals.
+i\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i,d}^{-1},d,\vp)+1 \qquad \forall i \ge i(\infty,d,\vp),  \ d \in \naturals.
 \]
 This implies via our technical assumption \eqref{eq:ptauassume} that for any $\tau > 1$,
 \begin{gather*}
@@ -555,7 +555,7 @@ Then Theorem \ref{thm_main_tract2} yields the  equivalent condition for algebrai
 \[
  \sup_{d\in\naturals}\, d^{-q} \sum_{i=\lceil L_{(p,q)} d^{q}\rceil}^\infty \min\{1,\lambda_{i,d}^p\}  < \infty \text{ for some } p,q \ge 0, L_{(p,q)} \in \naturals.
 \]
-\kachi{[KACHI: I have questions regarding $\vp$.]}
+
 Furthermore, the set of optimal $(p,q)$ is a subset of
 \begin{multline*}
 \{(p^*,q^*) : \text{the above condition holds for all }(p,q) \in (p^*,\infty) \times (q^*,\infty) \\
@@ -570,7 +570,7 @@ This essentially recovers the result on polynomial tractability in \cite[Theorem
 Let the tractability function, $T$,
 be defined by
 \[
- T(\varepsilon^{-1},d,\vp)= [\max\{1,\log(1+\varepsilon^{-1})\}]^{\vp}, \quad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
+ T(\varepsilon^{-1},d,\vp)= [\max\{1,\log(1+\varepsilon^{-1})\}]^{\vp} \quad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty),
 \]
 where $\vp=p$ is a scalar. Then Theorem \ref{thm_main_strong_tract2} yields the equivalent condition for exponential strong polynomial tractability:
 \begin{equation}\label{eq:exp_spt}
@@ -582,7 +582,7 @@ In this case the optimal $p$ is the infimum of all $p$ for which the above condi
 Let the tractability function, $T$,
 be defined by
 \[
- T(\varepsilon^{-1},d,\vp)=\left[\max\{1,\log(1+\varepsilon^{-1})\}\right]^p\, d^q, \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty)^2,
+ T(\varepsilon^{-1},d,\vp)=\left[\max\{1,\log(1+\varepsilon^{-1})\}\right]^p\, d^q \qquad \forall \varepsilon > 0, \,  d \in \naturals, \, \vp \in [0,\infty)^2,
 \] where $\vp = (p,q)$. Then Theorem \ref{thm_main_tract2} yields  the equivalent condition for exponential polynomial tractability:
 \begin{equation}\label{eq:exp_pt}
  \sup_{d\in\naturals}\, d^{-q} \sum_{i=\lceil L_{(p,q)} d^{q}\rceil}^\infty \frac{1}{[\max\{1,\log(1+\lambda_{i,d}^{-1})\}]^p} < \infty  \text{ for some } p,q \ge 0, L_{(p,q)} \in \naturals.
@@ -889,7 +889,7 @@ Since $h$ is strictly increasing, so is $h^{-1}$, and thus by \eqref{eq:submult_
 h^{-1}(\max(1,\comp(\varepsilon,d)) ) & \le  h^{-1} \left(
 \widetilde{S}_c \, h(cT(\varepsilon^{-1},d))  \right)
 \\
-&  \le  h^{-1}  (\widetilde{S}_c) + cT (\varepsilon^{-1},d),
+&  \le  h^{-1}  (\widetilde{S}_c) + cT (\varepsilon^{-1},d)
 \quad \forall c, \varepsilon > 0, \, d \in \naturals.
 \end{align*}
 
@@ -1003,7 +1003,7 @@ This concludes the proof of Theorem \ref{thm:subhT}.
 \begin{example}[Weak Tractability]
 	Suppose that
 	\[
-	T(\varepsilon^{-1},d,s,t) = \max(1,\varepsilon^{-1})^s + d^t, \quad \forall \varepsilon,s,t > 0, \, d \in \naturals, \qquad h(x) = \exp(x) \quad \forall x \ge 0.
+	T(\varepsilon^{-1},d,s,t) = \max(1,\varepsilon^{-1})^s + d^t \quad \forall \varepsilon,s,t > 0, \, d \in \naturals, \qquad h(x) = \exp(x) \quad \forall x \ge 0.
 	\]
 	Then Theorem \ref{thm:subhT} implies that
 	\[\lim_{\varepsilon^{-1}+d\rightarrow \infty} \frac{\log( \comp(\varepsilon,d))}{\varepsilon^{-s}+d^t} = 0
@@ -1170,7 +1170,7 @@ Thus, it follows by \eqref{eq:lambda_K_strong4} that
 \end{equation}
 Note furthermore that we always have
 \[
-i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1, \qquad  \forall \varepsilon > \theM(d), \ d \in \mathbb{N},
+i(\varepsilon,\vp)\le C_{\vp}\, T(\varepsilon^{-1},1,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,\vp),d}^{-1},1,\vp)+1 \qquad  \forall \varepsilon > \theM(d), \ d \in \mathbb{N},
 \]
 since
 $T(\cdot,1, \vp)$ is non-decreasing.
@@ -1185,7 +1185,7 @@ For $\varepsilon$ taking on all values in $(\theM(d),\infty)$, $i(\varepsilon,\v
 \]
 So,
 \[
-i\le  C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1, \qquad \forall i\in \mathscr{I}_{d,\vp},  \ d \in \naturals.
+i\le  C_{\vp} T(\lambda_{i,d}^{-1},1,\vp)+1 \qquad \forall i\in \mathscr{I}_{d,\vp},  \ d \in \naturals.
 \]
 This implies via our technical assumption \eqref{eq:ptauassume} that
 \begin{gather}
@@ -1304,7 +1304,7 @@ It follows by \eqref{eq:rest_lambda_K4} that $\lambda_{i(\varepsilon,d,\vp),d} \
 for any  $(\varepsilon^{-1}, d) \in \Omega$.
 Note furthermore that since $T(\cdot,d,\vp)$ is non-decreasing, we have
 \[
-i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,d,\vp),d}^{-1},d,\vp)+1, \qquad \forall \varepsilon > \theM(d),\ d \in \naturals.
+i(\varepsilon,d,\vp)\le C_{\vp}\, T(\varepsilon^{-1},d,\vp)+1 \le C_{\vp} T(\lambda_{i(\varepsilon,d,\vp),d}^{-1},d,\vp)+1 \qquad \forall \varepsilon > \theM(d),\ d \in \naturals.
 \]
 For $\varepsilon$ taking on all values in $(\theM(d),\infty)$, $i(\varepsilon,d,\vp)$ takes on (at least) all values in
 \[
@@ -1324,10 +1324,10 @@ This implies via our technical assumption \eqref{eq:ptauassume} that
  K_{\vp,\tau}\,T (\lambda_{i,d}^{-1},d,\tau \vp) \ge
  [T(\lambda_{i,d}^{-1},d, \vp)]^\tau
  \ge
-  \left[\frac{(i-1)}{C_{\vp}}\right]^\tau, \qquad \forall i\in \mathscr{I}_{d,\vp},  \ d \in \naturals, \\
+  \left[\frac{(i-1)}{C_{\vp}}\right]^\tau \qquad \forall i\in \mathscr{I}_{d,\vp},  \ d \in \naturals, \\
   \label{eq:rest_ineq}
  \frac{1}{T (\lambda_{i,d}^{-1},d,\tau \vp)} \le
-\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau},\qquad \forall i \in \mathscr{I}_{d,\vp} \setminus\{1\}, \ d \in \naturals .
+\frac{K_{\vp,\tau}\, C_{\vp}^\tau}{(i-1)^\tau}\qquad \forall i \in \mathscr{I}_{d,\vp} \setminus\{1\}, \ d \in \naturals .
 \end{gather}
 
 To complete the proof, we will sum both sides of \eqref{eq:rest_ineq} over the range of $i$ appearing in \eqref{eq:rest_tractiff}, to establish that $S_{\vp'}$ is finite, where  $\vp' = \tau \vp$.  To do this we need to show that \eqref{eq:rest_ineq} holds for that range.
@@ -1417,3 +1417,4 @@ Thank Henryk and Erich.
 
 
 \end{document}
+z
