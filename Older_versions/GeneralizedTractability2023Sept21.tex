@@ -108,7 +108,7 @@ We make the technical assumption that $\SOL_d$ is a compact operator. This impli
 The goal is to find a sequence of approximate solution operators, $\{\APP_d:\cb_d \times (0,\infty) \to \cg_d\}_{d \in \naturals}$, defined on the unit ball of functions in $\cf_d$, denoted $\cb_d$, which  satisfy an absolute error criterion:
 \begin{equation}
     \label{eq:errcrit}
-    \norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon \qquad \forall f \in \cb_d, \ \varepsilon \in (0,\infty)\footnote{We note that the radius of the $\cb_d$ could be taken to be an arbitrary positive value, $R$, in which case the problem becomes equivalent to the original one with the tolerance $\varepsilon$ replaced by $\varepsilon/R$ since the problem and the optimal approximate soluion are both linear (see below).}.
+    \norm[\cg_d]{\SOL_d(f) - \APP_d(f,\varepsilon)} \le \varepsilon \qquad \forall f \in \cb_d, \ \varepsilon \in (0,\infty)\footnote{We note that the radius of the $\cb_d$ could be taken to be an arbitrary positive value, $R$, in which case the problem becomes equivalent to the original one with the tolerance $\varepsilon$ replaced by $\varepsilon/R$ since the problem and the optimal approximate solution are both linear (see below).}.
 \end{equation}
 Here, $\APP_d(f,\varepsilon)$ is allowed to depend on arbitrary linear functionals.  Note that we also allow adaptive information, i.e., the linear functionals may sequentially depend on each other.
 
@@ -138,7 +138,7 @@ This means that, essentially, in the tractability analysis below, all criteria w
 
 The question of tractability is one of determining how fast the information complexity increases as $\varepsilon$ tends to zero and/or as $d$ tends to infinity.  Although \eqref{eq:comp_def} has a relatively simple form, its dependence on the ordering of the singular values means that it is not obvious what the behavior of $\comp(\varepsilon, d)$ is as $\varepsilon^{-1}$ and/or $d$ tend to infinity.
 
-We want to bound the information complexity in terms of a simple function, $T$, of $\varepsilon^{-1}$ and $d$, and identify conditions on the singular values that are easier to verify that are equivalent to this bound on the information complexity holding. We note that generalized tractability specified by a function $T$ has been considered before in the literature. In particular, there are several papers by Gnewuch and Wo\'{z}niakowski (see \cite{GW06,GW08,GW09,GneWoz11a}), and also \cite[Chapter 8]{NovWoz08a} is devoted to this topic. To our understanding, however, these references mainly focus on the special case of tensor product problems, a restriction we do not make.  Moreover, the conditions for tractability derived there focus mostly on relating the properties of the function $T$ to the different varieties of tractability, and not in terms of sums of (functions of) the singular values of a problem. Hence, the present paper adds to what is presently known on this subject. 
+We want to bound the information complexity in terms of a simple function, $T$, \kachi{which depends of three variables} $\varepsilon^{-1}$, \kachi{ $d$ and some parameter $\vp$},  and identify conditions on the singular values that are easier to verify that are equivalent to this bound on the information complexity holding. We note that generalized tractability specified by a function $T$ has been considered before in the literature. In particular, there are several papers by Gnewuch and Wo\'{z}niakowski (see \cite{GW06,GW08,GW09,GneWoz11a}), and also \cite[Chapter 8]{NovWoz08a} is devoted to this topic. To our understanding, however, these references mainly focus on the special case of tensor product problems, a restriction we do not make.  Moreover, the conditions for tractability derived there focus mostly on relating the properties of the function $T$ to the different varieties of tractability, and not in terms of sums of (functions of) the singular values of a problem. Hence, the present paper adds to what is presently known on this subject. 
 In this article, we investigate a \emph{generalized tractability function}, denoted by $T$:
 \begin{equation} \label{eq:Tspec}
     T :(0,\infty) \times \mathbb{N} \times [0,\infty)^s \rightarrow (0,\infty).
@@ -417,7 +417,9 @@ Suppose that \eqref{eq:tractiff4} holds for some $\vp \ge \boldsymbol{0}$.
 By the argument in the proof of the sufficient condition for Theorem \ref{thm_main_strong_tract2}, it follows from \eqref{eq:compUP} with $\thed=d$ and $N = \lceil L_{\vp}\, T(0,d,\vp)\rceil$ that
 \begin{align*}
        \comp(\varepsilon,d)
-       & \le T(\varepsilon^{-1},d,\vp) \Biggl [
+       & \le  \kachi{T(\varepsilon^{-1},\thed,\vp) \Biggl [\frac{N}{T(\varepsilon^{-1},\thed,\vp)}  +  \sum_{i=N}^\infty \frac{1}{T(\lambda_{i, d}^{-1},\thed,\vp)} \Biggr] \quad \forall  \thed, N \in \naturals}
+       \\
+      & \le T(\varepsilon^{-1},d,\vp) \Biggl [
        \frac{\lceil L_{\vp}\, T(0,d,\vp)\rceil}{T(\varepsilon^{-1},d,\vp)}  +
        \underbrace{\sum_{i=\lceil L_{\vp}\, T(0,d,\vp)\rceil}^\infty \frac{1}{T(\lambda_{i, d}^{-1},d,\vp)}}_{\le S_{\vp} \text{ by \eqref{eq:tractiff4}}}
        \Biggr ]

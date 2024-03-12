@@ -1,0 +1,89 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{latexsym,amsfonts,amsmath,graphics,mathtools,amssymb,amsthm,booktabs}
+\usepackage{epsfig}
+%\usepackage[notref,notcite]{showkeys}
+%\usepackage[active]{srcltx}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+
+\usepackage{algorithmic}
+
+%\input{common-macros}
+%\input{common-macros2}
+
+\input{FJHDef.tex}
+
+\usepackage[normalem]{ulem}
+\usepackage{algorithmic}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+\usepackage{cleveref}
+
+\setlength{\textheight}{24cm} \setlength{\textwidth}{16cm}
+\setlength{\hoffset}{-1.3cm} \setlength{\voffset}{-1.8cm}
+
+\newcommand{\supp}{\operatorname{supp}}
+
+\newcommand{\tpmod}[1]{{\;(\operatorname{mod}\;#1)}}
+
+\newcommand{\thed}{\mathscr{D}}
+\newcommand{\theM}{\mathscr{E}}
+\newcommand{\theUB}{\mathscr{U}}
+
+\DeclareMathOperator*{\esssup}{ess\,sup}
+
+%\DeclareMathOperator{\comp}{comp}
+\DeclareMathOperator{\SOL}{SOL}
+\DeclareMathOperator{\APP}{APP}
+
+\allowdisplaybreaks
+
+\newcommand{\fred}[1]{\begingroup\color{blue}Fred: #1\endgroup}
+\newcommand{\peter}[1]{\begingroup\color{purple}Peter: #1\endgroup}
+\newcommand{\kachi}[1]{\begingroup\color{ForestGreen}#1\endgroup}
+
+
+\begin{document}
+
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+
+\begin{center}
+    {\Large Response to the reviewers of the manuscript\\``A Unified Treatment of Tractability for \\ Approximation Problems Defined on Hilbert Spaces''}
+\end{center}
+
+We would like to thank the referees for their careful review and their valuable suggestions. Following the advice of the referees, we give an overview of the changes made in the manuscript
+
+\subsection*{Referee Report 1 (1 page):}
+\begin{itemize}
+    \item We are not quite sure whether we understood this remark correctly, but we have tried to reformulate the corresponding sentence in the introduction. 
+    \item We assume the referee means p.~2. We have re-formulated this sentence. 
+    \item We assume the referee means p.~2. We have added a footnote with an explanation. 
+    \item We have added another appendix (now, Appendix 1), where we show an example of how the condition for strong exponential tractability derived in our paper (which is different to what had been known before) can be applied to a concrete problem setting. The proof of Proposition 1 has been moved to Appendix 2. 
+\end{itemize}
+\medskip
+
+\subsection*{Referee Report 2 (3 pages):}
+\begin{itemize}
+    \item[1.] We have shortened the paragraph. 
+    \item[2.] We have added explanations to the introductory parts of the paper, and we have followed the suggestion of the referee to include a simplified version of the table for illustration. 
+    \item[3.] We have re-formulated the sentence that was on p.~2, line~25. 
+    \item[4.] A statement has been added as regards the role of $\vp$.
+    \item[5.] Page 3, towards the top an explanation has been added.
+    \item[6.] Page 2 (footnote) we explain that for problems where $\SOL_d$ has large singular values, a large error tolerance may be a reasonable expectation.  Thus we do not want to put an upper bound on $\varepsilon$.
+    \item[7.] We have added a corresponding statement on page 3. 
+    \item[8.] We have added a comment on this. 
+    \item[9.] We have added a corresponding statement. 
+    \item[10.] Done. 
+    \item[11.] The referee is right. We have made the corresponding corrections. 
+    \item[12.] We have removed the statement. 
+    \item[13.] We added the precise equation we are using.
+    \item[14.] We would like to emphasize that we intend to utilize equation (41) prior to establishing $\thed$ = 1. Indeed, we will make use of (41) in its general form in the proof of Theorem 5. 
+    \item[15.] Again, the referee is right. We have made the formulation more precise. 
+    \item[16.] Page 16, line -9: Done.
+    \item[17.] This typo has been corrected. That is, we have changed ``Equation (39)'' to ``Equation (45)''.
+    \item[18.] Done.
+\end{itemize}
+\end{document}
