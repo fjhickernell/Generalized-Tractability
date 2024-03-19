@@ -26,6 +26,7 @@
 \newcommand{\bsa}{\boldsymbol{a}}
 \newcommand{\bsb}{\boldsymbol{b}}
 \newcommand{\bsh}{\boldsymbol{h}}
+\newcommand{\bsx}{\boldsymbol{x}}
 \newcommand{\kor}{{\mathrm{kor}}}
 \newcommand{\ZZ}{{\mathbb{Z}}}
 \newcommand{\NN}{{\mathbb{N}}}
@@ -246,7 +247,7 @@ Finally, there is a technical assumption required for our analysis in \Cref{sec:
 \begin{equation} \label{eq:ptauassume}
 	[T(\varepsilon^{-1},d,\vp)]^\tau \le K_{\vp,\tau} T(\varepsilon^{-1},d,\tau \vp)   \quad \forall \varepsilon \in (0,\infty), \ d \in \naturals, \ \vp\in[0,\infty)^s, \ \tau\in [1,\infty).
 \end{equation}
-\peter{We remark that the latter assumption is quite natural, and is, for example fullfilled for all tractability types in Table~\ref{tab:commonT}.}
+\peter{We remark that the latter assumption is quite natural, and is, for example fulfilled for all tractability types in Table~\ref{tab:commonT}.}
 
 Certain common notions of tractability covered by the general situation described above are provided in Table \ref{tab:commonT}.  Here, $\vp = (p,q)$ in some cases, and $\vp$ is a scalar in other cases. A general reference
 for results on algebraic tractability is \cite{NovWoz08a}.  For exponential tractability we refer to \cite{HicKriWoz19a} and \cite{KriWoz19a}.
@@ -645,8 +646,8 @@ The proof of this result is deferred to \peter{Appendix 2} where we will prove t
 The conditions \eqref{eq:exp_spt} and \eqref{eq:KW_exp_spt} are equivalent. Furthermore, the conditions \eqref{eq:exp_pt} and \eqref{eq:KW_exp_pt} are equivalent.
 \end{proposition}
 
-\fred{Help!  I do not understand how we give and example of a summary of examples above.}
-In the following example, we provide a brief summary of the above examples of tractability. We would like to emphasize that this example was previously known (see, e.g., \cite{GW06}) where in this case the roles of $\varepsilon^{-1}$ and $d$ are separated. In order to accomplish this, we will first define two functions $\phi$ and $\psi$ with positive values that are increasing in both of their arguments. The equivalent conditions for this example take the same form as those in Theorems \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}.
+%\fred{Help!  I do not understand how we give and example of a summary of examples above.}
+\kachi{Next}, we provide a \kachi{generalization} of the above examples of tractability. We would like to emphasize that this example was previously known (see, e.g., \cite{GW06}) where in this case the roles of $\varepsilon^{-1}$ and $d$ are separated. In order to accomplish this, we will first define two functions $\phi$ and $\psi$ with positive values that are increasing in both of their arguments. The equivalent conditions for this example take the same form as those in Theorems \ref{thm_main_strong_tract2} and \ref{thm_main_tract2}.
 
 
 
@@ -1362,7 +1363,7 @@ However, some questions remain:
 
 
 \section{Acknowledgments}
-The authors gratefully acknowledge the fruitful discussions with Henryk Wo\'{z}niakowski and Erich Novak.  Fred Hickernell acknowledges support by the United States National Science Foundation under Award No.\ 2316011.
+The authors gratefully acknowledge the fruitful discussions with Henryk Wo\'{z}niakowski and Erich Novak. Moreover, we thank two anonymous referees for their suggestions.  Fred Hickernell acknowledges support by the United States National Science Foundation under Award No.\ 2316011.
 Peter Kritzer was supported by the Austrian Science Fund (FWF) Project P34808. For the purpose of open access, the authors have applied a CC BY public copyright licence to any author accepted manuscript version arising from this submission.
 
 \bibliography{FJHOwn23,FJH23,Further_references}
@@ -1376,20 +1377,21 @@ We define the weighted Korobov space $\ch_{\kor,d,\bsa,\bsb}$ below.
 This space contains real-analytic functions, and has been studied in the context of exponential tractability in, e.g., \cite{DKPW14, KPW17}, where the reader can find further details on this space.
 
 Let $\bsa=\{a_j\}_{j \ge 1}$ and
-$\bsb=\{b_j\}_{j \ge 1}$ be two sequences of real positive weights
-such that
-\begin{equation}\label{eq:cond_a_b}
-b_\ast:=\inf_j b_j> 0\ \ \ \ \ \mbox{and}\ \ \ \ \
-a_\ast:=\inf_j a_j>0.
-\end{equation}
-We assume, without loss of generality, that the $a_j$ are ordered in a non-decreasing way, i.e., $a_\ast=a_1$.
+$\bsb=\{b_j\}_{j \ge 1}$ be two \fred{non-decreasing} sequences of real positive weights\fred{.}
+%such that 
+%\fred{why don't we say that these are non-decreasing sequences of weight, in which case we do not need to define $a_\ast$ and $b_\bst$?  In fact, do you really need  $a_\ast$ and $b_\bst$ at all in the discussion?}
+%\begin{equation}\label{eq:cond_a_b}
+% a_\ast:=\inf_j a_j>0\ \ \ \ \ \mbox{and}\ \ \ \ \
+% b_\ast:=\inf_j b_j> 0.
+% \end{equation}
+%We assume, without loss of generality, that the $a_j$ are ordered in a non-decreasing way, i.e., $a_\ast=a_1$.
 Fix $\omega\in(0,1)$, and write 
 \[
 r_{d,\bsa,\bsb} (\bsh):=\omega^{-\sum_{j=1}^{d}a_j \abs{h_j}^{b_j}}
 \qquad\mbox{for}\qquad \bsh=(h_1,h_2,\dots,h_d)\in\ZZ^d.
 \]
 
-We define $\ch_{\kor,d,\bsa,\bsb}$ as the space of all one-periodic functions $f$ with absolutely convergent Fourier series, 
+We define $\ch_{\kor,d,\bsa,\bsb}$ as the space of all one-periodic functions $f$ with absolutely convergent Fourier series \fred{given by $f(\bsx) = \sum_{\bsh \in \ZZ^d} \widehat{f}(\bsh) \exp(2 \pi \sqrt{-1}\bsh'\bsx)$}, 
 and with finite norm 
 $||f||_{\kor,d,\bsa,\bsb}:=\langle f, f\rangle_{\kor,d,\bsa,\bsb}^{1/2}$,
 where the inner product is given by
@@ -1398,6 +1400,7 @@ where the inner product is given by
  \sum_{\bsh\in\ZZ^d} r_{d,\bsa,\bsb} (\bsh) 
  \widehat{f} (\bsh) \overline{\widehat{g}(\bsh)}.
 \]
+%where $\widehat{f}$ and $\widehat{g}$ denote the Fourier coefficients of $f$ and $g$, respectively.
 Let us consider $L_2$-approximation, i.e., $\SOL_d:\ch_{\kor,d,\bsa,\bsb}\to L_2([0,1]^d)$, $\SOL_d(f)=f$, and let us assume
 $\Lambda^{\rm all}$ as the information class. One can show that the singular values  for this choice of $\SOL_d$ are given by
 \begin{equation}\label{eq:eigenvalues}
@@ -1406,7 +1409,7 @@ $\Lambda^{\rm all}$ as the information class. One can show that the singular val
 \end{equation}
 
 If, for instance, we would like to find out whether $L_2$-approximation on $\ch_{\kor,d,\bsa,\bsb}$ satisfies 
-exponential strong tractability, we would use condition \eqref{eq:KW_exp_spt}, which previously existed in the literature. A slight drawback of this condition, however, is that we need to know everything about the order of the singular values, since we need to study summability of $\lambda_{i,d}^{i^{-\tau}}$ in \eqref{eq:KW_exp_spt}. This is technically rather involved, and was implicitly done in \cite{DKPW14} (we remark that the concise form 
+exponential strong tractability, we would use condition \eqref{eq:KW_exp_spt}, which previously existed in the literature. A slight drawback of this condition, however, is that we need to know everything about the \emph{order} of the singular values, since we need to study summability of $\lambda_{i,d}^{i^{-\tau}}$ in \eqref{eq:KW_exp_spt}. This is technically rather involved, and was implicitly done in \cite{DKPW14} (we remark that the concise form 
 of the condition \eqref{eq:KW_exp_spt} was not yet known when \cite{DKPW14} was written, and the proof idea in \cite{DKPW14} is less 
 straightforward than just checking \eqref{eq:KW_exp_spt}.
 
@@ -1415,13 +1418,17 @@ Alternatively, we can use the newly derived condition \eqref{eq:exp_spt} instead
  \sum_{i=1}^\infty \frac{1}{T\left(\lambda_{i,d}^{-1},1,(p,0)\right)}\kachi{,}
 \]
 for a real $p>0$. Inserting the singular values as in \eqref{eq:eigenvalues}, yields
-\[
+\begin{eqnarray*}
   \sum_{i=1}^\infty \frac{1}{T\left(\lambda_{i,d}^{-1},1,(p,0)\right)}
-  = \sum_{\bsh\in\ZZ^d} \frac{1}{\left(1+ \log \left(\omega^{-\frac{1}{2}\sum_{j=1}^d a_j \abs{h_j}^{b_j}}\right)\right)^p}\, .
-\]
+  &=&
+\sum_{\bsh\in\ZZ^d}
+\frac{1}{\left[\max\left\{1,\log\left(1+\omega^{-\frac{1}{2}\sum_{j=1}^d a_j \abs{h_j}^{b_j}}\right)
+\right\}\right]^p}\\
+&\le&1 +\sum_{\bsh\in\ZZ^d\setminus \{\boldsymbol{0}\}} \frac{1}{\left(\log \left(\omega^{-\frac{1}{2}\sum_{j=1}^d a_j \abs{h_j}^{b_j}}\right)\right)^p} \, .
+\end{eqnarray*}
 It is then not hard to show that the two conditions 
 \[
- \sum_{j=1}^\infty \frac{1}{b_j} <\infty \quad \mbox{and}\quad \alpha^*:=\liminf_{j\to\infty}\frac{\log a_j}{j}>0
+ \liminf_{j\to\infty}\frac{\log a_j}{j}>0 \quad \mbox{and}\quad \sum_{j=1}^\infty \frac{1}{b_j} <\infty 
 \]
 are sufficient to achieve exponential strong tractability (for details we refer to \cite{K24}), and this is in accordance with the findings in \cite{DKPW14}. Note, however, that this result in \cite{DKPW14} was technically much harder to show than 
 the analysis of the previous sum is. 
